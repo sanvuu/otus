@@ -1,0 +1,87 @@
+    1  sudo apt update && sudo apt upgrade
+    2  sudo reboot
+    3  df -hT
+    4  sudo fdisk -l
+    5  lsblk
+    6  sudo apt install mdadm
+    7  cat /proc/mdstat 
+    8  sudo mdadm --create /dev/md10 --level=10 --raid-devices=4 /dev/vdb /dev/vdc /dev/vdd /dev/vde 
+    9  cat /proc/mdstat 
+   10  sudo fdisk -l
+   11  lsblk
+   12  sudo mkfs.ext4 /dev/md10
+   13  sudo mount /dev/md10 /mnt/10
+   14  sudo mkdir /mnt/10
+   15  sudo mount /dev/md10 /mnt/10
+   16  df -hT
+   17  cat /proc/mdstat 
+   18  sudo mdadm /dev/md10
+   19  sudo mdadm /dev/md10 --detail
+   20  sudo mdadm --detail /dev/md10
+   21  lsblk
+   22  sudo mdadm --detail /dev/md10
+   23  lsblk
+   24  sudo mdadm --detail /dev/md10
+   25  sudo umount /mnt/10 
+   26  sudo mdadm  --stop /dev/md10
+   27  sudo mdadm --zero-superblock /dev/vdb /dev/vdc /dev/vdd /dev/vde
+   28  lsblk
+   29  cat /proc/mdstat 
+   30  sudo ls -la /dev/md
+   31  sudo ls -la /dev/md/
+   32  sudo rm -f /dev/md10
+   33  cat /proc/mdstat 
+   34  sudo systemctl restart mdadm
+   35  mdadm /dev/md10
+   36  sudo mdadm /dev/md10
+   37  sudo mdadm --create /dev/md10 --level=10 --raid-devices=4 /dev/vdb /dev/vdc /dev/vdd /dev/vde 
+   38  cat /proc/mdstat 
+   39  sudo mdadm /dev/md10
+   40  sudo mdadm --detail /dev/md10
+   41  lsblk
+   42  sudo poweroff
+   43  lsblk
+   44  df -hT
+   45  sudo mdadm --stop /dev/md10
+   46  sudo reboot
+   47  lsblk
+   48  sudo mdadm --stop /dev/md10
+   49  cat /proc/mdstat 
+   50  lsblk
+   51  cat /proc/mdstat 
+   52  sudo rm -f /dev/md10
+   53  sudo mdadm --create /dev/md10 --level=10 --raid-devices=4 /dev/vdb /dev/vdc /dev/vdd /dev/vde 
+   54  lsblk
+   55  cat /proc/mdstat 
+   56  sudo mdadm --create /dev/md10 --level=10 --raid-devices=4 /dev/vdb /dev/vdc /dev/vdd /dev/vde 
+   57  sudo mdadm --detail /dev/md10
+   58  lsblk
+   59  sudo mdadm --detail /dev/md10
+   60  sudo mdadm /dev/md10 --remove /dev/vde
+   61  sudo mdadm --detail /dev/md10
+   62  sudo mdadm /dev/md10 --add /dev/vde
+   63  sudo mdadm --detail /dev/md10
+   64  sudo fdisk -l /dev/md10
+   65  sudo fdisk /dev/md10
+   66  cat /proc/mdstat 
+   67  df -hT
+   68  sudo fdisk -l
+   69  sudo mkdir -p /mnt/10/1 /mnt/10/2 /mnt/10/3 /mnt/10/4 /mnt/10/5
+   70  sudo mount /dev/md10p1 /mnt/10/1
+   71  sudo mkfs.ext4 /dev/md10
+   72  sudo mkfs.ext4 /dev/md10p1
+   73  sudo mkfs.ext4 /dev/md10p2
+   74  sudo mkfs.ext4 /dev/md10p3
+   75  sudo mkfs.ext4 /dev/md10p4
+   76  sudo mkfs.ext4 /dev/md10p45
+   77  sudo mkfs.ext4 /dev/md10p5
+   78  sudo mount /dev/md10p1 /mnt/10/1
+   79  sudo mount /dev/md10p2 /mnt/10/2
+   80  sudo mount /dev/md10p3 /mnt/10/3
+   81  sudo mount /dev/md10p4 /mnt/10/4
+   82  sudo mount /dev/md10p5 /mnt/10/5
+   83  df -hT
+   84  watch cat /proc/mdstat 
+   85  sudo mdadm --detail /dev/md10
+   86  ip a
+   87  history > myhistory080726.txt
