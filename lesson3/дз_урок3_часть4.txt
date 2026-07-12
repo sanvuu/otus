@@ -1,0 +1,51 @@
+sudo apt install zfsutils-linux 
+Уже установлен пакет zfsutils-linux самой новой версии (2.4.1-1ubuntu5).
+Сводка:                                              
+  Обновление: 0, Установка: 0, Удаление: 0, Пропуск обновления: 0
+sergey@ubuntulvm:/$ sudo zpool create -f -m /opt optpool /dev/vde1
+sergey@ubuntulvm:/$ sudo zfs list
+NAME      USED  AVAIL  REFER  MOUNTPOINT
+optpool   128K  8.23G    24K  /opt
+sergey@ubuntulvm:/$ sudo zpool add optpool cache /dev/vde2
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       0     0     0
+	cache
+	  vde2      ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,3G  43% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  112K  140K  45% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G  347M  4,3G   8% /var
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+optpool                                zfs       8,3G  128K  8,3G   1% /opt
+sergey@ubuntulvm:/$ sudo fdisk -l /dev/vde
+Disk /dev/vde: 10 GiB, 10737418240 bytes, 20971520 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 9A62EBAA-0475-4636-A827-E48771C64FFB
+
+Device        Start      End  Sectors  Size Type
+/dev/vde1      2048 18876415 18874368    9G Linux filesystem
+/dev/vde2  18876416 20969471  2093056 1022M Linux filesystem
+sergey@ubuntulvm:/$ 
+

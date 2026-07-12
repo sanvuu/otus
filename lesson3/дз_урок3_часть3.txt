@@ -1,0 +1,195 @@
+ssh 192.168.122.139
+sergey@192.168.122.139's password: 
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/sergey: No such file or directory
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,2M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  106K  146K  43% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M  280K  906M   1% /home
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G   42M  4,6G   1% /var
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+sergey@ubuntulvm:/$ sudo pvs
+[sudo: authenticate] Password:         
+sudo: Authentication failed, try again.
+[sudo: authenticate] Password:          
+  PV         VG        Fmt  Attr PSize   PFree   
+  /dev/md0   ubuntu-vg lvm2 a--   <9,99g   <4,99g
+  /dev/vda3  ubuntu-vg lvm2 a--  <21,95g   10,97g
+  /dev/vdb   ubuntu-vg lvm2 a--  <10,00g 1020,00m
+sergey@ubuntulvm:/$ sudo vgs
+  VG        #PV #LV #SN Attr   VSize   VFree  
+  ubuntu-vg   3   4   0 wz--n- <41,93g <16,96g
+sergey@ubuntulvm:/$ sudo lvs
+  LV            VG        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ubuntu-home   ubuntu-vg -wi-ao----  1,00g                                                    
+  ubuntu-lv     ubuntu-vg -wi-a----- 10,97g                                                    
+  ubuntu-lv-new ubuntu-vg -wi-ao----  8,00g                                                    
+  ubuntu-var    ubuntu-vg -wi-ao----  5,00g                                                    
+sergey@ubuntulvm:/$ sudo mkdir /home/test
+sergey@ubuntulvm:/$ sudo cp -a /var/log/* /home/test/
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,2M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  106K  146K  43% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G   42M  4,6G   1% /var
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+sergey@ubuntulvm:/$ sudo ls -la /home
+total 28
+drwxr-xr-x  4 root root  4096 Jul 12 21:34 .
+drwxr-xr-x 17 root root  4096 Jul 12 21:31 ..
+drwx------  2 root root 16384 Jul 12 19:59 lost+found
+drwxr-xr-x  8 root root  4096 Jul 12 21:35 test
+sergey@ubuntulvm:/$ sudo lvcreate -L 1G -s -n home_backup /dev/mapper/ubuntu--vg-ubuntu--home
+  Logical volume "home_backup" created.
+sergey@ubuntulvm:/$ sudo lvs
+  LV            VG        Attr       LSize  Pool Origin      Data%  Meta%  Move Log Cpy%Sync Convert
+  home_backup   ubuntu-vg swi-a-s---  1,00g      ubuntu-home 0,01                                   
+  ubuntu-home   ubuntu-vg owi-aos---  1,00g                                                         
+  ubuntu-lv     ubuntu-vg -wi-a----- 10,97g                                                         
+  ubuntu-lv-new ubuntu-vg -wi-ao----  8,00g                                                         
+  ubuntu-var    ubuntu-vg -wi-ao----  5,00g                                                         
+sergey@ubuntulvm:/$ sudo rm -rf /home/test
+sergey@ubuntulvm:/$ sudo ls -la /home
+total 24
+drwxr-xr-x  3 root root  4096 Jul 12 21:36 .
+drwxr-xr-x 17 root root  4096 Jul 12 21:31 ..
+drwx------  2 root root 16384 Jul 12 19:59 lost+found
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  106K  146K  43% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M  280K  906M   1% /home
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G   42M  4,6G   1% /var
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+sergey@ubuntulvm:/$ sudo lvconvert --merge /dev/mapper/ubuntu--vg-home_backup
+  Delaying merge since origin is open.
+  Merging of snapshot ubuntu-vg/home_backup will occur on next activation of ubuntu-vg/ubuntu-home.
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  106K  146K  43% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M  280K  906M   1% /home
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G   42M  4,6G   1% /var
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+sergey@ubuntulvm:/$ sudo reboot
+sergey@ubuntulvm:/$ Read from remote host 192.168.122.139: Connection reset by peer
+Connection to 192.168.122.139 closed.
+client_loop: send disconnect: Broken pipe
+sergey@uchuwi:~$ ssh 192.168.122.139
+sergey@192.168.122.139's password: 
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/sergey: No such file or directory
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,2M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  112K  140K  45% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G   43M  4,6G   1% /var
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+sergey@ubuntulvm:/$ sudo ls -la /home/test/
+[sudo: authenticate] Password:          
+total 2436
+drwxr-xr-x 8 root    root               4096 Jul 12 21:35 .
+drwxr-xr-x 4 root    root               4096 Jul 12 21:34 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+-rw-r----- 1 syslog  adm               62278 Jul 12 21:35 auth.log
+drwxr-x--- 2 _chrony _chrony            4096 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               86160 Jul 12 21:33 dmesg
+-rw-r----- 1 root    adm               85697 Jul 12 21:20 dmesg.0
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.1.gz
+-rw-r----- 1 root    adm               20643 Jul 12 20:32 dmesg.2.gz
+-rw-r----- 1 root    adm               20985 Jul 12 20:18 dmesg.3.gz
+-rw-r----- 1 root    adm               20928 Jul 12 20:17 dmesg.4.gz
+drwxr-sr-x+3 root    systemd-journal    4096 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              690299 Jul 12 21:34 kern.log
+drwxr-xr-x 2 root    root               4096 Jul 12 20:18 landscape
+drwx------ 2 root    root               4096 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             1427342 Jul 12 21:34 syslog
+drwxr-xr-x 2 root    root               4096 Jul 12 20:17 sysstat
+drwxr-xr-x 2 root    root               4096 Jul 12 20:17 unattended-upgrades
+sergey@ubuntulvm:/$ sudo lvs
+  LV            VG        Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ubuntu-home   ubuntu-vg -wi-ao----  1,00g                                                    
+  ubuntu-lv     ubuntu-vg -wi-a----- 10,97g                                                    
+  ubuntu-lv-new ubuntu-vg -wi-ao----  8,00g                                                    
+  ubuntu-var    ubuntu-vg -wi-ao----  5,00g                                                    
+sergey@ubuntulvm:/$ 
+
