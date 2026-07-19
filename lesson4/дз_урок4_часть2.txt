@@ -1,0 +1,37 @@
+sergey@uchuwi:~$ virsh domblklist ubuntu24
+error: ошибка при получении данных домена «ubuntu24»
+
+sergey@uchuwi:~$ virsh domblklist ubuntu24.04 
+ Назначение   Источник
+-----------------------------------------------------------
+ vda          /var/lib/libvirt/images/ubuntu24.04.qcow2
+ vdb          /var/lib/libvirt/images/ubuntu24.04-1.qcow2
+ vdc          /var/lib/libvirt/images/ubuntu24.04-2.qcow2
+ vdd          /var/lib/libvirt/images/ubuntu24.04-3.qcow2
+ vde          /var/lib/libvirt/images/ubuntu24.04-4.qcow2
+ vdf          /var/lib/libvirt/images/ubuntu24.04-5.qcow2
+ vdg          /var/lib/libvirt/images/ubuntu24.04-6.qcow2
+ sda          -
+
+sergey@uchuwi:~$ virsh detach-disk /var/lib/libvirt/images/ubuntu24.04-4.qcow2 --live
+error: команда detach-disk требует указания <target>
+sergey@uchuwi:~$ virsh detach-disk /var/lib/libvirt/images/ubuntu24.04-4.qcow2 vde --live
+error: ошибка при получении данных домена «/var/lib/libvirt/images/ubuntu24.04-4.qcow2»
+
+sergey@uchuwi:~$ virsh detach-disk ubuntu24.04 vde --live
+Диск успешно отключён
+
+sergey@uchuwi:~$ virsh detach-disk ubuntu24.04 vde --live
+
+Диск успешно отключён
+
+sergey@uchuwi:~$ 
+sergey@uchuwi:~$ virsh attach-disk ubuntu24.04 vde --live
+error: команда attach-disk требует указания <target>
+sergey@uchuwi:~$ virsh attach-disk /var/lib/libvirt/images/ubuntu24.04-4.qcow2 vde --live
+error: команда attach-disk требует указания <target>
+sergey@uchuwi:~$ virsh attach-disk ubuntu24.04 /var/lib/libvirt/images/ubuntu24.04-4.qcow2 vde --live --subdriver qcow2
+Диск успешно подключён
+
+sergey@uchuwi:~$ 
+

@@ -1,0 +1,1779 @@
+sergey@uchuwi:~$ ssh sergey@192.168.122.139
+sergey@192.168.122.139's password: 
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/sergey: No such file or directory
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  123K  129K  49% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G  354M  4,3G   8% /var
+optpool                                zfs       8,3G  128K  8,3G   1% /opt
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+sergey@ubuntulvm:/$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                           11:0    1 1024M  0 rom   
+vda                          253:0    0   25G  0 disk  
+├─vda1                       253:1    0    1G  0 part  /boot/efi
+├─vda2                       253:2    0    2G  0 part  /boot
+└─vda3                       253:3    0 21,9G  0 part  
+  └─ubuntu--vg-ubuntu--lv    252:1    0   11G  0 lvm   
+vdb                          253:16   0   10G  0 disk  
+├─ubuntu--vg-ubuntu--lv--new 252:0    0    8G  0 lvm   /
+└─ubuntu--vg-ubuntu--home    252:2    0    1G  0 lvm   /home
+vdc                          253:32   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdd                          253:48   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vde                          253:64   0   10G  0 disk  
+├─vde1                       253:65   0    9G  0 part  
+└─vde2                       253:66   0 1022M  0 part  
+sergey@ubuntulvm:/$ sudo zfs list
+[sudo: authenticate] Password:          
+NAME      USED  AVAIL  REFER  MOUNTPOINT
+optpool   142K  8.23G    24K  /opt
+sergey@ubuntulvm:/$ sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+optpool  8.50G   142K  8.50G        -         -     0%     0%  1.00x    ONLINE  -
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       0     0     0
+	cache
+	  vde2      ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME     PROPERTY     VALUE           SOURCE
+optpool  compression  on              default
+sergey@ubuntulvm:/$ sudo zfs set compression=test optpool
+cannot set property for 'optpool': 'compression' must be one of 'on | off | lzjb | gzip | gzip-[1-9] | zle | lz4 | zstd | zstd-[1-19] | zstd-fast | zstd-fast-[1-10,20,30,40,50,60,70,80,90,100,500,1000]'
+sergey@ubuntulvm:/$ sudo zfs set compression=lzib optpool
+cannot set property for 'optpool': 'compression' must be one of 'on | off | lzjb | gzip | gzip-[1-9] | zle | lz4 | zstd | zstd-[1-19] | zstd-fast | zstd-fast-[1-10,20,30,40,50,60,70,80,90,100,500,1000]'
+sergey@ubuntulvm:/$ sudo zfs set compression=lzjb optpool
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME     PROPERTY     VALUE           SOURCE
+optpool  compression  lzjb            local
+sergey@ubuntulvm:/$ sudo zfs set compression=gzip optpool
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME     PROPERTY     VALUE           SOURCE
+optpool  compression  gzip            local
+sergey@ubuntulvm:/$ sudo zfs set compression=zle optpool
+sergey@ubuntulvm:/$ sudo zfs set compression=lz4 optpool
+sergey@ubuntulvm:/$ sudo zfs set compression=zstd optpool
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME     PROPERTY     VALUE           SOURCE
+optpool  compression  zstd            local
+sergey@ubuntulvm:/$ sudo zfs set compression=lz4 optpool
+sergey@ubuntulvm:/$ sudo zpool create optpool/01
+missing vdev specification
+usage:
+	create [-fnd] [-o property=value] ... 
+	    [-O file-system-property=value] ... 
+	    [-m mountpoint] [-R root] <pool> <vdev> ...
+sergey@ubuntulvm:/$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                           11:0    1 1024M  0 rom   
+vda                          253:0    0   25G  0 disk  
+├─vda1                       253:1    0    1G  0 part  /boot/efi
+├─vda2                       253:2    0    2G  0 part  /boot
+└─vda3                       253:3    0 21,9G  0 part  
+  └─ubuntu--vg-ubuntu--lv    252:1    0   11G  0 lvm   
+vdb                          253:16   0   10G  0 disk  
+├─ubuntu--vg-ubuntu--lv--new 252:0    0    8G  0 lvm   /
+└─ubuntu--vg-ubuntu--home    252:2    0    1G  0 lvm   /home
+vdc                          253:32   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdd                          253:48   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vde                          253:64   0   10G  0 disk  
+├─vde1                       253:65   0    9G  0 part  
+└─vde2                       253:66   0 1022M  0 part  
+vdf                          253:80   0   10G  0 disk  
+vdg                          253:96   0   10G  0 disk  
+sergey@ubuntulvm:/$ sudo zfs create optpool/01
+sergey@ubuntulvm:/$ sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+optpool  8.50G   266K  8.50G        -         -     0%     0%  1.00x    ONLINE  -
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool      201K  8.23G    24K  /opt
+optpool/01    24K  8.23G    24K  /opt/01
+sergey@ubuntulvm:/$ sudo zfs create zfspool mirrot vdf vdg -f
+invalid option 'f'
+usage:
+	create [-Pnpuv] [-o property=value] ... <filesystem>
+	create [-Pnpsv] [-b blocksize] [-o property=value] ... -V <size> <volume>
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+
+For further help on a command or topic, run: zfs help [<topic>]
+sergey@ubuntulvm:/$ sudo zfs create zfspool mirror vdf vdg -f
+invalid option 'f'
+usage:
+	create [-Pnpuv] [-o property=value] ... <filesystem>
+	create [-Pnpsv] [-b blocksize] [-o property=value] ... -V <size> <volume>
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+
+For further help on a command or topic, run: zfs help [<topic>]
+sergey@ubuntulvm:/$ sudo zfs create zfspool mirror vdf vdg
+too many arguments
+usage:
+	create [-Pnpuv] [-o property=value] ... <filesystem>
+	create [-Pnpsv] [-b blocksize] [-o property=value] ... -V <size> <volume>
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+
+For further help on a command or topic, run: zfs help [<topic>]
+sergey@ubuntulvm:/$ sudo zpool create zfspool mirror vdf vdg
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       0     0     0
+	cache
+	  vde2      ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+	    vdg     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ sudo zfs create zfspool/01
+sergey@ubuntulvm:/$ sudo zfs create zfspool/02
+sergey@ubuntulvm:/$ sudo zfs create zfspool/03
+sergey@ubuntulvm:/$ sudo zfs create zfspool/04
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME        PROPERTY     VALUE           SOURCE
+optpool     compression  lz4             local
+optpool/01  compression  lz4             inherited from optpool
+zfspool     compression  on              default
+zfspool/01  compression  on              default
+zfspool/02  compression  on              default
+zfspool/03  compression  on              default
+zfspool/04  compression  on              default
+sergey@ubuntulvm:/$ sudo zfs set compression=lz4 zfspool/01
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME        PROPERTY     VALUE           SOURCE
+optpool     compression  lz4             local
+optpool/01  compression  lz4             inherited from optpool
+zfspool     compression  on              default
+zfspool/01  compression  lz4             local
+zfspool/02  compression  on              default
+zfspool/03  compression  on              default
+zfspool/04  compression  on              default
+sergey@ubuntulvm:/$ sudo zfs set compression=zstd zfspool/02
+sergey@ubuntulvm:/$ sudo zfs set compression=gzip zfspool/03
+sergey@ubuntulvm:/$ sudo zfs set compression=zle zfspool/04
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME        PROPERTY     VALUE           SOURCE
+optpool     compression  lz4             local
+optpool/01  compression  lz4             inherited from optpool
+zfspool     compression  on              default
+zfspool/01  compression  lz4             local
+zfspool/02  compression  zstd            local
+zfspool/03  compression  gzip            local
+zfspool/04  compression  zle             local
+sergey@ubuntulvm:/$ sudo zfs create zfspool/05
+sergey@ubuntulvm:/$ sudo zfs set compression=off zfspool/05
+sergey@ubuntulvm:/$ sudo zfs get compression
+NAME        PROPERTY     VALUE           SOURCE
+optpool     compression  lz4             local
+optpool/01  compression  lz4             inherited from optpool
+zfspool     compression  on              default
+zfspool/01  compression  lz4             local
+zfspool/02  compression  zstd            local
+zfspool/03  compression  gzip            local
+zfspool/04  compression  zle             local
+zfspool/05  compression  off             local
+sergey@ubuntulvm:/$ sudo cp -ar /var/log/* /zfspool/05/
+cp: preserving permissions for ‘/zfspool/05/journal/b080d6be6146485a875b71bf6a3ceaf5/system@0006566fadf2eaa5-344315bc613cee25.journal~’: Operation not supported
+cp: preserving permissions for ‘/zfspool/05/journal/b080d6be6146485a875b71bf6a3ceaf5/system.journal’: Operation not supported
+cp: preserving permissions for ‘/zfspool/05/journal/b080d6be6146485a875b71bf6a3ceaf5/user-1000.journal’: Operation not supported
+cp: preserving permissions for ‘/zfspool/05/journal/b080d6be6146485a875b71bf6a3ceaf5’: Operation not supported
+cp: preserving permissions for ‘/zfspool/05/journal’: Operation not supported
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  123K  129K  49% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G  354M  4,3G   8% /var
+optpool                                zfs       8,3G  128K  8,3G   1% /opt
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+optpool/01                             zfs       8,3G  128K  8,3G   1% /opt/01
+zfspool                                zfs       9,2G  128K  9,2G   1% /zfspool
+zfspool/01                             zfs       9,2G  128K  9,2G   1% /zfspool/01
+zfspool/02                             zfs       9,2G  128K  9,2G   1% /zfspool/02
+zfspool/03                             zfs       9,2G  128K  9,2G   1% /zfspool/03
+zfspool/04                             zfs       9,2G  128K  9,2G   1% /zfspool/04
+zfspool/05                             zfs       9,3G   40M  9,2G   1% /zfspool/05
+sergey@ubuntulvm:/$ ls -la /zfspool/05/
+total 3895
+drwxr-xr-x 9 root    root                 23 Jul 19 08:24 .
+drwxr-xr-x 7 root    root                  7 Jul 19 08:24 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  123K  129K  49% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G  354M  4,3G   8% /var
+optpool                                zfs       8,3G  128K  8,3G   1% /opt
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+optpool/01                             zfs       8,3G  128K  8,3G   1% /opt/01
+zfspool                                zfs       9,2G  128K  9,2G   1% /zfspool
+zfspool/01                             zfs       9,2G  128K  9,2G   1% /zfspool/01
+zfspool/02                             zfs       9,2G  128K  9,2G   1% /zfspool/02
+zfspool/03                             zfs       9,2G  128K  9,2G   1% /zfspool/03
+zfspool/04                             zfs       9,2G  128K  9,2G   1% /zfspool/04
+zfspool/05                             zfs       9,3G   40M  9,2G   1% /zfspool/05
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /zfspool/01
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /zfspool/02
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /zfspool/03
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /zfspool/04
+sergey@ubuntulvm:/$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  1,3M  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv--new ext4      7,8G  3,1G  4,4G  42% /
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /dev/shm
+efivarfs                               efivarfs  256K  123K  129K  49% /sys/firmware/efi/efivars
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1,7G     0  1,7G   0% /tmp
+/dev/vda2                              ext4      2,0G  186M  1,7G  11% /boot
+/dev/mapper/ubuntu--vg-ubuntu--home    ext4      974M   35M  872M   4% /home
+/dev/vda1                              vfat      1,1G  6,4M  1,1G   1% /boot/efi
+/dev/mapper/ubuntu--vg-ubuntu--var     ext4      4,9G  354M  4,3G   8% /var
+optpool                                zfs       8,3G  128K  8,3G   1% /opt
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1,0M     0  1,0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8,0K  334M   1% /run/user/1000
+optpool/01                             zfs       8,3G  128K  8,3G   1% /opt/01
+zfspool                                zfs       9,2G  128K  9,2G   1% /zfspool
+zfspool/01                             zfs       9,3G   40M  9,2G   1% /zfspool/01
+zfspool/02                             zfs       9,3G   40M  9,2G   1% /zfspool/02
+zfspool/03                             zfs       9,3G   40M  9,2G   1% /zfspool/03
+zfspool/04                             zfs       9,3G   40M  9,2G   1% /zfspool/04
+zfspool/05                             zfs       9,3G   40M  9,2G   1% /zfspool/05
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool      201K  8.23G    24K  /opt
+optpool/01    24K  8.23G    24K  /opt/01
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+optpool  8.50G   201K  8.50G        -         -     0%     0%  1.00x    ONLINE  -
+zfspool  9.50G  40.1M  9.46G        -         -     0%     0%  1.00x    ONLINE  -
+sergey@ubuntulvm:/$ sudo zpool list -a
+invalid option 'a'
+usage:
+	list [-gHLpPv] [-o property[,...]] [-j [--json-int, --json-pool-key-guid]] ...
+	    [-T d|u] [pool] [interval [count]]
+
+the following properties are supported:
+
+	PROPERTY             EDIT   VALUES
+
+	allocated              NO   <size>
+	bcloneratio            NO   <1.00x or higher if cloned>
+	bclonesaved            NO   <size>
+	bcloneused             NO   <size>
+	capacity               NO   <percent>
+	checkpoint             NO   <size>
+	dedup_table_size       NO   <size>
+	dedupratio             NO   <1.00x or higher if deduped>
+	expandsize             NO   <size>
+	fragmentation          NO   <percent>
+	free                   NO   <size>
+	freeing                NO   <size>
+	guid                   NO   <guid>
+	health                 NO   <state>
+	last_scrubbed_txg      NO   <txg>
+	leaked                 NO   <size>
+	load_guid              NO   <load_guid>
+	size                   NO   <size>
+	altroot               YES   <path>
+	ashift                YES   <ashift, 9-16, or 0=default>
+	autoexpand            YES   on | off
+	autoreplace           YES   on | off
+	autotrim              YES   on | off
+	bootfs                YES   <filesystem>
+	cachefile             YES   <file> | none
+	comment               YES   <comment-string>
+	compatibility         YES   <file[,file...]> | off | legacy
+	dedup_table_quota     YES   <size>
+	delegation            YES   on | off
+	failmode              YES   wait | continue | panic
+	listsnapshots         YES   on | off
+	multihost             YES   on | off
+	readonly              YES   on | off
+	version               YES   <version>
+	feature@...           YES   disabled | enabled | active
+
+The feature@ properties must be appended with a feature name.
+See zpool-features(7).
+sergey@ubuntulvm:/$ sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+optpool  8.50G   201K  8.50G        -         -     0%     0%  1.00x    ONLINE  -
+zfspool  9.50G  40.1M  9.46G        -         -     0%     0%  1.00x    ONLINE  -
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       0     0     0
+	cache
+	  vde2      ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+	    vdg     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /optpool/01
+cp: target '/optpool/01': No such file or directory
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool      201K  8.23G    24K  /opt
+optpool/01    24K  8.23G    24K  /opt/01
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /opt/01
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool     7.60M  8.23G    24K  /opt
+optpool/01  7.43M  8.23G  7.43M  /opt/01
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool     7.60M  8.23G    24K  /opt
+optpool/01  7.43M  8.23G  7.43M  /opt/01
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                           11:0    1 1024M  0 rom   
+vda                          253:0    0   25G  0 disk  
+├─vda1                       253:1    0    1G  0 part  /boot/efi
+├─vda2                       253:2    0    2G  0 part  /boot
+└─vda3                       253:3    0 21,9G  0 part  
+  └─ubuntu--vg-ubuntu--lv    252:1    0   11G  0 lvm   
+vdb                          253:16   0   10G  0 disk  
+├─ubuntu--vg-ubuntu--lv--new 252:0    0    8G  0 lvm   /
+└─ubuntu--vg-ubuntu--home    252:2    0    1G  0 lvm   /home
+vdc                          253:32   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdd                          253:48   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vde                          253:64   0   10G  0 disk  
+├─vde1                       253:65   0    9G  0 part  
+└─vde2                       253:66   0 1022M  0 part  
+vdf                          253:80   0   10G  0 disk  
+├─vdf1                       253:81   0   10G  0 part  
+└─vdf9                       253:89   0    8M  0 part  
+vdg                          253:96   0   10G  0 disk  
+├─vdg1                       253:97   0   10G  0 part  
+└─vdg9                       253:105  0    8M  0 part  
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool     7.60M  8.23G    24K  /opt
+optpool/01  7.43M  8.23G  7.43M  /opt/01
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+status: One or more devices has experienced an error resulting in data
+	corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+	entire pool from backup.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-8A
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       0 10.6M     0
+	cache
+	  vde2      ONLINE       3     9     0
+
+errors: Permanent errors have been detected in the following files:
+
+        <metadata>:<0x0>
+        <metadata>:<0x80>
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+	    vdg     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ sudo cp -ar /zfspool/05/* /opt/01/
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+status: One or more devices has experienced an error resulting in data
+	corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+	entire pool from backup.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-8A
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       0 16.8M     0
+	cache
+	  vde2      ONLINE       3    21     0
+
+errors: Permanent errors have been detected in the following files:
+
+        <metadata>:<0x0>
+        <metadata>:<0x80>
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+	    vdg     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ ls -la /opt/01/
+total 1176
+drwxr-xr-x 9 root    root                 23 Jul 19 08:37 .
+drwxr-xr-x 3 root    root                  3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/$ sudo cp -ar /opt/01/kern.log /opt/01/kkkk
+^C^C^C
+^C
+^[[A
+
+
+
+^C^C^C
+
+
+auit
+quit
+exit
+
+
+
+
+Connection to 192.168.122.139 closed by remote host.
+Connection to 192.168.122.139 closed.
+sergey@uchuwi:~$ ssh sergey@192.168.122.139
+sergey@192.168.122.139's password: 
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/sergey: No such file or directory
+sergey@ubuntulvm:/$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                           11:0    1 1024M  0 rom   
+vda                          253:0    0   25G  0 disk  
+├─vda1                       253:1    0    1G  0 part  /boot/efi
+├─vda2                       253:2    0    2G  0 part  /boot
+└─vda3                       253:3    0 21,9G  0 part  
+  └─ubuntu--vg-ubuntu--lv    252:1    0   11G  0 lvm   
+vdb                          253:16   0   10G  0 disk  
+├─ubuntu--vg-ubuntu--lv--new 252:0    0    8G  0 lvm   /
+└─ubuntu--vg-ubuntu--home    252:2    0    1G  0 lvm   /home
+vdc                          253:32   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdd                          253:48   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdf                          253:80   0   10G  0 disk  
+├─vdf1                       253:81   0   10G  0 part  
+└─vdf9                       253:89   0    8M  0 part  
+vdg                          253:96   0   10G  0 disk  
+├─vdg1                       253:97   0   10G  0 part  
+└─vdg9                       253:105  0    8M  0 part  
+sergey@ubuntulvm:/$ sudo zpool status -v
+[sudo: authenticate] Password:          
+  pool: optpool
+ state: SUSPENDED
+status: One or more devices are faulted in response to IO failures.
+action: Make sure the affected devices are connected, then run 'zpool clear'.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-HC
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vde1      ONLINE       3     0     0
+	cache
+	  vde2      ONLINE       0     0     0
+
+errors: List of errors unavailable: pool I/O is currently suspended
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+	    vdg     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ ls -la /opt/01
+^C^[[A
+^C
+Read from remote host 192.168.122.139: Connection reset by peer
+Connection to 192.168.122.139 closed.
+client_loop: send disconnect: Broken pipe
+sergey@uchuwi:~$ 
+sergey@uchuwi:~$ ssh sergey@192.168.122.139
+sergey@192.168.122.139's password: 
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/sergey: No such file or directory
+sergey@ubuntulvm:/$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                           11:0    1 1024M  0 rom   
+vda                          253:0    0   25G  0 disk  
+├─vda1                       253:1    0    1G  0 part  /boot/efi
+├─vda2                       253:2    0    2G  0 part  /boot
+└─vda3                       253:3    0 21,9G  0 part  
+  └─ubuntu--vg-ubuntu--lv    252:1    0   11G  0 lvm   
+vdb                          253:16   0   10G  0 disk  
+├─ubuntu--vg-ubuntu--lv--new 252:0    0    8G  0 lvm   /
+└─ubuntu--vg-ubuntu--home    252:2    0    1G  0 lvm   /home
+vdc                          253:32   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdd                          253:48   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vde                          253:64   0   10G  0 disk  
+├─vde1                       253:65   0   10G  0 part  
+└─vde9                       253:73   0    8M  0 part  
+vdf                          253:80   0   10G  0 disk  
+├─vdf1                       253:81   0   10G  0 part  
+└─vdf9                       253:89   0    8M  0 part  
+sergey@ubuntulvm:/$ sudo zpool status -v
+[sudo: authenticate] Password:          
+no pools available
+sergey@ubuntulvm:/$ sudo zfs list
+no datasets available
+sergey@ubuntulvm:/$ sudo zfs import
+unrecognized command 'import'
+usage: zfs command args ...
+where 'command' is one of the following:
+
+	version [-j]
+
+	create [-Pnpuv] [-o property=value] ... <filesystem>
+	create [-Pnpsv] [-b blocksize] [-o property=value] ... -V <size> <volume>
+	destroy [-fnpRrv] <filesystem|volume>
+	destroy [-dnpRrv] <filesystem|volume>@<snap>[%<snap>][,...]
+	destroy <filesystem|volume>#<bookmark>
+
+	snapshot [-r] [-o property=value] ... <filesystem|volume>@<snap> ...
+	rollback [-rRf] <snapshot>
+	clone [-pu] [-o property=value] ... <snapshot> <filesystem|volume>
+	promote <clone-filesystem>
+	rename [-f] <filesystem|volume|snapshot> <filesystem|volume|snapshot>
+	rename -p [-f] <filesystem|volume> <filesystem|volume>
+	rename -u [-f] <filesystem> <filesystem>
+	rename -r <snapshot> <snapshot>
+	bookmark <snapshot|bookmark> <newbookmark>
+	diff [-FHth] <snapshot> [snapshot|filesystem]
+
+	list [-Hp] [-j [--json-int]] [-r|-d max] [-o property[,...]] [-s property]...
+	    [-S property]... [-t type[,...]] [filesystem|volume|snapshot] ...
+
+	set [-u] <property=value> ... <filesystem|volume|snapshot> ...
+	get [-rHp] [-j [--json-int]] [-d max] [-o "all" | field[,...]]
+	    [-t type[,...]] [-s source[,...]]
+	    <"all" | property[,...]> [filesystem|volume|snapshot|bookmark] ...
+	inherit [-rS] <property> <filesystem|volume|snapshot> ...
+	upgrade [-v]
+	upgrade [-r] [-V version] <-a | filesystem ...>
+
+	userspace [-Hinp] [-o field[,...]] [-s field] ...
+	    [-S field] ... [-t type[,...]] <filesystem|snapshot|path>
+	groupspace [-Hinp] [-o field[,...]] [-s field] ...
+	    [-S field] ... [-t type[,...]] <filesystem|snapshot|path>
+	projectspace [-Hp] [-o field[,...]] [-s field] ... 
+	    [-S field] ... <filesystem|snapshot|path>
+
+	project [-d|-r] <directory|file ...>
+	project -c [-0] [-d|-r] [-p id] <directory|file ...>
+	project -C [-k] [-r] <directory ...>
+	project [-p id] [-r] [-s] <directory ...>
+
+	mount [-j]
+	mount [-flvO] [-o opts] <-a|-R filesystem|filesystem>
+	unmount [-fu] <-a | filesystem|mountpoint>
+	share [-l] <-a [nfs|smb] | filesystem>
+	unshare <-a [nfs|smb] | filesystem|mountpoint>
+
+	send [-DLPbcehnpsVvw] [-i|-I snapshot]
+	     [-R [-X dataset[,dataset]...]]     <snapshot>
+	send [-DnVvPLecw] [-i snapshot|bookmark] <filesystem|volume|snapshot>
+	send [-DnPpVvLec] [-i bookmark|snapshot] --redact <bookmark> <snapshot>
+	send [-nVvPe] -t <receive_resume_token>
+	send [-PnVv] --saved filesystem
+	receive [-vMnsFhu] [-o <property>=<value>] ... [-x <property>] ...
+	    <filesystem|volume|snapshot>
+	receive [-vMnsFhu] [-o <property>=<value>] ... [-x <property>] ... 
+	    [-d | -e] <filesystem>
+	receive -A <filesystem|volume>
+	redact <snapshot> <bookmark> <redaction_snapshot> ...
+
+	allow <filesystem|volume>
+	allow [-ldug] <"everyone"|user|group>[,...] <perm|@setname>[,...]
+	    <filesystem|volume>
+	allow [-ld] -e <perm|@setname>[,...] <filesystem|volume>
+	allow -c <perm|@setname>[,...] <filesystem|volume>
+	allow -s @setname <perm|@setname>[,...] <filesystem|volume>
+	unallow [-rldug] <"everyone"|user|group>[,...]
+	    [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-rld] -e [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-r] -c [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-r] -s @setname [<perm|@setname>[,...]] <filesystem|volume>
+
+	hold [-r] <tag> <snapshot> ...
+	holds [-rHp] <snapshot> ...
+	release [-r] <tag> <snapshot> ...
+
+	load-key [-rn] [-L <keylocation>] <-a | filesystem|volume>
+	unload-key [-r] <-a | filesystem|volume>
+	change-key [-l] [-o keyformat=<value>]
+	    [-o keylocation=<value>] [-o pbkdf2iters=<value>]
+	    <filesystem|volume>
+	change-key -i [-l] <filesystem|volume>
+
+	program [-jn] [-t <instruction limit>] [-m <memory limit (b)>]
+	    <pool> <program file> [lua args...]
+	rewrite [-Prvx] [-o <offset>] [-l <length>] <directory|file ...>
+	wait [-t <activity>] <filesystem>
+
+	zone <nsfile> <filesystem>
+	unzone <nsfile> <filesystem>
+
+Each dataset is of the form: pool/[dataset/]*dataset[@name]
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+
+For further help on a command or topic, run: zfs help [<topic>]
+sergey@ubuntulvm:/$ sudo zfs import -f
+unrecognized command 'import'
+usage: zfs command args ...
+where 'command' is one of the following:
+
+	version [-j]
+
+	create [-Pnpuv] [-o property=value] ... <filesystem>
+	create [-Pnpsv] [-b blocksize] [-o property=value] ... -V <size> <volume>
+	destroy [-fnpRrv] <filesystem|volume>
+	destroy [-dnpRrv] <filesystem|volume>@<snap>[%<snap>][,...]
+	destroy <filesystem|volume>#<bookmark>
+
+	snapshot [-r] [-o property=value] ... <filesystem|volume>@<snap> ...
+	rollback [-rRf] <snapshot>
+	clone [-pu] [-o property=value] ... <snapshot> <filesystem|volume>
+	promote <clone-filesystem>
+	rename [-f] <filesystem|volume|snapshot> <filesystem|volume|snapshot>
+	rename -p [-f] <filesystem|volume> <filesystem|volume>
+	rename -u [-f] <filesystem> <filesystem>
+	rename -r <snapshot> <snapshot>
+	bookmark <snapshot|bookmark> <newbookmark>
+	diff [-FHth] <snapshot> [snapshot|filesystem]
+
+	list [-Hp] [-j [--json-int]] [-r|-d max] [-o property[,...]] [-s property]...
+	    [-S property]... [-t type[,...]] [filesystem|volume|snapshot] ...
+
+	set [-u] <property=value> ... <filesystem|volume|snapshot> ...
+	get [-rHp] [-j [--json-int]] [-d max] [-o "all" | field[,...]]
+	    [-t type[,...]] [-s source[,...]]
+	    <"all" | property[,...]> [filesystem|volume|snapshot|bookmark] ...
+	inherit [-rS] <property> <filesystem|volume|snapshot> ...
+	upgrade [-v]
+	upgrade [-r] [-V version] <-a | filesystem ...>
+
+	userspace [-Hinp] [-o field[,...]] [-s field] ...
+	    [-S field] ... [-t type[,...]] <filesystem|snapshot|path>
+	groupspace [-Hinp] [-o field[,...]] [-s field] ...
+	    [-S field] ... [-t type[,...]] <filesystem|snapshot|path>
+	projectspace [-Hp] [-o field[,...]] [-s field] ... 
+	    [-S field] ... <filesystem|snapshot|path>
+
+	project [-d|-r] <directory|file ...>
+	project -c [-0] [-d|-r] [-p id] <directory|file ...>
+	project -C [-k] [-r] <directory ...>
+	project [-p id] [-r] [-s] <directory ...>
+
+	mount [-j]
+	mount [-flvO] [-o opts] <-a|-R filesystem|filesystem>
+	unmount [-fu] <-a | filesystem|mountpoint>
+	share [-l] <-a [nfs|smb] | filesystem>
+	unshare <-a [nfs|smb] | filesystem|mountpoint>
+
+	send [-DLPbcehnpsVvw] [-i|-I snapshot]
+	     [-R [-X dataset[,dataset]...]]     <snapshot>
+	send [-DnVvPLecw] [-i snapshot|bookmark] <filesystem|volume|snapshot>
+	send [-DnPpVvLec] [-i bookmark|snapshot] --redact <bookmark> <snapshot>
+	send [-nVvPe] -t <receive_resume_token>
+	send [-PnVv] --saved filesystem
+	receive [-vMnsFhu] [-o <property>=<value>] ... [-x <property>] ...
+	    <filesystem|volume|snapshot>
+	receive [-vMnsFhu] [-o <property>=<value>] ... [-x <property>] ... 
+	    [-d | -e] <filesystem>
+	receive -A <filesystem|volume>
+	redact <snapshot> <bookmark> <redaction_snapshot> ...
+
+	allow <filesystem|volume>
+	allow [-ldug] <"everyone"|user|group>[,...] <perm|@setname>[,...]
+	    <filesystem|volume>
+	allow [-ld] -e <perm|@setname>[,...] <filesystem|volume>
+	allow -c <perm|@setname>[,...] <filesystem|volume>
+	allow -s @setname <perm|@setname>[,...] <filesystem|volume>
+	unallow [-rldug] <"everyone"|user|group>[,...]
+	    [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-rld] -e [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-r] -c [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-r] -s @setname [<perm|@setname>[,...]] <filesystem|volume>
+
+	hold [-r] <tag> <snapshot> ...
+	holds [-rHp] <snapshot> ...
+	release [-r] <tag> <snapshot> ...
+
+	load-key [-rn] [-L <keylocation>] <-a | filesystem|volume>
+	unload-key [-r] <-a | filesystem|volume>
+	change-key [-l] [-o keyformat=<value>]
+	    [-o keylocation=<value>] [-o pbkdf2iters=<value>]
+	    <filesystem|volume>
+	change-key -i [-l] <filesystem|volume>
+
+	program [-jn] [-t <instruction limit>] [-m <memory limit (b)>]
+	    <pool> <program file> [lua args...]
+	rewrite [-Prvx] [-o <offset>] [-l <length>] <directory|file ...>
+	wait [-t <activity>] <filesystem>
+
+	zone <nsfile> <filesystem>
+	unzone <nsfile> <filesystem>
+
+Each dataset is of the form: pool/[dataset/]*dataset[@name]
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+
+For further help on a command or topic, run: zfs help [<topic>]
+sergey@ubuntulvm:/$ sudo zfs import zfspool
+unrecognized command 'import'
+usage: zfs command args ...
+where 'command' is one of the following:
+
+	version [-j]
+
+	create [-Pnpuv] [-o property=value] ... <filesystem>
+	create [-Pnpsv] [-b blocksize] [-o property=value] ... -V <size> <volume>
+	destroy [-fnpRrv] <filesystem|volume>
+	destroy [-dnpRrv] <filesystem|volume>@<snap>[%<snap>][,...]
+	destroy <filesystem|volume>#<bookmark>
+
+	snapshot [-r] [-o property=value] ... <filesystem|volume>@<snap> ...
+	rollback [-rRf] <snapshot>
+	clone [-pu] [-o property=value] ... <snapshot> <filesystem|volume>
+	promote <clone-filesystem>
+	rename [-f] <filesystem|volume|snapshot> <filesystem|volume|snapshot>
+	rename -p [-f] <filesystem|volume> <filesystem|volume>
+	rename -u [-f] <filesystem> <filesystem>
+	rename -r <snapshot> <snapshot>
+	bookmark <snapshot|bookmark> <newbookmark>
+	diff [-FHth] <snapshot> [snapshot|filesystem]
+
+	list [-Hp] [-j [--json-int]] [-r|-d max] [-o property[,...]] [-s property]...
+	    [-S property]... [-t type[,...]] [filesystem|volume|snapshot] ...
+
+	set [-u] <property=value> ... <filesystem|volume|snapshot> ...
+	get [-rHp] [-j [--json-int]] [-d max] [-o "all" | field[,...]]
+	    [-t type[,...]] [-s source[,...]]
+	    <"all" | property[,...]> [filesystem|volume|snapshot|bookmark] ...
+	inherit [-rS] <property> <filesystem|volume|snapshot> ...
+	upgrade [-v]
+	upgrade [-r] [-V version] <-a | filesystem ...>
+
+	userspace [-Hinp] [-o field[,...]] [-s field] ...
+	    [-S field] ... [-t type[,...]] <filesystem|snapshot|path>
+	groupspace [-Hinp] [-o field[,...]] [-s field] ...
+	    [-S field] ... [-t type[,...]] <filesystem|snapshot|path>
+	projectspace [-Hp] [-o field[,...]] [-s field] ... 
+	    [-S field] ... <filesystem|snapshot|path>
+
+	project [-d|-r] <directory|file ...>
+	project -c [-0] [-d|-r] [-p id] <directory|file ...>
+	project -C [-k] [-r] <directory ...>
+	project [-p id] [-r] [-s] <directory ...>
+
+	mount [-j]
+	mount [-flvO] [-o opts] <-a|-R filesystem|filesystem>
+	unmount [-fu] <-a | filesystem|mountpoint>
+	share [-l] <-a [nfs|smb] | filesystem>
+	unshare <-a [nfs|smb] | filesystem|mountpoint>
+
+	send [-DLPbcehnpsVvw] [-i|-I snapshot]
+	     [-R [-X dataset[,dataset]...]]     <snapshot>
+	send [-DnVvPLecw] [-i snapshot|bookmark] <filesystem|volume|snapshot>
+	send [-DnPpVvLec] [-i bookmark|snapshot] --redact <bookmark> <snapshot>
+	send [-nVvPe] -t <receive_resume_token>
+	send [-PnVv] --saved filesystem
+	receive [-vMnsFhu] [-o <property>=<value>] ... [-x <property>] ...
+	    <filesystem|volume|snapshot>
+	receive [-vMnsFhu] [-o <property>=<value>] ... [-x <property>] ... 
+	    [-d | -e] <filesystem>
+	receive -A <filesystem|volume>
+	redact <snapshot> <bookmark> <redaction_snapshot> ...
+
+	allow <filesystem|volume>
+	allow [-ldug] <"everyone"|user|group>[,...] <perm|@setname>[,...]
+	    <filesystem|volume>
+	allow [-ld] -e <perm|@setname>[,...] <filesystem|volume>
+	allow -c <perm|@setname>[,...] <filesystem|volume>
+	allow -s @setname <perm|@setname>[,...] <filesystem|volume>
+	unallow [-rldug] <"everyone"|user|group>[,...]
+	    [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-rld] -e [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-r] -c [<perm|@setname>[,...]] <filesystem|volume>
+	unallow [-r] -s @setname [<perm|@setname>[,...]] <filesystem|volume>
+
+	hold [-r] <tag> <snapshot> ...
+	holds [-rHp] <snapshot> ...
+	release [-r] <tag> <snapshot> ...
+
+	load-key [-rn] [-L <keylocation>] <-a | filesystem|volume>
+	unload-key [-r] <-a | filesystem|volume>
+	change-key [-l] [-o keyformat=<value>]
+	    [-o keylocation=<value>] [-o pbkdf2iters=<value>]
+	    <filesystem|volume>
+	change-key -i [-l] <filesystem|volume>
+
+	program [-jn] [-t <instruction limit>] [-m <memory limit (b)>]
+	    <pool> <program file> [lua args...]
+	rewrite [-Prvx] [-o <offset>] [-l <length>] <directory|file ...>
+	wait [-t <activity>] <filesystem>
+
+	zone <nsfile> <filesystem>
+	unzone <nsfile> <filesystem>
+
+Each dataset is of the form: pool/[dataset/]*dataset[@name]
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+
+For further help on a command or topic, run: zfs help [<topic>]
+sergey@ubuntulvm:/$ sudo zfs allow
+Usage: 	allow <filesystem|volume>
+	allow [-ldug] <"everyone"|user|group>[,...] <perm|@setname>[,...]
+	    <filesystem|volume>
+	allow [-ld] -e <perm|@setname>[,...] <filesystem|volume>
+	allow -c <perm|@setname>[,...] <filesystem|volume>
+	allow -s @setname <perm|@setname>[,...] <filesystem|volume>
+
+Options:
+  -h          show this help message and exit
+  -l          set permission locally
+  -d          set permission for descents
+  -u          set permission for user
+  -g          set permission for group
+  -e          set permission for everyone
+  -c          set create time permission
+  -s          define permission set
+
+The following permissions are supported:
+
+NAME             TYPE          	NOTES
+allow            subcommand    	Must also have the permission that is being
+				allowed
+clone            subcommand    	Must also have the 'create' ability and 'mount'
+				ability in the origin file system
+create           subcommand    	Must also have the 'mount' ability
+destroy          subcommand    	Must also have the 'mount' ability
+diff             subcommand    	Allows lookup of paths within a dataset;
+				given an object number. Ordinary users need this
+				in order to use zfs diff
+hold             subcommand    	Allows adding a user hold to a snapshot
+mount            subcommand    	Allows mount/umount of ZFS datasets
+promote          subcommand    	Must also have the 'mount'
+				and 'promote' ability in the origin file system
+receive          subcommand    	Must also have the 'mount' and 'create' ability
+release          subcommand    	Allows releasing a user hold which
+				might destroy the snapshot
+rename           subcommand    	Must also have the 'mount' and 'create'
+				ability in the new parent
+rollback         subcommand    	
+send             subcommand    	
+send:raw         subcommand    	Allow sending ONLY encrypted (raw) replication
+				streams
+share            subcommand    	Allows sharing file systems over NFS or SMB
+				protocols
+snapshot         subcommand    	
+bookmark         subcommand    	
+load-key         subcommand    	Allows loading or unloading an encryption key
+change-key       subcommand    	Allows changing or adding an encryption key
+groupquota       other         	Allows accessing any groupquota@... property
+groupused        other         	Allows reading any groupused@... property
+userprop         other         	Allows changing any user property
+userquota        other         	Allows accessing any userquota@... property
+userused         other         	Allows reading any userused@... property
+userobjquota     other         	Allows accessing any userobjquota@... property
+userobjused      other         	Allows reading any userobjused@... property
+groupobjquota    other         	Allows accessing any 
+				groupobjquota@... property
+groupobjused     other         	Allows reading any groupobjused@... property
+projectused      other         	Allows reading any projectused@... property
+projectquota     other         	Allows accessing any projectquota@... property
+projectobjused   other         	Allows accessing any 
+				projectobjused@... property
+projectobjquota  other         	Allows accessing any 
+				projectobjquota@... property
+aclinherit       property      	
+aclmode          property      	
+acltype          property      	
+atime            property      	
+canmount         property      	
+casesensitivity  property      	
+checksum         property      	
+compression      property      	
+context          property      	
+copies           property      	
+dedup            property      	
+defaultgroupobjquota property      	
+defaultgroupquota property      	
+defaultprojectobjquota property      	
+defaultprojectquota property      	
+defaultuserobjquota property      	
+defaultuserquota property      	
+defcontext       property      	
+devices          property      	
+direct           property      	
+dnodesize        property      	
+encryption       property      	
+exec             property      	
+filesystem_limit property      	
+fscontext        property      	
+keyformat        property      	
+keylocation      property      	
+logbias          property      	
+longname         property      	
+mlslabel         property      	
+mountpoint       property      	
+nbmand           property      	
+normalization    property      	
+overlay          property      	
+pbkdf2iters      property      	
+prefetch         property      	
+primarycache     property      	
+quota            property      	
+readonly         property      	
+recordsize       property      	
+redundant_metadata property      	
+refquota         property      	
+refreservation   property      	
+relatime         property      	
+reservation      property      	
+rootcontext      property      	
+secondarycache   property      	
+setuid           property      	
+sharenfs         property      	
+sharesmb         property      	
+snapdev          property      	
+snapdir          property      	
+snapshot_limit   property      	
+special_small_blocks property      	
+sync             property      	
+utf8only         property      	
+version          property      	
+volblocksize     property      	
+volmode          property      	
+volsize          property      	
+volthreading     property      	
+vscan            property      	
+xattr            property      	
+zoned            property      	
+
+zfs: error: wrong number of parameters
+sergey@ubuntulvm:/$ sudo zpool list
+no pools available
+sergey@ubuntulvm:/$ sudo zpool import
+  pool: zfspool
+    id: 16457770469744854076
+ state: ONLINE
+action: The pool can be imported using its name or numeric identifier.
+config:
+
+	zfspool     ONLINE
+	  mirror-0  ONLINE
+	    vde     ONLINE
+	    vdf     ONLINE
+sergey@ubuntulvm:/$ sudo zpool list
+no pools available
+sergey@ubuntulvm:/$ sudo zpool import zfspool
+sergey@ubuntulvm:/$ sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+zfspool  9.50G  40.1M  9.46G        -         -     0%     0%  1.00x    ONLINE  -
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ дыидл
+Could not find command-not-found database. Run 'sudo apt update' to populate it.
+дыидл: command not found
+sergey@ubuntulvm:/$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                           11:0    1 1024M  0 rom   
+vda                          253:0    0   25G  0 disk  
+├─vda1                       253:1    0    1G  0 part  /boot/efi
+├─vda2                       253:2    0    2G  0 part  /boot
+└─vda3                       253:3    0 21,9G  0 part  
+  └─ubuntu--vg-ubuntu--lv    252:1    0   11G  0 lvm   
+vdb                          253:16   0   10G  0 disk  
+├─ubuntu--vg-ubuntu--lv--new 252:0    0    8G  0 lvm   /
+└─ubuntu--vg-ubuntu--home    252:2    0    1G  0 lvm   /home
+vdc                          253:32   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vdd                          253:48   0   10G  0 disk  
+└─md0                          9:0    0   10G  0 raid1 
+  └─ubuntu--vg-ubuntu--var   252:3    0    5G  0 lvm   /var
+vde                          253:64   0   10G  0 disk  
+├─vde1                       253:65   0   10G  0 part  
+└─vde9                       253:73   0    8M  0 part  
+vdf                          253:80   0   10G  0 disk  
+├─vdf1                       253:81   0   10G  0 part  
+└─vdf9                       253:89   0    8M  0 part  
+vdg                          253:96   0   10G  0 disk  
+├─vdg1                       253:97   0    9G  0 part  
+└─vdg2                       253:98   0 1022M  0 part  
+sergey@ubuntulvm:/$ sudo zpool import
+  pool: optpool
+    id: 17245298597891116593
+ state: ONLINE
+status: One or more devices contains corrupted data.
+action: The pool can be imported using its name or numeric identifier.
+   see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+config:
+
+	optpool     ONLINE
+	  vdg1      ONLINE
+	cache
+	  vdg2
+sergey@ubuntulvm:/$ sudo zpool import optpool
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vdg1      ONLINE       0     0     0
+	cache
+	  vdg2      ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vde     ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ ls -la /opt/01
+total 1176
+drwxr-xr-x 9 root    root                 23 Jul 19 08:34 .
+drwxr-xr-x 3 root    root                  3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/$ sudoi zfs list
+Could not find command-not-found database. Run 'sudo apt update' to populate it.
+sudoi: command not found
+sergey@ubuntulvm:/$ sudo zfs list
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+optpool     7.60M  8.23G    24K  /opt
+optpool/01  7.43M  8.23G  7.43M  /opt/01
+zfspool      198M  9.16G    25K  /zfspool
+zfspool/01  39.6M  9.16G  39.6M  /zfspool/01
+zfspool/02  39.6M  9.16G  39.6M  /zfspool/02
+zfspool/03  39.6M  9.16G  39.6M  /zfspool/03
+zfspool/04  39.6M  9.16G  39.6M  /zfspool/04
+zfspool/05  39.6M  9.16G  39.6M  /zfspool/05
+sergey@ubuntulvm:/$ sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+optpool  8.50G  7.60M  8.49G        -         -     0%     0%  1.00x    ONLINE  -
+zfspool  9.50G  40.1M  9.46G        -         -     0%     0%  1.00x    ONLINE  -
+sergey@ubuntulvm:/$ sudo zpool status -v
+  pool: optpool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	optpool     ONLINE       0     0     0
+	  vdg1      ONLINE       0     0     0
+	cache
+	  vdg2      ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: zfspool
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfspool     ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    vde     ONLINE       0     0     0
+	    vdf     ONLINE       0     0     0
+
+errors: No known data errors
+sergey@ubuntulvm:/$ sudo zfs get recordsize
+NAME        PROPERTY    VALUE    SOURCE
+optpool     recordsize  128K     default
+optpool/01  recordsize  128K     default
+zfspool     recordsize  128K     default
+zfspool/01  recordsize  128K     default
+zfspool/02  recordsize  128K     default
+zfspool/03  recordsize  128K     default
+zfspool/04  recordsize  128K     default
+zfspool/05  recordsize  128K     default
+sergey@ubuntulvm:/$ sudo zfs get compression 
+NAME        PROPERTY     VALUE           SOURCE
+optpool     compression  lz4             local
+optpool/01  compression  lz4             inherited from optpool
+zfspool     compression  on              default
+zfspool/01  compression  lz4             local
+zfspool/02  compression  zstd            local
+zfspool/03  compression  gzip            local
+zfspool/04  compression  zle             local
+zfspool/05  compression  off             local
+sergey@ubuntulvm:/$ sudo zfs get compresratio
+bad property list: invalid property 'compresratio'
+usage:
+	get [-rHp] [-j [--json-int]] [-d max] [-o "all" | field[,...]]
+	    [-t type[,...]] [-s source[,...]]
+	    <"all" | property[,...]> [filesystem|volume|snapshot|bookmark] ...
+
+The following properties are supported:
+
+	PROPERTY              EDIT  INHERIT   VALUES
+
+	available               NO       NO   <size>
+	clones                  NO       NO   <dataset>[,...]
+	compressratio           NO       NO   <1.00x or higher if compressed>
+	createtxg               NO       NO   <uint64>
+	creation                NO       NO   <date>
+	defer_destroy           NO       NO   yes | no
+	encryptionroot          NO       NO   <filesystem | volume>
+	filesystem_count        NO       NO   <count>
+	guid                    NO       NO   <uint64>
+	keystatus               NO       NO   none | unavailable | available
+	logicalreferenced       NO       NO   <size>
+	logicalused             NO       NO   <size>
+	mounted                 NO       NO   yes | no
+	objsetid                NO       NO   <uint64>
+	origin                  NO       NO   <snapshot>
+	receive_resume_token    NO       NO   <string token>
+	redact_snaps            NO       NO   <snapshot>[,...]
+	refcompressratio        NO       NO   <1.00x or higher if compressed>
+	referenced              NO       NO   <size>
+	snapshot_count          NO       NO   <count>
+	snapshots_changed       NO       NO   <date>
+	type                    NO       NO   filesystem | volume | snapshot | bookmark
+	used                    NO       NO   <size>
+	usedbychildren          NO       NO   <size>
+	usedbydataset           NO       NO   <size>
+	usedbyrefreservation    NO       NO   <size>
+	usedbysnapshots         NO       NO   <size>
+	userrefs                NO       NO   <count>
+	written                 NO       NO   <size>
+	aclinherit             YES      YES   discard | noallow | restricted | passthrough | passthrough-x
+	aclmode                YES      YES   discard | groupmask | passthrough | restricted
+	acltype                YES      YES   off | nfsv4 | posix
+	atime                  YES      YES   on | off
+	canmount               YES       NO   on | off | noauto
+	casesensitivity         NO      YES   sensitive | insensitive | mixed
+	checksum               YES      YES   on | off | fletcher2 | fletcher4 | sha256 | sha512 | skein | edonr | blake3
+	compression            YES      YES   on | off | lzjb | gzip | gzip-[1-9] | zle | lz4 | zstd | zstd-[1-19] | zstd-fast | zstd-fast-[1-10,20,30,40,50,60,70,80,90,100,500,1000]
+	context                YES       NO   <selinux context>
+	copies                 YES      YES   1 | 2 | 3
+	dedup                  YES      YES   on | off | verify | sha256[,verify] | sha512[,verify] | skein[,verify] | edonr,verify | blake3[,verify]
+	defaultgroupobjquota   YES       NO   <size> | none
+	defaultgroupquota      YES       NO   <size> | none
+	defaultprojectobjquota YES       NO   <size> | none
+	defaultprojectquota    YES       NO   <size> | none
+	defaultuserobjquota    YES       NO   <size> | none
+	defaultuserquota       YES       NO   <size> | none
+	defcontext             YES       NO   <selinux defcontext>
+	devices                YES      YES   on | off
+	direct                 YES      YES   disabled | standard | always
+	dnodesize              YES      YES   legacy | auto | 1k | 2k | 4k | 8k | 16k
+	encryption              NO      YES   on | off | aes-128-ccm | aes-192-ccm | aes-256-ccm | aes-128-gcm | aes-192-gcm | aes-256-gcm
+	exec                   YES      YES   on | off
+	filesystem_limit       YES       NO   <count> | none
+	fscontext              YES       NO   <selinux fscontext>
+	keyformat               NO       NO   none | raw | hex | passphrase
+	keylocation            YES       NO   prompt | <file URI> | <https URL> | <http URL>
+	logbias                YES      YES   latency | throughput
+	longname               YES      YES   on | off
+	mlslabel               YES      YES   <sensitivity label>
+	mountpoint             YES      YES   <path> | legacy | none
+	nbmand                 YES      YES   on | off
+	normalization           NO      YES   none | formC | formD | formKC | formKD
+	overlay                YES      YES   on | off
+	pbkdf2iters             NO       NO   <iters>
+	prefetch               YES      YES   none | metadata | all
+	primarycache           YES      YES   all | none | metadata
+	quota                  YES       NO   <size> | none
+	readonly               YES      YES   on | off
+	recordsize             YES      YES   512 to 16M, power of 2
+	redundant_metadata     YES      YES   all | most | some | none
+	refquota               YES       NO   <size> | none
+	refreservation         YES       NO   <size> | none
+	relatime               YES      YES   on | off
+	reservation            YES       NO   <size> | none
+	rootcontext            YES       NO   <selinux rootcontext>
+	secondarycache         YES      YES   all | none | metadata
+	setuid                 YES      YES   on | off
+	sharenfs               YES      YES   on | off | NFS share options
+	sharesmb               YES      YES   on | off | SMB share options
+	snapdev                YES      YES   hidden | visible
+	snapdir                YES      YES   disabled | hidden | visible
+	snapshot_limit         YES       NO   <count> | none
+	special_small_blocks   YES      YES   0 to 16M
+	sync                   YES      YES   standard | always | disabled
+	utf8only                NO      YES   on | off
+	version                YES       NO   1 | 2 | 3 | 4 | 5 | current
+	volblocksize            NO      YES   512 to 16M, power of 2
+	volmode                YES      YES   default | full | geom | dev | none
+	volsize                YES       NO   <size>
+	volthreading           YES       NO   on | off
+	vscan                  YES      YES   on | off
+	xattr                  YES      YES   on | off | dir | sa
+	zoned                  YES      YES   on | off
+	userused@...            NO       NO   <size>
+	groupused@...           NO       NO   <size>
+	projectused@...         NO       NO   <size>
+	userobjused@...         NO       NO   <size>
+	groupobjused@...        NO       NO   <size>
+	projectobjused@...      NO       NO   <size>
+	userquota@...          YES       NO   <size> | none
+	groupquota@...         YES       NO   <size> | none
+	projectquota@...       YES       NO   <size> | none
+	userobjquota@...       YES       NO   <size> | none
+	groupobjquota@...      YES       NO   <size> | none
+	projectobjquota@...    YES       NO   <size> | none
+	written@<snap>          NO       NO   <size>
+	written#<bookmark>      NO       NO   <size>
+
+Sizes are specified in bytes with standard units such as K, M, G, etc.
+
+User-defined properties can be specified by using a name containing a colon (:).
+
+The {user|group|project}[obj]{used|quota}@ properties must be appended with
+a user|group|project specifier of one of these forms:
+    POSIX name      (eg: "matt")
+    POSIX id        (eg: "126829")
+    SMB name@domain (eg: "matt@sun")
+    SMB SID         (eg: "S-1-234-567-89")
+sergey@ubuntulvm:/$ sudo zfs get compressratio
+NAME        PROPERTY       VALUE  SOURCE
+optpool     compressratio  3.78x  -
+optpool/01  compressratio  3.81x  -
+zfspool     compressratio  1.00x  -
+zfspool/01  compressratio  1.00x  -
+zfspool/02  compressratio  1.00x  -
+zfspool/03  compressratio  1.00x  -
+zfspool/04  compressratio  1.00x  -
+zfspool/05  compressratio  1.00x  -
+sergey@ubuntulvm:/$ sudo zfs get compression 
+NAME        PROPERTY     VALUE           SOURCE
+optpool     compression  lz4             local
+optpool/01  compression  lz4             inherited from optpool
+zfspool     compression  on              default
+zfspool/01  compression  lz4             local
+zfspool/02  compression  zstd            local
+zfspool/03  compression  gzip            local
+zfspool/04  compression  zle             local
+zfspool/05  compression  off             local
+sergey@ubuntulvm:/$ sudo zfs get recordsize
+NAME        PROPERTY    VALUE    SOURCE
+optpool     recordsize  128K     default
+optpool/01  recordsize  128K     default
+zfspool     recordsize  128K     default
+zfspool/01  recordsize  128K     default
+zfspool/02  recordsize  128K     default
+zfspool/03  recordsize  128K     default
+zfspool/04  recordsize  128K     default
+zfspool/05  recordsize  128K     default
+sergey@ubuntulvm:/$ sudo zfs get checksum
+NAME        PROPERTY  VALUE      SOURCE
+optpool     checksum  on         default
+optpool/01  checksum  on         default
+zfspool     checksum  on         default
+zfspool/01  checksum  on         default
+zfspool/02  checksum  on         default
+zfspool/03  checksum  on         default
+zfspool/04  checksum  on         default
+zfspool/05  checksum  on         default
+sergey@ubuntulvm:/$ sudo zfs snapshot optpool/01@snap1
+sergey@ubuntulvm:/$ sudo zfs list -t snapshot
+NAME               USED  AVAIL  REFER  MOUNTPOINT
+optpool/01@snap1     0B      -  7.43M  -
+sergey@ubuntulvm:/$ sudo zfs send optpool/01@snap1 | sudo zfs receive zfspool/restored_secret
+sergey@ubuntulvm:/$ sudo zfs list -t snapshot
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+optpool/01@snap1                  0B      -  7.43M  -
+zfspool/restored_secret@snap1     0B      -  7.43M  -
+sergey@ubuntulvm:/$ ls -la /zfspool/05/
+total 3896
+drwxr-xr-x 9 root    root                 23 Jul 19 08:24 .
+drwxr-xr-x 8 root    root                  8 Jul 19 09:10 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/$ ls -la /zfspool/05/kern.log 
+-rw-r----- 1 syslog adm 995918 Jul 19 08:20 /zfspool/05/kern.log
+sergey@ubuntulvm:/$ ls -la /zfspool/05/sysstat/
+total 3747
+drwxr-xr-x 2 root root     14 Jul 19 08:08 .
+drwxr-xr-x 9 root root     23 Jul 19 08:24 ..
+-rw-r--r-- 1 root root  51936 Jul 13 00:00 sa12
+-rw-r--r-- 1 root root 317812 Jul 14 00:00 sa13
+-rw-r--r-- 1 root root 317812 Jul 15 00:00 sa14
+-rw-r--r-- 1 root root 304736 Jul 16 00:00 sa15
+-rw-r--r-- 1 root root 317812 Jul 17 00:00 sa16
+-rw-r--r-- 1 root root  88492 Jul 17 06:30 sa17
+-rw-r--r-- 1 root root   5688 Jul 19 08:20 sa19
+-rw-r--r-- 1 root root    137 Jul 13 00:07 sar12
+-rw-r--r-- 1 root root 484440 Jul 14 00:07 sar13
+-rw-r--r-- 1 root root 484440 Jul 15 00:07 sar14
+-rw-r--r-- 1 root root 466011 Jul 16 00:07 sar15
+-rw-r--r-- 1 root root 484440 Jul 17 00:07 sar16
+sergey@ubuntulvm:/$ cd /zfspool/restored_secret/.zfs/snapshot/snap1/
+sergey@ubuntulvm:/zfspool/restored_secret/.zfs/snapshot/snap1$ ls -la
+total 1176
+drwxr-xr-x 9 root    root                 23 Jul 19 08:34 .
+drwxrwxrwx 3 root    root                  2 Jul 19 09:10 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/zfspool/restored_secret/.zfs/snapshot/snap1$ sudo cp kern.log /home/
+sergey@ubuntulvm:/zfspool/restored_secret/.zfs/snapshot/snap1$ cd /opt/01/
+sergey@ubuntulvm:/opt/01$ ls -la
+total 1176
+drwxr-xr-x 9 root    root                 23 Jul 19 08:34 .
+drwxr-xr-x 3 root    root                  3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/opt/01$ ls -la
+total 1176
+drwxr-xr-x 9 root    root                 23 Jul 19 08:34 .
+drwxr-xr-x 3 root    root                  3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/opt/01$ sudo rm -f kern.log 
+sergey@ubuntulvm:/opt/01$ sudo rm -f auth.log 
+sergey@ubuntulvm:/opt/01$ ls -la
+total 886
+drwxr-xr-x 9 root    root                 21 Jul 19 09:17 .
+drwxr-xr-x 3 root    root                  3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/opt/01$ sudo rm -f syslog 
+sergey@ubuntulvm:/opt/01$ ls -la
+total 160
+drwxr-xr-x 9 root    root               20 Jul 19 09:17 .
+drwxr-xr-x 3 root    root                3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root               39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root              387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                 0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                5 Jul 15 06:26 apt
+drwxr-x--- 2 _chrony _chrony             2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm             87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm             85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm             20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm             20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm             20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm             20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root            51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal     3 Jul 12 20:17 journal
+drwxr-xr-x 2 root    root                3 Jul 12 20:18 landscape
+drwx------ 2 root    root                2 Jul 12 20:17 private
+drwxr-xr-x 2 root    root               14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/opt/01$ cd
+-bash: cd: /home/sergey: No such file or directory
+sergey@ubuntulvm:/opt/01$ cd /home/
+sergey@ubuntulvm:/home$ sudo zfs list -t snapshot 
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+optpool/01@snap1               1.02M      -  7.43M  -
+zfspool/restored_secret@snap1     0B      -  7.43M  -
+sergey@ubuntulvm:/home$ sudo zfs rollback zfspool/restored_secret@snap1 
+sergey@ubuntulvm:/home$ sudo zfs list -t snapshot 
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+optpool/01@snap1               1.02M      -  7.43M  -
+zfspool/restored_secret@snap1     0B      -  7.43M  -
+sergey@ubuntulvm:/home$ cd /opt/01/
+sergey@ubuntulvm:/opt/01$ ls -la
+total 160
+drwxr-xr-x 9 root    root               20 Jul 19 09:17 .
+drwxr-xr-x 3 root    root                3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root               39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root              387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                 0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                5 Jul 15 06:26 apt
+drwxr-x--- 2 _chrony _chrony             2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm             87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm             85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm             20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm             20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm             20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm             20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root            51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal     3 Jul 12 20:17 journal
+drwxr-xr-x 2 root    root                3 Jul 12 20:18 landscape
+drwx------ 2 root    root                2 Jul 12 20:17 private
+drwxr-xr-x 2 root    root               14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/opt/01$ sudo zfs rollback optpool/01@snap1
+sergey@ubuntulvm:/opt/01$ ls -la
+total 1176
+drwxr-xr-x 9 root    root                 23 Jul 19 08:34 .
+drwxr-xr-x 3 root    root                  3 Jul 19 08:18 ..
+lrwxrwxrwx 1 root    root                 39 Jul 12 20:17 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r-- 1 root    root                387 Jul 12 21:49 alternatives.log
+-rw-r----- 1 root    adm                   0 Jul 12 20:17 apport.log
+drwxr-xr-x 2 root    root                  5 Jul 15 06:26 apt
+-rw-r----- 1 syslog  adm              129336 Jul 19 08:24 auth.log
+drwxr-x--- 2 _chrony _chrony               2 Jul 12 20:17 chrony
+-rw-r----- 1 root    adm               87010 Jul 19 08:08 dmesg
+-rw-r----- 1 root    adm               85899 Jul 15 19:09 dmesg.0
+-rw-r----- 1 root    adm               20636 Jul 12 21:38 dmesg.1.gz
+-rw-r----- 1 root    adm               20680 Jul 12 21:33 dmesg.2.gz
+-rw-r----- 1 root    adm               20661 Jul 12 21:20 dmesg.3.gz
+-rw-r----- 1 root    adm               20572 Jul 12 20:54 dmesg.4.gz
+-rw-r--r-- 1 root    root              51815 Jul 15 06:26 dpkg.log
+drwxr-sr-x 3 root    systemd-journal       3 Jul 12 20:17 journal
+-rw-r----- 1 syslog  adm              995918 Jul 19 08:20 kern.log
+drwxr-xr-x 2 root    root                  3 Jul 12 20:18 landscape
+drwx------ 2 root    root                  2 Jul 12 20:17 private
+-rw-r----- 1 syslog  adm             2424881 Jul 19 08:24 syslog
+drwxr-xr-x 2 root    root                 14 Jul 19 08:08 sysstat
+-rw-r--r-- 1 root    root                  0 Jul 12 21:49 ubuntu-advantage-apt-hook.log
+drwxr-xr-x 2 root    root                  5 Jul 13 06:43 unattended-upgrades
+sergey@ubuntulvm:/opt/01$ 
+
+
