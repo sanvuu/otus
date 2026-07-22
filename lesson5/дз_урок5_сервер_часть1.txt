@@ -1,0 +1,1354 @@
+ssh 192.168.122.133
+The authenticity of host '192.168.122.133 (192.168.122.133)' can't be established.
+ED25519 key fingerprint is: SHA256:1pvX7B+eP0HJTpI9X91NCy6tXXuvlzK6yKnOkmAKcbI
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.122.133' (ED25519) to the list of known hosts.
+sergey@192.168.122.133's password: 
+Welcome to Ubuntu 26.04 LTS (GNU/Linux 7.0.0-28-generic x86_64)
+
+ * Documentation:  https://docs.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+This system has been minimized by removing packages and content that are
+not required on a system that users do not log into.
+
+To restore this content, you can run the 'unminimize' command.
+sergey@ubuntu51:~$ lsblk
+NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sr0                        11:0    1 1024M  1 rom  
+vda                       253:0    0   50G  0 disk 
+├─vda1                    253:1    0    1G  0 part /boot/efi
+├─vda2                    253:2    0    2G  0 part /boot
+└─vda3                    253:3    0 46.9G  0 part 
+  └─ubuntu--vg-ubuntu--lv 252:0    0 23.5G  0 lvm  /
+sergey@ubuntu51:~$ sudo apt install nfs-common
+[sudo: authenticate] Password:         
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  nfs-common
+
+Installing dependencies:
+  keyutils  libevent-core-2.1-7t64  libnfsidmap1  rpcbind
+
+Suggested packages:
+  watchdog
+
+Summary:
+  Upgrading: 0, Installing: 5, Removing: 0, Not Upgrading: 6
+  Download size: 493 kB
+  Space needed: 1680 kB / 16.4 GB available
+
+Continue? [Y/n] y
+0% [Waiting for headers]^C
+sergey@ubuntu51:~$ sudo apt install nfs-common
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  nfs-common
+
+Installing dependencies:
+  keyutils  libevent-core-2.1-7t64  libnfsidmap1  rpcbind
+
+Suggested packages:
+  watchdog
+
+Summary:
+  Upgrading: 0, Installing: 5, Removing: 0, Not Upgrading: 6
+  Download size: 493 kB
+  Space needed: 1680 kB / 16.4 GB available
+
+Continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 libevent-core-2.1-7t64 amd64 2.1.12-stable-10build2 [93.1 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 libnfsidmap1 amd64 1:2.8.5-1ubuntu1 [51.4 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 rpcbind amd64 1.2.7-1build2 [47.6 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 keyutils amd64 1.6.3-6ubuntu3 [56.8 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 nfs-common amd64 1:2.8.5-1ubuntu1 [244 kB]
+Fetched 493 kB in 0s (2852 kB/s)     
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 5.)
+debconf: falling back to frontend: Readline
+Selecting previously unselected package libevent-core-2.1-7t64:amd64.
+(Reading database ... 126750 files and directories currently installed.)
+Preparing to unpack .../libevent-core-2.1-7t64_2.1.12-stable-10build2_amd64.deb ...
+Unpacking libevent-core-2.1-7t64:amd64 (2.1.12-stable-10build2) ...
+Selecting previously unselected package libnfsidmap1:amd64.
+Preparing to unpack .../libnfsidmap1_1%3a2.8.5-1ubuntu1_amd64.deb ...
+Unpacking libnfsidmap1:amd64 (1:2.8.5-1ubuntu1) ...
+Selecting previously unselected package rpcbind.
+Preparing to unpack .../rpcbind_1.2.7-1build2_amd64.deb ...
+Unpacking rpcbind (1.2.7-1build2) ...
+Selecting previously unselected package keyutils.
+Preparing to unpack .../keyutils_1.6.3-6ubuntu3_amd64.deb ...
+Unpacking keyutils (1.6.3-6ubuntu3) ...
+Selecting previously unselected package nfs-common.
+Preparing to unpack .../nfs-common_1%3a2.8.5-1ubuntu1_amd64.deb ...
+Unpacking nfs-common (1:2.8.5-1ubuntu1) ...
+Setting up libnfsidmap1:amd64 (1:2.8.5-1ubuntu1) ...
+Setting up rpcbind (1.2.7-1build2) ...
+Created symlink '/etc/systemd/system/multi-user.target.wants/rpcbind.service' → '/usr/lib/systemd/system/rpcbind.service'.
+Created symlink '/etc/systemd/system/sockets.target.wants/rpcbind.socket' → '/usr/lib/systemd/system/rpcbind.socket'.
+Setting up keyutils (1.6.3-6ubuntu3) ...
+Setting up libevent-core-2.1-7t64:amd64 (2.1.12-stable-10build2) ...
+Setting up nfs-common (1:2.8.5-1ubuntu1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/idmapd.conf with new version
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/nfs.conf with new version
+Created symlink '/etc/systemd/system/multi-user.target.wants/nfs-client.target' → '/usr/lib/systemd/system/nfs-client.target'.
+Created symlink '/etc/systemd/system/remote-fs.target.wants/nfs-client.target' → '/usr/lib/systemd/system/nfs-client.target'.
+auth-rpcgss-module.service is a disabled or a static unit, not starting it.
+nfs-idmapd.service is a disabled or a static unit, not starting it.
+nfs-utils.service is a disabled or a static unit, not starting it.
+proc-fs-nfsd.mount is a disabled or a static unit, not starting it.
+rpc-gssd.service is a disabled or a static unit, not starting it.
+rpc-statd-notify.service is a disabled or a static unit, not starting it.
+rpc-statd.service is a disabled or a static unit, not starting it.
+rpc-svcgssd.service is a disabled or a static unit, not starting it.
+Processing triggers for libc-bin (2.43-2ubuntu2) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ sudo mkdir -p /mnt/nfs_share
+sergey@ubuntu51:~$ sudo ls -la /mnt/nfs_share/
+total 8
+drwxr-xr-x 2 root root 4096 Jul 22 20:50 .
+drwxr-xr-x 3 root root 4096 Jul 22 20:50 ..
+sergey@ubuntu51:~$ sudo ls -la /mnt/
+total 12
+drwxr-xr-x  3 root root 4096 Jul 22 20:50 .
+drwxr-xr-x 20 root root 4096 Jul 22 20:28 ..
+drwxr-xr-x  2 root root 4096 Jul 22 20:50 nfs_share
+sergey@ubuntu51:~$ sudo mount 192.168.88.139:/mnt/nfs_share/ /mnt/nfs_share/
+^C
+sergey@ubuntu51:~$ sudo mount 192.168.88.139:/mnt/nfs_share/ /mnt/nfs_share/
+mount.nfs: No route to host for 192.168.88.139:/mnt/nfs_share/ on /mnt/nfs_share
+sergey@ubuntu51:~$ ping 192.168.122.139
+-bash: ping: command not found
+sergey@ubuntu51:~$ ping ya.ru
+-bash: ping: command not found
+sergey@ubuntu51:~$ sudo apt install net-tools
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  net-tools
+
+Summary:
+  Upgrading: 0, Installing: 1, Removing: 0, Not Upgrading: 6
+  Download size: 151 kB
+  Space needed: 680 kB / 16.3 GB available
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 net-tools amd64 2.10-2ubuntu1 [151 kB]
+Fetched 151 kB in 0s (499 kB/s)  
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 1.)
+debconf: falling back to frontend: Readline
+Selecting previously unselected package net-tools.
+(Reading database ... 126886 files and directories currently installed.)
+Preparing to unpack .../net-tools_2.10-2ubuntu1_amd64.deb ...
+Unpacking net-tools (2.10-2ubuntu1) ...
+Setting up net-tools (2.10-2ubuntu1) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ ping ya.ru
+-bash: ping: command not found
+sergey@ubuntu51:~$ sudo apt install ping
+Package ping is a virtual package provided by:
+  inetutils-ping 2:2.7-2ubuntu1.1
+  iputils-ping 3:20250605-1ubuntu1
+You should explicitly select one to install.
+
+Error: Package 'ping' has no installation candidate
+sergey@ubuntu51:~$ sudo apt install inetutils-ping
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  inetutils-ping
+
+Summary:
+  Upgrading: 0, Installing: 1, Removing: 0, Not Upgrading: 6
+  Download size: 64.7 kB
+  Space needed: 208 kB / 16.3 GB available
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute-updates/universe amd64 inetutils-ping amd64 2:2.7-2ubuntu1.1 [64.7 kB]
+Fetched 64.7 kB in 0s (1047 kB/s)         
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 1.)
+debconf: falling back to frontend: Readline
+Selecting previously unselected package inetutils-ping.
+(Reading database ... 126914 files and directories currently installed.)
+Preparing to unpack .../inetutils-ping_2%3a2.7-2ubuntu1.1_amd64.deb ...
+Unpacking inetutils-ping (2:2.7-2ubuntu1.1) ...
+Setting up inetutils-ping (2:2.7-2ubuntu1.1) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ ping ya.ru
+PING ya.ru (77.88.55.242): 56 data bytes
+64 bytes from 77.88.55.242: icmp_seq=0 ttl=52 time=12.361 ms
+64 bytes from 77.88.55.242: icmp_seq=1 ttl=52 time=15.434 ms
+^C--- ya.ru ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 12.361/13.898/15.434/1.537 ms
+sergey@ubuntu51:~$ ping 192.168.122.139
+PING 192.168.122.139 (192.168.122.139): 56 data bytes
+64 bytes from 192.168.122.139: icmp_seq=0 ttl=64 time=0.691 ms
+64 bytes from 192.168.122.139: icmp_seq=1 ttl=64 time=1.127 ms
+^C--- 192.168.122.139 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.691/0.909/1.127/0.218 ms
+sergey@ubuntu51:~$ sudo mount 192.168.88.139:/mnt/nfs_share/ /mnt/nfs_share/
+^C   
+sergey@ubuntu51:~$ ping 192.168.122.139
+PING 192.168.122.139 (192.168.122.139): 56 data bytes
+64 bytes from 192.168.122.139: icmp_seq=0 ttl=64 time=0.757 ms
+64 bytes from 192.168.122.139: icmp_seq=1 ttl=64 time=1.062 ms
+^C--- 192.168.122.139 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.757/0.910/1.062/0.153 ms
+sergey@ubuntu51:~$ ^[[200~nc -zv 192.168.88.139 2049
+-bash: $'\E[200~nc': command not found
+sergey@ubuntu51:~$ nc -zv 192.168.88.139 111
+nc: connect to 192.168.88.139 port 111 (tcp) failed: No route to host
+sergey@ubuntu51:~$ nc -zv 192.168.88.139 111
+nc: connect to 192.168.88.139 port 111 (tcp) failed: No route to host
+sergey@ubuntu51:~$ nc -zv 192.168.88.139 2049
+nc: connect to 192.168.88.139 port 2049 (tcp) failed: No route to host
+sergey@ubuntu51:~$ sudo mount 192.168.122.139:/mnt/nfs_share/ /mnt/nfs_share/
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  864K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share    nfs4      7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ sudo apt install autofs
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  autofs
+
+Installing dependencies:
+  libnsl2
+
+Summary:
+  Upgrading: 0, Installing: 2, Removing: 0, Not Upgrading: 6
+  Download size: 329 kB
+  Space needed: 1143 kB / 16.3 GB available
+
+Continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 libnsl2 amd64 1.3.0-3build4 [41.8 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 autofs amd64 5.1.9-1.2ubuntu4 [287 kB]
+Fetched 329 kB in 0s (1726 kB/s)
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 2.)
+debconf: falling back to frontend: Readline
+Selecting previously unselected package libnsl2:amd64.
+(Reading database ... 126925 files and directories currently installed.)
+Preparing to unpack .../libnsl2_1.3.0-3build4_amd64.deb ...
+Unpacking libnsl2:amd64 (1.3.0-3build4) ...
+Selecting previously unselected package autofs.
+Preparing to unpack .../autofs_5.1.9-1.2ubuntu4_amd64.deb ...
+Unpacking autofs (5.1.9-1.2ubuntu4) ...
+Setting up libnsl2:amd64 (1.3.0-3build4) ...
+Setting up autofs (5.1.9-1.2ubuntu4) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/auto.master with new version
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/auto.net with new version
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/auto.misc with new version
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/auto.smb with new version
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/autofs.conf with new version
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Creating config file /etc/default/autofs with new version
+update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
+Created symlink '/etc/systemd/system/multi-user.target.wants/autofs.service' → '/usr/lib/systemd/system/autofs.service'.
+Processing triggers for libc-bin (2.43-2ubuntu2) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ sudo nano /etc/auto.master
+sudo: 'nano': command not found
+sergey@ubuntu51:~$ sudo apt install nano
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  nano
+
+Suggested packages:
+  hunspell
+
+Summary:
+  Upgrading: 0, Installing: 1, Removing: 0, Not Upgrading: 6
+  Download size: 289 kB
+  Space needed: 893 kB / 16.3 GB available
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 nano amd64 8.7.1-1ubuntu0.1 [289 kB]
+Fetched 289 kB in 0s (1412 kB/s)
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 1.)
+debconf: falling back to frontend: Readline
+Selecting previously unselected package nano.
+(Reading database ... 126987 files and directories currently installed.)
+Preparing to unpack .../nano_8.7.1-1ubuntu0.1_amd64.deb ...
+Unpacking nano (8.7.1-1ubuntu0.1) ...
+Setting up nano (8.7.1-1ubuntu0.1) ...
+update-alternatives: using /bin/nano to provide /usr/bin/editor (editor) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/editor.1.gz because associated file /usr/share/man/man1/nano.1.gz (of link group editor) doe
+s not exist
+update-alternatives: using /bin/nano to provide /usr/bin/pico (pico) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/pico.1.gz because associated file /usr/share/man/man1/nano.1.gz (of link group pico) does no
+t exist
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ sudo nano /etc/auto.master
+sergey@ubuntu51:~$ sudo nano /etc/auto.nfs
+sergey@ubuntu51:~$ sudo systemctl restart autofs
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ ls /mnt/nfs_share/
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo apt install nano
+nano is already the newest version (8.7.1-1ubuntu0.1).
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Summary:
+  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 6
+sergey@ubuntu51:~$ sudo nano /etc/auto.nfs
+sergey@ubuntu51:~$ sudo systemctl status autofs
+● autofs.service - Automounts filesystems on demand
+     Loaded: loaded (/usr/lib/systemd/system/autofs.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-07-22 21:10:42 UTC; 3min 36s ago
+ Invocation: 59c06390299f4b35bc0c03f540f3b5ec
+       Docs: man:autofs(8)
+    Process: 3896 ExecStart=/usr/sbin/automount $OPTIONS --pid-file /var/run/autofs.pid (code=exited, status=0/SUCCESS)
+   Main PID: 3897 (automount)
+      Tasks: 5 (limit: 1794)
+     Memory: 1.4M (peak: 2.1M)
+        CPU: 23ms
+     CGroup: /system.slice/autofs.service
+             └─3897 /usr/sbin/automount --pid-file /var/run/autofs.pid
+
+Jul 22 21:10:42 ubuntu51 systemd[1]: Starting autofs.service - Automounts filesystems on demand...
+Jul 22 21:10:42 ubuntu51 (automount)[3896]: autofs.service: Referenced but unset environment variable evaluates to an empty string: OPTIONS
+Jul 22 21:10:42 ubuntu51 systemd[1]: Started autofs.service - Automounts filesystems on demand.
+sergey@ubuntu51:~$ sudo umount /mnt/nfs_share 
+umount: /mnt/nfs_share: target is busy.
+sergey@ubuntu51:~$ sudo apt install psmisc
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  psmisc
+
+Summary:
+  Upgrading: 0, Installing: 1, Removing: 0, Not Upgrading: 6
+  Download size: 179 kB
+  Space needed: 618 kB / 16.3 GB available
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 psmisc amd64 23.7-2ubuntu2 [179 kB]
+Fetched 179 kB in 0s (831 kB/s)
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 1.)
+debconf: falling back to frontend: Readline
+Selecting previously unselected package psmisc.
+(Reading database ... 127061 files and directories currently installed.)
+Preparing to unpack .../psmisc_23.7-2ubuntu2_amd64.deb ...
+Unpacking psmisc (23.7-2ubuntu2) ...
+Setting up psmisc (23.7-2ubuntu2) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ sudo fuser -v /mnt/nfs_share
+                     USER        PID ACCESS COMMAND
+/mnt/nfs_share:      root     kernel mount /mnt/nfs_share
+                     root       3897 f.... automount
+sergey@ubuntu51:~$ sudo systemctl restart autofs
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ ls -la /mnt/nfs_share/
+total 4
+drwxr-xr-x 2 root root    0 Jul 22 21:18 .
+drwxr-xr-x 3 root root 4096 Jul 22 20:50 ..
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo fuser -v /mnt/nfs_share
+                     USER        PID ACCESS COMMAND
+/mnt/nfs_share:      root     kernel mount /mnt/nfs_share
+                     root       4179 f.... automount
+sergey@ubuntu51:~$ touch /mnt/nfs_share/jjjj.test
+touch: cannot touch '/mnt/nfs_share/jjjj.test': Permission denied
+sergey@ubuntu51:~$ sudo touch /mnt/nfs_share/jjjj.test
+touch: cannot touch '/mnt/nfs_share/jjjj.test': Permission denied
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo ls /mnt/nfs_share/
+sergey@ubuntu51:~$ sudo nano /etc/auto.master
+sergey@ubuntu51:~$ sudo nano /etc/auto.nfs 
+sergey@ubuntu51:~$ sudo systemctl restart autofs
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share    nfs4      7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share    nfs4      7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ sudo ls /mnt/nfs_share/
+lkdcflk.test
+sergey@ubuntu51:~$ sudo nano /mnt/nfs_share/
+lkdcflk.test  upload/       
+sergey@ubuntu51:~$ sudo nano /mnt/nfs_share/upload/1
+sergey@ubuntu51:~$ nano /mnt/nfs_share/upload/1
+sergey@ubuntu51:~$ showmount -e 192.168.122.139
+Export list for 192.168.122.139:
+/mnt/nfs_share 192.168.122.133
+sergey@ubuntu51:~$ sudo nano /mnt/nfs_share/upload/1
+sergey@ubuntu51:~$ touch /mnt/nfs_share/upload/1
+touch: cannot touch '/mnt/nfs_share/upload/1': Permission denied
+sergey@ubuntu51:~$ sudo touch /mnt/nfs_share/upload/1
+sergey@ubuntu51:~$ touch /mnt/nfs_share/upload/2
+touch: cannot touch '/mnt/nfs_share/upload/2': Permission denied
+sergey@ubuntu51:~$ nano /mnt/nfs_share/upload/2
+sergey@ubuntu51:~$ nano /mnt/nfs_share/upload/2
+sergey@ubuntu51:~$ touch /mnt/nfs_share/upload/2
+sergey@ubuntu51:~$ mount | grep /mnt
+192.168.122.139:/mnt/nfs_share on /mnt/nfs_share type nfs4 (rw,relatime,vers=4.2,rsize=524288,wsize=524288,namlen=255,hard,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.122.133,local_lock=none,addr=192.168.122.139)
+/etc/auto.nfs on /mnt/nfs_share type autofs (rw,relatime,fd=7,pgrp=4338,timeout=600,minproto=5,maxproto=5,direct,pipe_ino=25536)
+192.168.122.139:/mnt/nfs_share on /mnt/nfs_share type nfs4 (rw,relatime,vers=4.2,rsize=524288,wsize=524288,namlen=255,soft,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.122.133,local_lock=none,addr=192.168.122.139)
+sergey@ubuntu51:~$ mount | grep /mnt/nfs_share/
+sergey@ubuntu51:~$ mount | grep /mnt/nfs_share
+192.168.122.139:/mnt/nfs_share on /mnt/nfs_share type nfs4 (rw,relatime,vers=4.2,rsize=524288,wsize=524288,namlen=255,hard,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.122.133,local_lock=none,addr=192.168.122.139)
+/etc/auto.nfs on /mnt/nfs_share type autofs (rw,relatime,fd=7,pgrp=4338,timeout=600,minproto=5,maxproto=5,direct,pipe_ino=25536)
+192.168.122.139:/mnt/nfs_share on /mnt/nfs_share type nfs4 (rw,relatime,vers=4.2,rsize=524288,wsize=524288,namlen=255,soft,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.122.133,local_lock=none,addr=192.168.122.139)
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share    nfs4      7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ sudo systemctl stop autofs
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  856K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share    nfs4      7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ sudo umount /mnt/nfs_share 
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  856K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo mount -o vers=3,proto=udp 192.168.122.139:/mnt/nfs_share/ /mnt/nfs_share/
+Created symlink '/run/systemd/system/remote-fs.target.wants/rpc-statd.service' → '/usr/lib/systemd/system/rpc-statd.service'.
+mount.nfs: requested NFS version or transport protocol is not supported for /mnt/nfs_share
+sergey@ubuntu51:~$ sudo grep -i "udp" /boot/config-7.0.0-
+config-7.0.0-14-generic  config-7.0.0-28-generic  
+sergey@ubuntu51:~$ sudo grep -i "udp" /boot/config-7.0.0-28-generic 
+CONFIG_NET_UDP_TUNNEL=m
+CONFIG_INET_UDP_DIAG=m
+CONFIG_NF_CT_PROTO_UDPLITE=y
+CONFIG_IP_VS_PROTO_UDP=y
+CONFIG_TIPC_MEDIA_UDP=y
+CONFIG_6LOWPAN_NHC_UDP=m
+# CONFIG_6LOWPAN_GHC_UDP is not set
+CONFIG_BAREUDP=m
+CONFIG_SPEAKUP_SYNTH_AUDPTR=m
+CONFIG_NFS_DISABLE_UDP_SUPPORT=y
+sergey@ubuntu51:~$ sudo mount -o vers=3 192.168.122.139:/mnt/nfs_share/ /mnt/nfs_share/
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  864K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share/   nfs       7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ ps -efl | grep rpc
+4 S _rpc        1796       1  0  80   0 -  1717 -      20:49 ?        00:00:00 /usr/sbin/rpcbind -f -w
+1 I root        2188       2  0  60 -20 -     0 -      20:49 ?        00:00:00 [kworker/R-rpciod]
+5 S statd       4660       1  0  80   0 -  1169 -      21:52 ?        00:00:00 /usr/sbin/rpc.statd
+0 S sergey      4778    1469  0  80   0 -  1032 anon_p 21:56 pts/0    00:00:00 grep --color=auto rpc
+sergey@ubuntu51:~$ sudo nano /etc/auto.nfs 
+sergey@ubuntu51:~$ sudo cat /etc/auto.nfs 
+/mnt/nfs_share  -fstype=nfs,nfsvers=3,rw,soft,intr  192.168.122.139:/mnt/nfs_share
+sergey@ubuntu51:~$ sudo cat /etc/auto.master
+#
+# Sample auto.master file
+# This is a 'master' automounter map and it has the following format:
+# mount-point [map-type[,format]:]map [options]
+# For details of the format look at auto.master(5).
+#
+#/misc	/etc/auto.misc
+#
+# NOTE: mounts done from a hosts map will be mounted with the
+#	"nosuid" and "nodev" options unless the "suid" and "dev"
+#	options are explicitly given.
+#
+#/net	-hosts
+#
+# Include /etc/auto.master.d/*.autofs
+# To add an extra map using this mechanism you will need to add
+# two configuration items - one /etc/auto.master.d/extra.autofs file
+# (using the same line format as the auto.master file)
+# and a separate mount map (e.g. /etc/auto.extra or an auto.extra NIS map)
+# that is referred to by the extra.autofs file.
+#
++dir:/etc/auto.master.d
+#
+# If you have fedfs set up and the related binaries, either
+# built as part of autofs or installed from another package,
+# uncomment this line to use the fedfs program map to access
+# your fedfs mounts.
+#/nfs4  /usr/sbin/fedfs-map-nfs4 nobind
+#
+# Include central master map if it can be found using
+# nsswitch sources.
+#
+# Note that if there are entries for /net or /misc (as
+# above) in the included master map any keys that are the
+# same will not be seen as the first read key seen takes
+# precedence.
+#
++auto.master
+/-  /etc/auto.nfs  --timeout=600
+sergey@ubuntu51:~$ sudo umount /mnt/nfs_share 
+sergey@ubuntu51:~$ sudo mount 192.168.122.139:/mnt/nfs_share/ /mnt/nfs_share/
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  864K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+192.168.122.139:/mnt/nfs_share/   nfs       7.8G  3.1G  4.4G  42% /mnt/nfs_share
+sergey@ubuntu51:~$ sudo umount /mnt/nfs_share 
+sergey@ubuntu51:~$ sudo nano /etc/auto.nfs 
+sergey@ubuntu51:~$ sudo systemctl restart autofs
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo systemctl start autofs
+sergey@ubuntu51:~$ ls /mnt/nfs_share/
+ls: cannot access '/mnt/nfs_share/': No such file or directory
+sergey@ubuntu51:~$ ls /mnt/nfs_share/
+ls: cannot access '/mnt/nfs_share/': No such file or directory
+sergey@ubuntu51:~$ sudo ls /mnt/nfs_share/
+ls: cannot access '/mnt/nfs_share/': No such file or directory
+sergey@ubuntu51:~$ sudo systemctl status autofs
+● autofs.service - Automounts filesystems on demand
+     Loaded: loaded (/usr/lib/systemd/system/autofs.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-07-22 22:07:46 UTC; 1min 5s ago
+ Invocation: 5e9c3b6e2f3845d19130be0f4108a431
+       Docs: man:autofs(8)
+    Process: 4953 ExecStart=/usr/sbin/automount $OPTIONS --pid-file /var/run/autofs.pid (code=exited, status=0/SUCCESS)
+   Main PID: 4954 (automount)
+      Tasks: 5 (limit: 1794)
+     Memory: 1.5M (peak: 2.1M)
+        CPU: 31ms
+     CGroup: /system.slice/autofs.service
+             └─4954 /usr/sbin/automount --pid-file /var/run/autofs.pid
+
+Jul 22 22:07:46 ubuntu51 systemd[1]: Starting autofs.service - Automounts filesystems on demand...
+Jul 22 22:07:46 ubuntu51 (automount)[4953]: autofs.service: Referenced but unset environment variable evaluates to an empty string: OPTIONS
+Jul 22 22:07:46 ubuntu51 systemd[1]: Started autofs.service - Automounts filesystems on demand.
+sergey@ubuntu51:~$ sudo nano /etc/auto.nfs 
+sergey@ubuntu51:~$ sudo systemctl restart autofs
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  868K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  30% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo ls /mnt/nfs_share/
+lkdcflk.test  upload
+sergey@ubuntu51:~$ sudo ls /mnt/nfs_share/upload/
+1  2
+sergey@ubuntu51:~$ sudo ls -la /mnt/nfs_share/upload/
+total 8
+drwxrwxrwx 2 nobody nogroup 4096 Jul 22 21:45 .
+drwxrwxrwx 3 nobody nogroup 4096 Jul 22 21:28 ..
+-rwxrwxrwx 1 nobody nogroup    0 Jul 22 21:39 1
+-rw-rw-r-- 1 sergey sergey     0 Jul 22 21:45 2
+sergey@ubuntu51:~$ sudo nano /etc/hosts
+[sudo: authenticate] Password:         
+sergey@ubuntu51:~$ ping ubuntu139
+PING ubuntu139.intranet (192.168.122.139): 56 data bytes
+64 bytes from 192.168.122.139: icmp_seq=0 ttl=64 time=1.032 ms
+64 bytes from 192.168.122.139: icmp_seq=1 ttl=64 time=1.249 ms
+^C--- ubuntu139.intranet ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 1.032/1.140/1.249/0.108 ms
+sergey@ubuntu51:~$ sudo nano /etc/hosts
+sergey@ubuntu51:~$ ping ubuntu139
+PING ubuntu139.home.intranet (192.168.122.139): 56 data bytes
+64 bytes from 192.168.122.139: icmp_seq=0 ttl=64 time=0.577 ms
+64 bytes from 192.168.122.139: icmp_seq=1 ttl=64 time=1.308 ms
+64 bytes from 192.168.122.139: icmp_seq=2 ttl=64 time=1.464 ms
+64 bytes from 192.168.122.139: icmp_seq=3 ttl=64 time=1.361 ms
+^C--- ubuntu139.home.intranet ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.577/1.177/1.464/0.351 ms
+sergey@ubuntu51:~$ sudo mv /tmp/ubuntu133.keytab /etc/krb5.keytab && sudo chmod 600 /etc/krb5.keytab
+[sudo: authenticate] Password:         
+sergey@ubuntu51:~$ sudo apt install -y nfs-common krb5-user
+nfs-common is already the newest version (1:2.8.5-1ubuntu1).
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  krb5-user
+
+Installing dependencies:
+  bind9-host  bind9-libs  krb5-config  libgssrpc4t64  libjemalloc2  libkadm5clnt-mit12  libkadm5srv-mit12  libkdb5-10t64  liblmdb0  libmaxminddb0  libuv1t64
+
+Suggested packages:
+  krb5-k5tls  krb5-doc  mmdb-bin
+
+Summary:
+  Upgrading: 0, Installing: 12, Removing: 0, Not Upgrading: 6
+  Download size: 2114 kB
+  Space needed: 6307 kB / 16.3 GB available
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 libjemalloc2 amd64 5.3.0-4 [263 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 liblmdb0 amd64 0.9.31-1build2 [49.5 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 libmaxminddb0 amd64 1.12.2-1build2 [18.9 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 libuv1t64 amd64 1.51.0-2ubuntu1 [103 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 bind9-libs amd64 1:9.20.18-1ubuntu2.1 [1303 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 bind9-host amd64 1:9.20.18-1ubuntu2.1 [49.7 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu resolute/main amd64 krb5-config all 2.7ubuntu1 [20.8 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 libgssrpc4t64 amd64 1.22.1-2ubuntu4.1 [57.9 kB]
+Get:9 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 libkadm5clnt-mit12 amd64 1.22.1-2ubuntu4.1 [40.2 kB]
+Get:10 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 libkdb5-10t64 amd64 1.22.1-2ubuntu4.1 [41.6 kB]
+Get:11 http://ru.archive.ubuntu.com/ubuntu resolute-updates/main amd64 libkadm5srv-mit12 amd64 1.22.1-2ubuntu4.1 [55.2 kB]
+Get:12 http://ru.archive.ubuntu.com/ubuntu resolute-updates/universe amd64 krb5-user amd64 1.22.1-2ubuntu4.1 [110 kB]
+Fetched 2114 kB in 1s (3261 kB/s)  
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 12.)
+debconf: falling back to frontend: Readline
+Preconfiguring packages ...
+Configuring Kerberos Authentication
+-----------------------------------
+
+When users attempt to use Kerberos and specify a principal or user name without specifying what administrative Kerberos realm that principal belongs to, the 
+system appends the default realm.  The default realm may also be used as the realm of a Kerberos service running on the local machine.  Often, the default 
+realm is the uppercase version of the local DNS domain.
+
+Default Kerberos version 5 realm: 
+
+
+Selecting previously unselected package libjemalloc2:amd64.
+(Reading database ... 127144 files and directories currently installed.)
+Preparing to unpack .../00-libjemalloc2_5.3.0-4_amd64.deb ...
+Unpacking libjemalloc2:amd64 (5.3.0-4) ...
+Selecting previously unselected package liblmdb0:amd64.
+Preparing to unpack .../01-liblmdb0_0.9.31-1build2_amd64.deb ...
+Unpacking liblmdb0:amd64 (0.9.31-1build2) ...
+Selecting previously unselected package libmaxminddb0:amd64.
+Preparing to unpack .../02-libmaxminddb0_1.12.2-1build2_amd64.deb ...
+Unpacking libmaxminddb0:amd64 (1.12.2-1build2) ...
+Selecting previously unselected package libuv1t64:amd64.
+Preparing to unpack .../03-libuv1t64_1.51.0-2ubuntu1_amd64.deb ...
+Unpacking libuv1t64:amd64 (1.51.0-2ubuntu1) ...
+Selecting previously unselected package bind9-libs:amd64.
+Preparing to unpack .../04-bind9-libs_1%3a9.20.18-1ubuntu2.1_amd64.deb ...
+Unpacking bind9-libs:amd64 (1:9.20.18-1ubuntu2.1) ...
+Selecting previously unselected package bind9-host.
+Preparing to unpack .../05-bind9-host_1%3a9.20.18-1ubuntu2.1_amd64.deb ...
+Unpacking bind9-host (1:9.20.18-1ubuntu2.1) ...
+Selecting previously unselected package krb5-config.
+Preparing to unpack .../06-krb5-config_2.7ubuntu1_all.deb ...
+Unpacking krb5-config (2.7ubuntu1) ...
+Selecting previously unselected package libgssrpc4t64:amd64.
+Preparing to unpack .../07-libgssrpc4t64_1.22.1-2ubuntu4.1_amd64.deb ...
+Unpacking libgssrpc4t64:amd64 (1.22.1-2ubuntu4.1) ...
+Selecting previously unselected package libkadm5clnt-mit12:amd64.
+Preparing to unpack .../08-libkadm5clnt-mit12_1.22.1-2ubuntu4.1_amd64.deb ...
+Unpacking libkadm5clnt-mit12:amd64 (1.22.1-2ubuntu4.1) ...
+Selecting previously unselected package libkdb5-10t64:amd64.
+Preparing to unpack .../09-libkdb5-10t64_1.22.1-2ubuntu4.1_amd64.deb ...
+Unpacking libkdb5-10t64:amd64 (1.22.1-2ubuntu4.1) ...
+Selecting previously unselected package libkadm5srv-mit12:amd64.
+Preparing to unpack .../10-libkadm5srv-mit12_1.22.1-2ubuntu4.1_amd64.deb ...
+Unpacking libkadm5srv-mit12:amd64 (1.22.1-2ubuntu4.1) ...
+Selecting previously unselected package krb5-user.
+Preparing to unpack .../11-krb5-user_1.22.1-2ubuntu4.1_amd64.deb ...
+Unpacking krb5-user (1.22.1-2ubuntu4.1) ...
+Setting up liblmdb0:amd64 (0.9.31-1build2) ...
+Setting up libmaxminddb0:amd64 (1.12.2-1build2) ...
+Setting up libuv1t64:amd64 (1.51.0-2ubuntu1) ...
+Setting up libjemalloc2:amd64 (5.3.0-4) ...
+Setting up libgssrpc4t64:amd64 (1.22.1-2ubuntu4.1) ...
+Setting up libkadm5clnt-mit12:amd64 (1.22.1-2ubuntu4.1) ...
+Setting up libkdb5-10t64:amd64 (1.22.1-2ubuntu4.1) ...
+Setting up bind9-libs:amd64 (1:9.20.18-1ubuntu2.1) ...
+Setting up libkadm5srv-mit12:amd64 (1.22.1-2ubuntu4.1) ...
+Setting up bind9-host (1:9.20.18-1ubuntu2.1) ...
+Setting up krb5-config (2.7ubuntu1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79.)
+debconf: falling back to frontend: Readline
+Setting up krb5-user (1.22.1-2ubuntu4.1) ...
+update-alternatives: using /usr/bin/kinit.mit to provide /usr/bin/kinit (kinit) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/kinit.1.gz because associated file /usr/share/man/man1/kinit.mit.1.gz (of link group kinit) 
+does not exist
+update-alternatives: using /usr/bin/klist.mit to provide /usr/bin/klist (klist) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/klist.1.gz because associated file /usr/share/man/man1/klist.mit.1.gz (of link group klist) 
+does not exist
+update-alternatives: using /usr/bin/kswitch.mit to provide /usr/bin/kswitch (kswitch) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/kswitch.1.gz because associated file /usr/share/man/man1/kswitch.mit.1.gz (of link group ksw
+itch) does not exist
+update-alternatives: using /usr/bin/ksu.mit to provide /usr/bin/ksu (ksu) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/ksu.1.gz because associated file /usr/share/man/man1/ksu.mit.1.gz (of link group ksu) does n
+ot exist
+update-alternatives: using /usr/bin/kpasswd.mit to provide /usr/bin/kpasswd (kpasswd) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/kpasswd.1.gz because associated file /usr/share/man/man1/kpasswd.mit.1.gz (of link group kpa
+sswd) does not exist
+update-alternatives: using /usr/bin/kdestroy.mit to provide /usr/bin/kdestroy (kdestroy) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/kdestroy.1.gz because associated file /usr/share/man/man1/kdestroy.mit.1.gz (of link group k
+destroy) does not exist
+update-alternatives: using /usr/bin/kadmin.mit to provide /usr/bin/kadmin (kadmin) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/kadmin.1.gz because associated file /usr/share/man/man1/kadmin.mit.1.gz (of link group kadmi
+n) does not exist
+update-alternatives: using /usr/bin/ktutil.mit to provide /usr/bin/ktutil (ktutil) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/ktutil.1.gz because associated file /usr/share/man/man1/ktutil.mit.1.gz (of link group ktuti
+l) does not exist
+Processing triggers for libc-bin (2.43-2ubuntu2) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ sudo apt reinstall krb5-user
+The following packages were automatically installed and are no longer required:
+  linux-headers-7.0.0-14          linux-image-unsigned-7.0.0-14-generic    linux-modules-7.0.0-14-generic  linux-tools-7.0.0-14-generic
+  linux-headers-7.0.0-14-generic  linux-main-modules-zfs-7.0.0-14-generic  linux-tools-7.0.0-14
+Use 'sudo apt autoremove' to remove them.
+
+Summary:
+  Upgrading: 0, Installing: 0, Reinstalling: 1, Removing: 0, Not Upgrading: 6
+  Download size: 110 kB
+  Space needed: 0 B / 16.3 GB available
+
+Get:1 http://ru.archive.ubuntu.com/ubuntu resolute-updates/universe amd64 krb5-user amd64 1.22.1-2ubuntu4.1 [110 kB]
+Fetched 110 kB in 0s (756 kB/s)    
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 1.)
+debconf: falling back to frontend: Readline
+(Reading database ... 127241 files and directories currently installed.)
+Preparing to unpack .../krb5-user_1.22.1-2ubuntu4.1_amd64.deb ...
+Unpacking krb5-user (1.22.1-2ubuntu4.1) over (1.22.1-2ubuntu4.1) ...
+Setting up krb5-user (1.22.1-2ubuntu4.1) ...
+Scanning processes...                                                                                                                                          
+Scanning linux images...                                                                                                                                       
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+sergey@ubuntu51:~$ sudo nano /etc/krb5.conf
+sergey@ubuntu51:~$ kinit sergey
+Password for sergey@HOME.INTRANET: 
+sergey@ubuntu51:~$ klist
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: sergey@HOME.INTRANET
+
+Valid starting     Expires            Service principal
+07/22/26 22:56:32  07/23/26 08:56:32  krbtgt/HOME.INTRANET@HOME.INTRANET
+	renew until 07/29/26 22:56:24
+sergey@ubuntu51:~$ sudo mkdir -p /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: Protocol not supported for ubuntu139.home.intranet:/mnt/nfs_share on /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: an incorrect mount option was specified for /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo mount -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs: an incorrect mount option was specified for /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo modprobe rpcsec_gss_krb5
+sergey@ubuntu51:~$ echo "rpcsec_gss_krb5" | sudo tee -a /etc/modules
+rpcsec_gss_krb5
+sergey@ubuntu51:~$ sudo klist -k /etc/krb5.keytab
+Keytab name: FILE:/etc/krb5.keytab
+KVNO Principal
+---- --------------------------------------------------------------------------
+   2 host/ubuntu133.home.intranet@HOME.INTRANET
+   2 host/ubuntu133.home.intranet@HOME.INTRANET
+   2 nfs/ubuntu133.home.intranet@HOME.INTRANET
+   2 nfs/ubuntu133.home.intranet@HOME.INTRANET
+sergey@ubuntu51:~$ sudo systemctl restart rpc-gssd
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                             Type      Size  Used Avail Use% Mounted on
+tmpfs                                  tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv      ext4       23G  6.6G   16G  31% /
+tmpfs                                  tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                               efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                                   tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                                   tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                                  tmpfs     1.7G  8.0K  1.7G   1% /tmp
+/dev/vda2                              ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                              vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                                   tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                                   tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                                  tmpfs     334M  8.0K  334M   1% /run/user/1000
+ubuntu139.home.intranet:/mnt/nfs_share nfs4      7.8G  3.1G  4.3G  42% /mnt/nfs_kerberos
+sergey@ubuntu51:~$ kdestroy
+sergey@ubuntu51:~$ ls -la /mnt/nfs_kerberos/
+total 16
+drwxrwxrwx+3 nobody nogroup 4096 Jul 22 21:28 .
+drwxr-xr-x 4 root   root    4096 Jul 22 23:05 ..
+-rwxrwxrwx+1 nobody nogroup   14 Jul 22 21:25 lkdcflk.test
+drwxrwxrwx+2 nobody nogroup 4096 Jul 22 21:45 upload
+sergey@ubuntu51:~$ ls -la /mnt/nfs_kerberos/
+total 16
+drwxrwxrwx+3 nobody nogroup 4096 Jul 22 21:28 .
+drwxr-xr-x 4 root   root    4096 Jul 22 23:05 ..
+-rwxrwxrwx+1 nobody nogroup   14 Jul 22 21:25 lkdcflk.test
+drwxrwxrwx+2 nobody nogroup 4096 Jul 22 21:45 upload
+sergey@ubuntu51:~$ sudo systemctl restart rpc-gssd.service 
+sergey@ubuntu51:~$ sudo umount /mnt/nfs_kerberos 
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ ls -la /mnt/nfs_kerberos/
+ls: unknown io error: '/mnt/nfs_kerberos/', 'Os { code: 116, kind: StaleNetworkFileHandle, message: "Stale file handle" }'
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo umount -f -l /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: access denied by server while mounting ubuntu139.home.intranet:/mnt/nfs_share
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: access denied by server while mounting ubuntu139.home.intranet:/mnt/nfs_share
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: access denied by server while mounting (null)
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+^[[Csergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo umount -f -l /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo systemctl restart rpc-gssd
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo journalctl -u nfs-kernel-server -u rpc-gssd -n 30 --no-pager
+Jul 22 20:49:35 ubuntu51 systemd[1]: rpc-gssd.service - RPC security service for NFS client and server skipped, unmet condition check ConditionPathExists=/etc/krb5.keytab
+Jul 22 23:08:57 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:08:57 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:12:00 ubuntu51 rpc.gssd[5864]: event_dispatch() returned 0!
+Jul 22 23:12:00 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:12:00 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:12:00 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:12:00 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:12:00 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:18:04 ubuntu51 rpc.gssd[5981]: event_dispatch() returned 0!
+Jul 22 23:18:04 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:18:04 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:18:04 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:18:04 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:18:04 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+sergey@ubuntu51:~$ sudo journalctl -u rpc-gssd -n 30 --no-pager
+Jul 22 20:49:35 ubuntu51 systemd[1]: rpc-gssd.service - RPC security service for NFS client and server skipped, unmet condition check ConditionPathExists=/etc/krb5.keytab
+Jul 22 23:08:57 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:08:57 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:12:00 ubuntu51 rpc.gssd[5864]: event_dispatch() returned 0!
+Jul 22 23:12:00 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:12:00 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:12:00 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:12:00 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:12:00 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:18:04 ubuntu51 rpc.gssd[5981]: event_dispatch() returned 0!
+Jul 22 23:18:04 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:18:04 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:18:04 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:18:04 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:18:04 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+sergey@ubuntu51:~$ sudo umount -f -l /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo systemctl restart rpc-gssd
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o sec=krb5 ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo journalctl -u rpc-gssd -n 30 --no-pager
+Jul 22 20:49:35 ubuntu51 systemd[1]: rpc-gssd.service - RPC security service for NFS client and server skipped, unmet condition check ConditionPathExists=/etc/krb5.keytab
+Jul 22 23:08:57 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:08:57 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:12:00 ubuntu51 rpc.gssd[5864]: event_dispatch() returned 0!
+Jul 22 23:12:00 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:12:00 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:12:00 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:12:00 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:12:00 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:18:04 ubuntu51 rpc.gssd[5981]: event_dispatch() returned 0!
+Jul 22 23:18:04 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:18:04 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:18:04 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:18:04 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:18:04 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:21:03 ubuntu51 systemd[1]: Stopping rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:21:03 ubuntu51 rpc.gssd[6312]: event_dispatch() returned 0!
+Jul 22 23:21:03 ubuntu51 systemd[1]: rpc-gssd.service: Deactivated successfully.
+Jul 22 23:21:03 ubuntu51 systemd[1]: Stopped rpc-gssd.service - RPC security service for NFS client and server.
+Jul 22 23:21:03 ubuntu51 systemd[1]: Starting rpc-gssd.service - RPC security service for NFS client and server...
+Jul 22 23:21:03 ubuntu51 systemd[1]: Started rpc-gssd.service - RPC security service for NFS client and server.
+sergey@ubuntu51:~$ mount | grep pipefs
+sunrpc on /run/rpc_pipefs type rpc_pipefs (rw,relatime)
+sergey@ubuntu51:~$ sudo systemctl enable --now var-lib-nfs-rpc_pipefs.mount
+Failed to enable unit: Unit var-lib-nfs-rpc_pipefs.mount does not exist
+sergey@ubuntu51:~$ sudo nano /etc/idmapd.conf
+sergey@ubuntu51:~$ sudo systemctl restart nfs-idmapd.service 
+sergey@ubuntu51:~$ sudo mount -t nfs4 -o nfsvers=4.2,sec=krb5,proto=tcp ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  872K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo cat /etc/idmapd.conf
+[General]
+
+Verbosity = 0
+# set your own domain here, if it differs from FQDN minus hostname
+Pipefs-Directory = /run/rpc_pipefs
+Domain = home.intranet
+
+[Mapping]
+
+Nobody-User = nobody
+Nobody-Group = nogroup
+sergey@ubuntu51:~$ sudo mount -t nfs4 -vvv -o nfsvers=4.2,sec=krb5,proto=tcp ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: timeout set for Wed Jul 22 23:28:20 2026
+mount.nfs4: trying text-based options 'nfsvers=4.2,sec=krb5,proto=tcp,addr=192.168.122.139,clientaddr=192.168.122.133'
+mount.nfs4: mount(2): Device or resource busy
+sergey@ubuntu51:~$ sudo systemctl stop autofs
+sergey@ubuntu51:~$ sudo systemctl restart rpc-gssd nfs-idmapd
+sergey@ubuntu51:~$ sudo umount -f -l /mnt/nfs_kerberos
+sergey@ubuntu51:~$ sudo mount -t nfs4 -vvv -o nfsvers=4.2,sec=krb5,proto=tcp ubuntu139.home.intranet:/mnt/nfs_share /mnt/nfs_kerberos
+mount.nfs4: timeout set for Wed Jul 22 23:29:29 2026
+mount.nfs4: trying text-based options 'nfsvers=4.2,sec=krb5,proto=tcp,addr=192.168.122.139,clientaddr=192.168.122.133'
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  864K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ ls -la /mnt/nfs_kerberos/
+ls: cannot open file '/mnt/nfs_kerberos/': Permission denied
+sergey@ubuntu51:~$ sudo ls -la /mnt/nfs_kerberos/
+total 16
+drwxr-xr-x+3 nobody nogroup 4096 Jul 22 21:28 .
+drwxr-xr-x 4 root   root    4096 Jul 22 23:05 ..
+-rwx------ 1 sergey sergey    14 Jul 22 21:25 lkdcflk.test
+drwx------ 2 sergey sergey  4096 Jul 22 21:45 upload
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  864K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ df -hT
+Filesystem                        Type      Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs     667M  864K  666M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4       23G  6.6G   16G  31% /
+tmpfs                             tmpfs     1.7G     0  1.7G   0% /dev/shm
+efivarfs                          efivarfs  256K   61K  191K  24% /sys/firmware/efi/efivars
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+tmpfs                             tmpfs     1.7G  4.0K  1.7G   1% /tmp
+/dev/vda2                         ext4      2.0G  131M  1.7G   8% /boot
+/dev/vda1                         vfat      1.1G  6.4M  1.1G   1% /boot/efi
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+none                              tmpfs     1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                             tmpfs     334M  8.0K  334M   1% /run/user/1000
+sergey@ubuntu51:~$ sudo ls -la /mnt/nfs_kerberos/
+total 16
+drwxr-xr-x+3 nobody nogroup 4096 Jul 22 21:28 .
+drwxr-xr-x 4 root   root    4096 Jul 22 23:05 ..
+-rwx------ 1 sergey sergey    14 Jul 22 21:25 lkdcflk.test
+drwx------ 2 sergey sergey  4096 Jul 22 21:45 upload
+sergey@ubuntu51:~$ sudo ls /mnt/nfs_kerberos/upload
+ls: cannot open directory '/mnt/nfs_kerberos/upload': Permission denied
+sergey@ubuntu51:~$ kinit sergey
+Password for sergey@HOME.INTRANET: 
+sergey@ubuntu51:~$ klist
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: sergey@HOME.INTRANET
+
+Valid starting     Expires            Service principal
+07/22/26 23:29:53  07/23/26 09:29:53  krbtgt/HOME.INTRANET@HOME.INTRANET
+	renew until 07/29/26 23:29:49
+sergey@ubuntu51:~$ ls -la /mnt/nfs_kerberos/upload
+total 8
+drwx------+2 sergey sergey  4096 Jul 22 21:45 .
+drwxr-xr-x+3 nobody nogroup 4096 Jul 22 21:28 ..
+-rwx------+1 sergey sergey     0 Jul 22 21:39 1
+-rwx------+1 sergey sergey     0 Jul 22 21:45 2
+sergey@ubuntu51:~$ 
+
