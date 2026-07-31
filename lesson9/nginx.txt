@@ -1,0 +1,146 @@
+sergey@ubuntu290726:~$ sudo nano /etc/systemd/system/nginx@.service
+sergey@ubuntu290726:~$ pid /run/nginx-first.pid
+-bash: pid: command not found
+sergey@ubuntu290726:~$ sudo nano /etc/nginx/nginx.conf 
+sergey@ubuntu290726:~$ sudo nano /etc/nginx/nginx-first.conf
+sergey@ubuntu290726:~$ sudo nano /etc/nginx/nginx-second.conf
+sergey@ubuntu290726:~$ sudo cat /etc/nginx/nginx-first.conf
+# Указываем уникальный PID-файл для первого экземпляра
+pid /run/nginx-first.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    server {
+        # Первый экземпляр будет слушать порт 9001
+        listen 9001;
+        server_name localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+    }
+}
+sergey@ubuntu290726:~$ sudo cat /etc/nginx/nginx-second.conf
+# Указываем уникальный PID-файл для второго экземпляра
+pid /run/nginx-second.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    server {
+        # Второй экземпляр будет слушать порт 9002
+        listen 9002;
+        server_name localhost;
+
+        location / {
+            # Можно указать другую папку с сайтом, если они должны отличаться
+            root   /usr/share/nginx/html; 
+            index  index.html index.htm;
+        }
+    }
+}
+sergey@ubuntu290726:~$ sudo systemctl start nginx@first.service
+sergey@ubuntu290726:~$ sudo systemctl status nginx@first.service
+● nginx@first.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/etc/systemd/system/nginx@.service; disabled; preset: enabled)
+     Active: active (running) since Fri 2026-07-31 18:54:58 UTC; 5s ago
+ Invocation: 8be883220c034d908c4958e01833df25
+       Docs: man:nginx(8)
+    Process: 9458 ExecStartPre=/usr/sbin/nginx -t -c /etc/nginx/nginx-first.conf -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 9459 ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx-first.conf -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 9461 (nginx)
+      Tasks: 2 (limit: 1794)
+     Memory: 2.4M (peak: 2.9M)
+        CPU: 17ms
+     CGroup: /system.slice/system-nginx.slice/nginx@first.service
+             ├─9461 "nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx-first.conf -g daemon on; master_process on;"
+             └─9462 "nginx: worker process"
+
+Jul 31 18:54:58 ubuntu290726 systemd[1]: Starting nginx@first.service - A high performance web server and a reverse proxy server...
+Jul 31 18:54:58 ubuntu290726 systemd[1]: Started nginx@first.service - A high performance web server and a reverse proxy server.
+sergey@ubuntu290726:~$ sudo systemctl status nginx@second.service
+○ nginx@second.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/etc/systemd/system/nginx@.service; disabled; preset: enabled)
+     Active: inactive (dead)
+       Docs: man:nginx(8)
+sergey@ubuntu290726:~$ sudo systemctl start nginx@second.service
+sergey@ubuntu290726:~$ sudo systemctl status nginx@second.service
+● nginx@second.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/etc/systemd/system/nginx@.service; disabled; preset: enabled)
+     Active: active (running) since Fri 2026-07-31 18:55:17 UTC; 1s ago
+ Invocation: 5f9fba2732f94d4bb04f1c842921c035
+       Docs: man:nginx(8)
+    Process: 9505 ExecStartPre=/usr/sbin/nginx -t -c /etc/nginx/nginx-second.conf -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 9507 ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx-second.conf -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 9508 (nginx)
+      Tasks: 2 (limit: 1794)
+     Memory: 2.6M (peak: 2.9M)
+        CPU: 33ms
+     CGroup: /system.slice/system-nginx.slice/nginx@second.service
+             ├─9508 "nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx-second.conf -g daemon on; master_process on;"
+             └─9509 "nginx: worker process"
+
+Jul 31 18:55:17 ubuntu290726 systemd[1]: Starting nginx@second.service - A high performance web server and a reverse proxy server...
+Jul 31 18:55:17 ubuntu290726 systemd[1]: Started nginx@second.service - A high performance web server and a reverse proxy server.
+sergey@ubuntu290726:~$ sudo ss -tnulp | grep nginx
+tcp   LISTEN 0      511                   0.0.0.0:9002      0.0.0.0:*    users:(("nginx",pid=9509,fd=4),("nginx",pid=9508,fd=4))                                                        
+tcp   LISTEN 0      511                   0.0.0.0:9001      0.0.0.0:*    users:(("nginx",pid=9462,fd=4),("nginx",pid=9461,fd=4))                                                        
+sergey@ubuntu290726:~$ sudo ps afx | grep nginx
+   9552 pts/0    S+     0:00              \_ grep --color=auto nginx
+   9461 ?        Ss     0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx-first.conf -g daemon on; master_process on;
+   9462 ?        S      0:00  \_ nginx: worker process
+   9508 ?        Ss     0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx-second.conf -g daemon on; master_process on;
+   9509 ?        S      0:00  \_ nginx: worker process
+sergey@ubuntu290726:~$ sudo cat /etc/systemd/system/nginx@.service
+# Stop dance for nginx
+# =======================
+#
+# ExecStop sends SIGSTOP (graceful stop) to the nginx process.
+# If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control
+# and sends SIGTERM (fast shutdown) to the main process.
+# After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends
+# SIGKILL to all the remaining processes in the process group (KillMode=mixed).
+#
+# nginx signals reference doc:
+# http://nginx.org/en/docs/control.html
+#
+[Unit]
+Description=A high performance web server and a reverse proxy server
+Documentation=man:nginx(8)
+After=network.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/run/nginx-%I.pid
+ExecStartPre=/usr/sbin/nginx -t -c /etc/nginx/nginx-%I.conf -q -g 'daemon on; master_process on;'
+ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx-%I.conf -g 'daemon on; master_process on;'
+ExecReload=/usr/sbin/nginx -c /etc/nginx/nginx-%I.conf -g 'daemon on; master_process on;' -s reload
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx-%I.pid
+TimeoutStopSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+sergey@ubuntu290726:~$ sudo cat /etc/spawn-fcgi/fcgi.conf 
+# You must set some working options before the "spawn-fcgi" service will work.
+# If SOCKET points to a file, then this file is cleaned up by the init script.
+#
+# See spawn-fcgi(1) for all possible options.
+#
+# Example :
+SOCKET=/var/run/php-fcgi.sock
+OPTIONS="-u www-data -g www-data -s $SOCKET -S -M 0600 -C 32 -F 1 -- /usr/bin/php-cgi"
+sergey@ubuntu290726:~$ 
+

@@ -1,0 +1,77 @@
+sergey@uchuwi:~$ sudo nano /etc/default/watchlog
+[sudo: authenticate] Пароль:         
+sergey@uchuwi:~$ sudo nano /var/log/watchlog.log
+sergey@uchuwi:~$ sudo nano /opt/watchlog.sh
+sergey@uchuwi:~$ sudo chmod +x /opt/watchlog.sh 
+sergey@uchuwi:~$ sudo nano /etc/systemd/system/watchlog.service
+sergey@uchuwi:~$ sudo nano /etc/systemd/system/watchlog.timer
+sergey@uchuwi:~$ sudo systemctl start watchlog.timer 
+sergey@uchuwi:~$ sudo systemctl status watchlog.timer 
+● watchlog.timer - Run watchlog script every 30 second
+     Loaded: loaded (/etc/systemd/system/watchlog.timer; disabled; preset: enabled)
+     Active: active (elapsed) since Fri 2026-07-31 21:30:13 MSK; 5s ago
+ Invocation: d67fda8f71214b27ad7c350a3e410e1e
+    Trigger: n/a
+   Triggers: ● watchlog.service
+
+июл 31 21:30:13 uchuwi systemd[1]: Started watchlog.timer - Run watchlog script every 30 second.
+sergey@uchuwi:~$ sudo systemctl start watchlog.service
+sergey@uchuwi:~$ sudo systemctl restart watchlog.timer 
+sergey@uchuwi:~$ sudo systemctl status watchlog.timer 
+● watchlog.timer - Run watchlog script every 30 second
+     Loaded: loaded (/etc/systemd/system/watchlog.timer; disabled; preset: enabled)
+     Active: active (waiting) since Fri 2026-07-31 21:30:30 MSK; 2s ago
+ Invocation: e8d501c428774c39beed8812320c3c69
+    Trigger: Fri 2026-07-31 21:30:54 MSK; 21s left
+   Triggers: ● watchlog.service
+
+июл 31 21:30:30 uchuwi systemd[1]: Stopped watchlog.timer - Run watchlog script every 30 second.
+июл 31 21:30:30 uchuwi systemd[1]: Stopping watchlog.timer - Run watchlog script every 30 second...
+июл 31 21:30:30 uchuwi systemd[1]: Started watchlog.timer - Run watchlog script every 30 second.
+sergey@uchuwi:~$ tail -n 1000 /var/log/syslog  | grep word
+2026-07-31T21:30:24.555850+03:00 uchuwi root: пт 31 июль 2026 21:30:24 MSK: I found word, Master!
+sergey@uchuwi:~$ sudo nano /opt/watchlog.sh
+sergey@uchuwi:~$ sudo nano /etc/default/watchlog
+sergey@uchuwi:~$ sudo systemctl restart watchlog.service 
+sergey@uchuwi:~$ sudo systemctl restart watchlog.timer
+sergey@uchuwi:~$ tail -n 1000 /var/log/syslog  | grep word
+2026-07-31T21:30:24.555850+03:00 uchuwi root: пт 31 июль 2026 21:30:24 MSK: I found word, Master!
+2026-07-31T21:31:02.547559+03:00 uchuwi root: пт 31 июль 2026 21:31:02 MSK: I found word, Master!
+2026-07-31T21:31:37.087137+03:00 uchuwi root: пт 31 июль 2026 21:31:37 MSK: I found word, Master!
+sergey@uchuwi:~$ sudo cat /opt/watchlog.sh
+#!/bin/bash
+
+WORD=$1
+LOG=$2
+DATE=`date`
+
+if grep $WORD $LOG &> /dev/null
+then
+logger "$DATE: I found word, Master!"
+else
+exit 0
+fi
+sergey@uchuwi:~$ sudo cat /etc/default/watchlog
+WORD="ALERT"
+LOG=/var/log/syslog
+sergey@uchuwi:~$ sudo cat /etc/systemd/system/watchlog.service
+[Unit]
+Description=My watchlog service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/default/watchlog
+ExecStart=/opt/watchlog.sh $WORD $LOG
+sergey@uchuwi:~$ sudo cat /etc/systemd/system/watchlog.timer
+[Unit]
+Description=Run watchlog script every 30 second
+
+[Timer]
+# Run every 30 second
+OnUnitActiveSec=30
+Unit=watchlog.service
+
+[Install]
+WantedBy=multi-user.target
+sergey@uchuwi:~$ 
+
