@@ -1,0 +1,1036 @@
+
+Ноутбук заряжен на 88%
+осталось зарядить 00:18:13
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 12
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 18:36 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+-rw-rw-r-- 1 sergey sergey 1108 Aug 29 18:34 Vagrantfile
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant up
+Bringing machine 'nginx' up with 'libvirt' provider...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> nginx: Box 'generic/ubuntu2204' could not be found. Attempting to find and install...
+    nginx: Box Provider: libvirt
+    nginx: Box Version: >= 0
+==> nginx: Loading metadata for box 'generic/ubuntu2204'
+    nginx: URL: https://vagrantcloud.com/api/v2/vagrant/generic/ubuntu2204
+^C==> nginx: Waiting for cleanup before exiting...
+==> nginx: Box download was interrupted. Exiting.
+Vagrant exited after cleanup due to external interrupt.
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant up
+Bringing machine 'nginx' up with 'libvirt' provider...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> nginx: Box 'generic/ubuntu2204' could not be found. Attempting to find and install...
+    nginx: Box Provider: libvirt
+    nginx: Box Version: >= 0
+==> nginx: Loading metadata for box 'generic/ubuntu2204'
+    nginx: URL: https://vagrantcloud.com/api/v2/vagrant/generic/ubuntu2204
+==> nginx: Adding box 'generic/ubuntu2204' (v4.3.12) for provider: libvirt (amd64)
+    nginx: Downloading: https://vagrantcloud.com/generic/boxes/ubuntu2204/versions/4.3.12/providers/libvirt/amd64/vagrant.box
+    nginx: Calculating and comparing box checksum...
+==> nginx: Successfully added box 'generic/ubuntu2204' (v4.3.12) for 'libvirt (amd64)'!
+==> nginx: Uploading base box image as volume into Libvirt storage...
+==> nginx: Creating image (snapshot of base box volume).
+==> nginx: Creating domain with the following settings...
+==> nginx:  -- Name:              lesson16_nginx
+==> nginx:  -- Description:       Source: /home/sergey/otus/ansible/lesson16/Vagrantfile
+==> nginx:  -- Domain type:       kvm
+==> nginx:  -- Cpus:              2
+==> nginx:  -- Feature:           acpi
+==> nginx:  -- Feature:           apic
+==> nginx:  -- Feature:           pae
+==> nginx:  -- Clock offset:      utc
+==> nginx:  -- Memory:            2048M
+==> nginx:  -- Base box:          generic/ubuntu2204
+==> nginx:  -- Storage pool:      default
+==> nginx:  -- Image(vda):        /var/lib/libvirt/images/lesson16_nginx.img, virtio, 128G
+==> nginx:  -- Disk driver opts:  cache='default'
+==> nginx:  -- Graphics Type:     vnc
+==> nginx:  -- Video Type:        cirrus
+==> nginx:  -- Video VRAM:        256
+==> nginx:  -- Video 3D accel:    false
+==> nginx:  -- Keymap:            en-us
+==> nginx:  -- TPM Backend:       passthrough
+==> nginx:  -- INPUT:             type=mouse, bus=ps2
+==> nginx: Removing domain...
+==> nginx: Deleting the machine folder
+/home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_network_interfaces.rb:43:in `block in call': undefined method `[]' for nil (NoMethodError)
+
+            @network_name = iface_configuration[:network_name]
+                                               ^^^^^^^^^^^^^^^
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_network_interfaces.rb:41:in `each'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_network_interfaces.rb:41:in `each_with_index'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_network_interfaces.rb:41:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_networks.rb:98:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_domain.rb:466:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/resolve_disk_settings.rb:143:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/create_domain_volume.rb:98:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/handle_box_image.rb:129:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builtin/handle_box.rb:58:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/handle_storage_pool.rb:63:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/set_name_of_domain.rb:34:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builtin/provision.rb:83:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /home/sergey/.vagrant.d/gems/3.3.8/gems/vagrant-libvirt-0.12.2/lib/vagrant-libvirt/action/cleanup_on_failure.rb:21:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:117:in `block in finalize_action'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builder.rb:183:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/runner.rb:104:in `block in run'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/util/busy.rb:22:in `busy'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/runner.rb:104:in `run'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builtin/call.rb:56:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builtin/box_check_outdated.rb:34:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builtin/config_validate.rb:28:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/warden.rb:38:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/builder.rb:183:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/runner.rb:104:in `block in run'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/util/busy.rb:22:in `busy'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/action/runner.rb:104:in `run'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/machine.rb:244:in `action_raw'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/machine.rb:213:in `block in action'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:647:in `lock'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/machine.rb:199:in `call'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/machine.rb:199:in `action'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/batch_action.rb:88:in `block (2 levels) in run'
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant up --provider=libvirt
+/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/plugins/kernel_v2/config/vm.rb:328:in `network': wrong number of arguments (given 2, expected 1) (ArgumentError)
+	from /home/sergey/otus/ansible/lesson16/Vagrantfile:43:in `block (4 levels) in <top (required)>'
+	from /home/sergey/otus/ansible/lesson16/Vagrantfile:32:in `each'
+	from /home/sergey/otus/ansible/lesson16/Vagrantfile:32:in `block (3 levels) in <top (required)>'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/v2/loader.rb:40:in `load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:129:in `block (2 levels) in load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:122:in `each'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:122:in `block in load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:119:in `each'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:119:in `load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/vagrantfile.rb:175:in `machine_config'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:999:in `block in find_configured_plugins'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:997:in `each'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:997:in `find_configured_plugins'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:1025:in `process_configured_plugins'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:198:in `initialize'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/bin/vagrant:193:in `new'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/bin/vagrant:193:in `<main>'
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 16
+drwxrwxr-x 3 sergey sergey 4096 Aug 29 18:59 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 .vagrant/
+-rw-rw-r-- 1 sergey sergey 1646 Aug 29 18:59 Vagrantfile
+sergey@uchuwi:~/otus/ansible/lesson16$ cat Vagrantfile 
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :nginx => {
+        :box_name => "generic/ubuntu2204",
+        :vm_name => "nginx",
+        :net => [
+           ["192.168.11.150",  2, "255.255.255.0", "mynet"],
+        ]
+  }
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+   
+      box.vm.box = boxconfig[:box_name]
+      box.vm.host_name = boxconfig[:vm_name]
+      
+      box.vm.provider "virtualbox" do |v|
+        v.memory = 768
+        v.cpus = 1
+       end
+      box.vm.provider "libvirt" do |v|
+        v.memory = 768
+        v.cpus = 1
+       end
+
+      boxconfig[:net].each do |ipconf|
+        # Базовые параметры, общие для всех провайдеров
+        net_options = { ip: ipconf[0], netmask: ipconf[2] }
+        
+        # Специфичные параметры для VirtualBox
+        net_options[:adapter] = ipconf[1]
+        net_options[:virtualbox__intnet] = ipconf[3]
+        
+        # Специфичные параметры для Libvirt (чтобы не было конфликтов)
+        net_options[:libvirt__network_name] = ipconf[3]
+        
+        box.vm.network("private_network", net_options)
+      end
+
+      if boxconfig.key?(:public)
+        box.vm.network "public_network", boxconfig[:public]
+      end
+
+      box.vm.provision "shell", inline: <<-SHELL
+        mkdir -p ~root/.ssh
+        cp ~vagrant/.ssh/auth* ~root/.ssh
+        sudo sed -i 's/\#PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+        systemctl restart sshd
+      SHELL
+    end
+  end
+end
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant up --provider=libvirt
+/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/plugins/kernel_v2/config/vm.rb:365:in `provider': wrong number of arguments (given 0, expected 1) (ArgumentError)
+	from /home/sergey/otus/ansible/lesson16/Vagrantfile:41:in `block (4 levels) in <top (required)>'
+	from /home/sergey/otus/ansible/lesson16/Vagrantfile:33:in `each'
+	from /home/sergey/otus/ansible/lesson16/Vagrantfile:33:in `block (3 levels) in <top (required)>'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/v2/loader.rb:40:in `load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:129:in `block (2 levels) in load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:122:in `each'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:122:in `block in load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:119:in `each'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/config/loader.rb:119:in `load'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/vagrantfile.rb:175:in `machine_config'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:999:in `block in find_configured_plugins'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:997:in `each'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:997:in `find_configured_plugins'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:1025:in `process_configured_plugins'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/environment.rb:198:in `initialize'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/bin/vagrant:193:in `new'
+	from /opt/vagrant/embedded/gems/gems/vagrant-2.4.9/bin/vagrant:193:in `<main>'
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant up --provider=libvirt
+Bringing machine 'nginx' up with 'libvirt' provider...
+==> nginx: Checking if box 'generic/ubuntu2204' version '4.3.12' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> nginx: Creating image (snapshot of base box volume).
+==> nginx: Creating domain with the following settings...
+==> nginx:  -- Name:              lesson16_nginx
+==> nginx:  -- Description:       Source: /home/sergey/otus/ansible/lesson16/Vagrantfile
+==> nginx:  -- Domain type:       kvm
+==> nginx:  -- Cpus:              1
+==> nginx:  -- Feature:           acpi
+==> nginx:  -- Feature:           apic
+==> nginx:  -- Feature:           pae
+==> nginx:  -- Clock offset:      utc
+==> nginx:  -- Memory:            768M
+==> nginx:  -- Base box:          generic/ubuntu2204
+==> nginx:  -- Storage pool:      default
+==> nginx:  -- Image(vda):        /var/lib/libvirt/images/lesson16_nginx.img, virtio, 128G
+==> nginx:  -- Disk driver opts:  cache='default'
+==> nginx:  -- Graphics Type:     vnc
+==> nginx:  -- Video Type:        cirrus
+==> nginx:  -- Video VRAM:        256
+==> nginx:  -- Video 3D accel:    false
+==> nginx:  -- Keymap:            en-us
+==> nginx:  -- TPM Backend:       passthrough
+==> nginx:  -- INPUT:             type=mouse, bus=ps2
+==> nginx: Creating shared folders metadata...
+==> nginx: Starting domain.
+==> nginx: Domain launching with graphics connection settings...
+==> nginx:  -- Graphics Port:      5900
+==> nginx:  -- Graphics IP:        127.0.0.1
+==> nginx:  -- Graphics Password:  Not defined
+==> nginx:  -- Graphics Websocket: 5700
+==> nginx: Waiting for domain to get an IP address...
+==> nginx: Waiting for machine to boot. This may take a few minutes...
+    nginx: SSH address: 192.168.121.151:22
+    nginx: SSH username: vagrant
+    nginx: SSH auth method: private key
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: Warning: Connection refused. Retrying...
+    nginx: 
+    nginx: Vagrant insecure key detected. Vagrant will automatically replace
+    nginx: this with a newly generated keypair for better security.
+    nginx: 
+    nginx: Inserting generated public key within guest...
+    nginx: Removing insecure key from the guest if it's present...
+    nginx: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> nginx: Machine booted and ready!
+==> nginx: Setting hostname...
+==> nginx: Configuring and enabling network interfaces...
+==> nginx: Running provisioner: shell...
+    nginx: Running: inline script
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant status
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+Current machine states:
+
+nginx                     running (libvirt)
+
+The Libvirt domain is running. To stop this machine, you can run
+`vagrant halt`. To destroy the machine, you can run `vagrant destroy`.
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant ssh
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+vagrant@nginx:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:a6:0f:ef brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname ens5
+    inet 192.168.121.151/24 metric 100 brd 192.168.121.255 scope global dynamic eth0
+       valid_lft 3472sec preferred_lft 3472sec
+    inet6 fe80::5054:ff:fea6:fef/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:8d:fc:4f brd ff:ff:ff:ff:ff:ff
+    altname enp0s6
+    altname ens6
+    inet 192.168.11.150/24 brd 192.168.11.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fe8d:fc4f/64 scope link 
+       valid_lft forever preferred_lft forever
+vagrant@nginx:~$ 
+logout
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant ssh-config
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+Host nginx
+  HostName 192.168.121.151
+  User vagrant
+  Port 22
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile /home/sergey/otus/ansible/lesson16/.vagrant/machines/nginx/libvirt/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+  PubkeyAcceptedKeyTypes +ssh-rsa
+  HostKeyAlgorithms +ssh-rsa
+
+sergey@uchuwi:~/otus/ansible/lesson16$ mkdir staging
+sergey@uchuwi:~/otus/ansible/lesson16$ cd staging/
+sergey@uchuwi:~/otus/ansible/lesson16/staging$ nano hosts
+sergey@uchuwi:~/otus/ansible/lesson16/staging$ cd ..
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible-vagrant % nginx -i staging/hosts -m ping
+ansible-vagrant: команда не найдена
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible  nginx -i staging/hosts -m ping
+[ERROR]: Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory
+Host key verification failed.
+Origin: <adhoc 'ping' task>
+
+{'action': 'ping', 'args': {}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+nginx | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory\r\nHost key verification failed.",
+    "unreachable": true
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -i staging/hosts -m ping
+[ERROR]: Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory
+Host key verification failed.
+Origin: <adhoc 'ping' task>
+
+{'action': 'ping', 'args': {}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+nginx | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory\r\nHost key verification failed.",
+    "unreachable": true
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -i staging/hosts -m ping
+[ERROR]: Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory
+Host key verification failed.
+Origin: <adhoc 'ping' task>
+
+{'action': 'ping', 'args': {}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+nginx | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory\r\nHost key verification failed.",
+    "unreachable": true
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ ping 192.168.121.151
+PING 192.168.121.151 (192.168.121.151) 56(84) bytes of data.
+64 bytes from 192.168.121.151: icmp_seq=1 ttl=64 time=0.350 ms
+64 bytes from 192.168.121.151: icmp_seq=2 ttl=64 time=0.563 ms
+^C
+--- 192.168.121.151 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1031ms
+rtt min/avg/max/mdev = 0.350/0.456/0.563/0.106 ms
+sergey@uchuwi:~/otus/ansible/lesson16$ ssh vagrant@192.168.121.151
+The authenticity of host '192.168.121.151 (192.168.121.151)' can't be established.
+ED25519 key fingerprint is: SHA256:W+gppuK3WAJsBqf4AeJbnIDbmFZP3jYwYQrXfkqmdc8
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.121.151' (ED25519) to the list of known hosts.
+vagrant@192.168.121.151's password: 
+Permission denied, please try again.
+vagrant@192.168.121.151's password: 
+
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ pwd
+/home/sergey/otus/ansible/lesson16
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 20
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 19:35 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 .vagrant/
+-rw-rw-r-- 1 sergey sergey 1819 Aug 29 19:05 Vagrantfile
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 19:40 staging/
+sergey@uchuwi:~/otus/ansible/lesson16$ ll .vagrant/
+total 20
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 19:35 ../
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 18:38 bundler/
+drwxrwxr-x 3 sergey sergey 4096 Aug 29 18:38 machines/
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 18:38 rgloader/
+sergey@uchuwi:~/otus/ansible/lesson16$ ll .vagrant/machines/nginx/
+total 12
+drwxrwxr-x 3 sergey sergey 4096 Aug 29 18:51 ./
+drwxrwxr-x 3 sergey sergey 4096 Aug 29 18:38 ../
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 19:07 libvirt/
+sergey@uchuwi:~/otus/ansible/lesson16$ ll .vagrant/machines/nginx/libvirt/
+total 44
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 19:07 ./
+drwxrwxr-x 3 sergey sergey 4096 Aug 29 18:51 ../
+-rw-rw-r-- 1 sergey sergey   40 Aug 29 19:07 action_provision
+-rw-rw-r-- 1 sergey sergey  142 Aug 29 19:07 box_meta
+-rw-rw-r-- 1 sergey sergey   74 Aug 29 19:05 created_networks
+-rw-rw-r-- 1 sergey sergey    4 Aug 29 19:05 creator_uid
+-rw-rw-r-- 1 sergey sergey   36 Aug 29 19:05 id
+-rw-rw-r-- 1 sergey sergey   32 Aug 29 19:05 index_uuid
+-rw------- 1 sergey sergey  400 Aug 29 19:07 private_key
+-rw-rw-r-- 1 sergey sergey    2 Aug 29 19:07 synced_folders
+-rw-rw-r-- 1 sergey sergey   34 Aug 29 19:05 vagrant_cwd
+sergey@uchuwi:~/otus/ansible/lesson16$ ll .vagrant/machines/nginx/libvirt/
+total 44
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 19:07 ./
+drwxrwxr-x 3 sergey sergey 4096 Aug 29 18:51 ../
+-rw-rw-r-- 1 sergey sergey   40 Aug 29 19:07 action_provision
+-rw-rw-r-- 1 sergey sergey  142 Aug 29 19:07 box_meta
+-rw-rw-r-- 1 sergey sergey   74 Aug 29 19:05 created_networks
+-rw-rw-r-- 1 sergey sergey    4 Aug 29 19:05 creator_uid
+-rw-rw-r-- 1 sergey sergey   36 Aug 29 19:05 id
+-rw-rw-r-- 1 sergey sergey   32 Aug 29 19:05 index_uuid
+-rw------- 1 sergey sergey  400 Aug 29 19:07 private_key
+-rw-rw-r-- 1 sergey sergey    2 Aug 29 19:07 synced_folders
+-rw-rw-r-- 1 sergey sergey   34 Aug 29 19:05 vagrant_cwd
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -i staging/hosts -m ping
+[ERROR]: Task failed: Failed to connect to the host via ssh: sergey@192.168.121.151: Permission denied (publickey,password).
+Origin: <adhoc 'ping' task>
+
+{'action': 'ping', 'args': {}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+nginx | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Task failed: Failed to connect to the host via ssh: sergey@192.168.121.151: Permission denied (publickey,password).",
+    "unreachable": true
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -i staging/hosts -m ping
+[ERROR]: Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory
+Host key verification failed.
+Origin: <adhoc 'ping' task>
+
+{'action': 'ping', 'args': {}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+nginx | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Task failed: Failed to connect to the host via ssh: ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory\r\nHost key verification failed.",
+    "unreachable": true
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ vagrant ssh-config
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+Host nginx
+  HostName 192.168.121.151
+  User vagrant
+  Port 22
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile /home/sergey/otus/ansible/lesson16/.vagrant/machines/nginx/libvirt/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+  PubkeyAcceptedKeyTypes +ssh-rsa
+  HostKeyAlgorithms +ssh-rsa
+
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -i staging/hosts -m ping
+[ERROR]: Task failed: Failed to connect to the host via ssh: sergey@192.168.121.151: Permission denied (publickey,password).
+Origin: <adhoc 'ping' task>
+
+{'action': 'ping', 'args': {}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+nginx | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Task failed: Failed to connect to the host via ssh: sergey@192.168.121.151: Permission denied (publickey,password).",
+    "unreachable": true
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ cat staging/hosts 
+[web]
+nginx ansible_host=192.168.121.151
+ansible_port=22
+ansible_user=vagrant 
+ansible_private_key_file=/home/sergey/otus/ansible/lesson16/.vagrant/machines/nginx/libvirt/private_key
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -i staging/hosts -m ping
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+nginx | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.10"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ дд
+дд: команда не найдена
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 20
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 19:35 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 .vagrant/
+-rw-rw-r-- 1 sergey sergey 1819 Aug 29 19:05 Vagrantfile
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 19:57 staging/
+sergey@uchuwi:~/otus/ansible/lesson16$ nano ansible.cfg
+sergey@uchuwi:~/otus/ansible/lesson16$ nano staging/hosts
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -m ping
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+nginx | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.10"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -m command -a "uname -r"
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+nginx | CHANGED | rc=0 >>
+5.15.0-91-generic
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible nginx -m systemd -a name=firewalld
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+nginx | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.10"
+    },
+    "changed": false,
+    "name": "firewalld",
+    "status": {
+        "ActiveEnterTimestamp": "n/a",
+        "ActiveEnterTimestampMonotonic": "0",
+        "ActiveExitTimestamp": "n/a",
+        "ActiveExitTimestampMonotonic": "0",
+        "ActiveState": "inactive",
+        "AllowIsolate": "no",
+        "AssertResult": "no",
+        "AssertTimestamp": "n/a",
+        "AssertTimestampMonotonic": "0",
+        "BlockIOAccounting": "no",
+        "BlockIOWeight": "[not set]",
+        "CPUAccounting": "yes",
+        "CPUAffinityFromNUMA": "no",
+        "CPUQuotaPerSecUSec": "infinity",
+        "CPUQuotaPeriodUSec": "infinity",
+        "CPUSchedulingPolicy": "0",
+        "CPUSchedulingPriority": "0",
+        "CPUSchedulingResetOnFork": "no",
+        "CPUShares": "[not set]",
+        "CPUUsageNSec": "[not set]",
+        "CPUWeight": "[not set]",
+        "CacheDirectoryMode": "0755",
+        "CanFreeze": "yes",
+        "CanIsolate": "no",
+        "CanReload": "no",
+        "CanStart": "no",
+        "CanStop": "yes",
+        "CapabilityBoundingSet": "cap_chown cap_dac_override cap_dac_read_search cap_fowner cap_fsetid cap_kill cap_setgid cap_setuid cap_setpcap cap_linux_immutable cap_net_bind_service cap_net_broadcast cap_net_admin cap_net_raw cap_ipc_lock cap_ipc_owner cap_sys_module cap_sys_rawio cap_sys_chroot cap_sys_ptrace cap_sys_pacct cap_sys_admin cap_sys_boot cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config cap_mknod cap_lease cap_audit_write cap_audit_control cap_setfcap cap_mac_override cap_mac_admin cap_syslog cap_wake_alarm cap_block_suspend cap_audit_read cap_perfmon cap_bpf cap_checkpoint_restore",
+        "CleanResult": "success",
+        "CollectMode": "inactive",
+        "ConditionResult": "no",
+        "ConditionTimestamp": "n/a",
+        "ConditionTimestampMonotonic": "0",
+        "ConfigurationDirectoryMode": "0755",
+        "ControlPID": "0",
+        "CoredumpFilter": "0x33",
+        "DefaultDependencies": "yes",
+        "DefaultMemoryLow": "0",
+        "DefaultMemoryMin": "0",
+        "Delegate": "no",
+        "Description": "firewalld.service",
+        "DevicePolicy": "auto",
+        "DynamicUser": "no",
+        "ExecMainCode": "0",
+        "ExecMainExitTimestamp": "n/a",
+        "ExecMainExitTimestampMonotonic": "0",
+        "ExecMainPID": "0",
+        "ExecMainStartTimestamp": "n/a",
+        "ExecMainStartTimestampMonotonic": "0",
+        "ExecMainStatus": "0",
+        "FailureAction": "none",
+        "FileDescriptorStoreMax": "0",
+        "FinalKillSignal": "9",
+        "FreezerState": "running",
+        "GID": "[not set]",
+        "GuessMainPID": "yes",
+        "IOAccounting": "no",
+        "IOReadBytes": "18446744073709551615",
+        "IOReadOperations": "18446744073709551615",
+        "IOSchedulingClass": "2",
+        "IOSchedulingPriority": "4",
+        "IOWeight": "[not set]",
+        "IOWriteBytes": "18446744073709551615",
+        "IOWriteOperations": "18446744073709551615",
+        "IPAccounting": "no",
+        "IPEgressBytes": "[no data]",
+        "IPEgressPackets": "[no data]",
+        "IPIngressBytes": "[no data]",
+        "IPIngressPackets": "[no data]",
+        "Id": "firewalld.service",
+        "IgnoreOnIsolate": "no",
+        "IgnoreSIGPIPE": "yes",
+        "InactiveEnterTimestamp": "n/a",
+        "InactiveEnterTimestampMonotonic": "0",
+        "InactiveExitTimestamp": "n/a",
+        "InactiveExitTimestampMonotonic": "0",
+        "JobRunningTimeoutUSec": "infinity",
+        "JobTimeoutAction": "none",
+        "JobTimeoutUSec": "infinity",
+        "KeyringMode": "private",
+        "KillMode": "control-group",
+        "KillSignal": "15",
+        "LimitAS": "infinity",
+        "LimitASSoft": "infinity",
+        "LimitCORE": "infinity",
+        "LimitCORESoft": "0",
+        "LimitCPU": "infinity",
+        "LimitCPUSoft": "infinity",
+        "LimitDATA": "infinity",
+        "LimitDATASoft": "infinity",
+        "LimitFSIZE": "infinity",
+        "LimitFSIZESoft": "infinity",
+        "LimitLOCKS": "infinity",
+        "LimitLOCKSSoft": "infinity",
+        "LimitMEMLOCK": "92471296",
+        "LimitMEMLOCKSoft": "92471296",
+        "LimitMSGQUEUE": "819200",
+        "LimitMSGQUEUESoft": "819200",
+        "LimitNICE": "0",
+        "LimitNICESoft": "0",
+        "LimitNOFILE": "1048576",
+        "LimitNOFILESoft": "1048576",
+        "LimitNPROC": "2369",
+        "LimitNPROCSoft": "2369",
+        "LimitRSS": "infinity",
+        "LimitRSSSoft": "infinity",
+        "LimitRTPRIO": "0",
+        "LimitRTPRIOSoft": "0",
+        "LimitRTTIME": "infinity",
+        "LimitRTTIMESoft": "infinity",
+        "LimitSIGPENDING": "2369",
+        "LimitSIGPENDINGSoft": "2369",
+        "LimitSTACK": "infinity",
+        "LimitSTACKSoft": "8388608",
+        "LoadError": "org.freedesktop.systemd1.NoSuchUnit \"Unit firewalld.service not found.\"",
+        "LoadState": "not-found",
+        "LockPersonality": "no",
+        "LogLevelMax": "-1",
+        "LogRateLimitBurst": "0",
+        "LogRateLimitIntervalUSec": "0",
+        "LogsDirectoryMode": "0755",
+        "MainPID": "0",
+        "ManagedOOMMemoryPressure": "auto",
+        "ManagedOOMMemoryPressureLimit": "0",
+        "ManagedOOMPreference": "none",
+        "ManagedOOMSwap": "auto",
+        "MemoryAccounting": "yes",
+        "MemoryAvailable": "infinity",
+        "MemoryCurrent": "[not set]",
+        "MemoryDenyWriteExecute": "no",
+        "MemoryHigh": "infinity",
+        "MemoryLimit": "infinity",
+        "MemoryLow": "0",
+        "MemoryMax": "infinity",
+        "MemoryMin": "0",
+        "MemorySwapMax": "infinity",
+        "MountAPIVFS": "no",
+        "NFileDescriptorStore": "0",
+        "NRestarts": "0",
+        "NUMAPolicy": "n/a",
+        "Names": "firewalld.service",
+        "NeedDaemonReload": "no",
+        "Nice": "0",
+        "NoNewPrivileges": "no",
+        "NonBlocking": "no",
+        "NotifyAccess": "none",
+        "OOMScoreAdjust": "0",
+        "OnFailureJobMode": "replace",
+        "OnSuccessJobMode": "fail",
+        "Perpetual": "no",
+        "PrivateDevices": "no",
+        "PrivateIPC": "no",
+        "PrivateMounts": "no",
+        "PrivateNetwork": "no",
+        "PrivateTmp": "no",
+        "PrivateUsers": "no",
+        "ProcSubset": "all",
+        "ProtectClock": "no",
+        "ProtectControlGroups": "no",
+        "ProtectHome": "no",
+        "ProtectHostname": "no",
+        "ProtectKernelLogs": "no",
+        "ProtectKernelModules": "no",
+        "ProtectKernelTunables": "no",
+        "ProtectProc": "default",
+        "ProtectSystem": "no",
+        "RefuseManualStart": "no",
+        "RefuseManualStop": "no",
+        "ReloadResult": "success",
+        "RemainAfterExit": "no",
+        "RemoveIPC": "no",
+        "Restart": "no",
+        "RestartKillSignal": "15",
+        "RestartUSec": "100ms",
+        "RestrictNamespaces": "no",
+        "RestrictRealtime": "no",
+        "RestrictSUIDSGID": "no",
+        "Result": "success",
+        "RootDirectoryStartOnly": "no",
+        "RuntimeDirectoryMode": "0755",
+        "RuntimeDirectoryPreserve": "no",
+        "RuntimeMaxUSec": "infinity",
+        "SameProcessGroup": "no",
+        "SecureBits": "0",
+        "SendSIGHUP": "no",
+        "SendSIGKILL": "yes",
+        "StandardError": "inherit",
+        "StandardInput": "null",
+        "StandardOutput": "inherit",
+        "StartLimitAction": "none",
+        "StartLimitBurst": "5",
+        "StartLimitIntervalUSec": "10s",
+        "StartupBlockIOWeight": "[not set]",
+        "StartupCPUShares": "[not set]",
+        "StartupCPUWeight": "[not set]",
+        "StartupIOWeight": "[not set]",
+        "StateChangeTimestamp": "n/a",
+        "StateChangeTimestampMonotonic": "0",
+        "StateDirectoryMode": "0755",
+        "StatusErrno": "0",
+        "StopWhenUnneeded": "no",
+        "SubState": "dead",
+        "SuccessAction": "none",
+        "SyslogFacility": "3",
+        "SyslogLevel": "6",
+        "SyslogLevelPrefix": "yes",
+        "SyslogPriority": "30",
+        "SystemCallErrorNumber": "2147483646",
+        "TTYReset": "no",
+        "TTYVHangup": "no",
+        "TTYVTDisallocate": "no",
+        "TasksAccounting": "yes",
+        "TasksCurrent": "[not set]",
+        "TasksMax": "710",
+        "TimeoutAbortUSec": "1min 30s",
+        "TimeoutCleanUSec": "infinity",
+        "TimeoutStartFailureMode": "terminate",
+        "TimeoutStartUSec": "1min 30s",
+        "TimeoutStopFailureMode": "terminate",
+        "TimeoutStopUSec": "1min 30s",
+        "TimerSlackNSec": "50000",
+        "Transient": "no",
+        "UID": "[not set]",
+        "UMask": "0022",
+        "UtmpMode": "init",
+        "WatchdogSignal": "6",
+        "WatchdogTimestamp": "n/a",
+        "WatchdogTimestampMonotonic": "0",
+        "WatchdogUSec": "infinity"
+    }
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ nano install_nginx.yml
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 28
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 20:07 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 .vagrant/
+-rw-rw-r-- 1 sergey sergey 1819 Aug 29 19:05 Vagrantfile
+-rw-rw-r-- 1 sergey sergey  113 Aug 29 19:59 ansible.cfg
+-rw-rw-r-- 1 sergey sergey  229 Aug 29 20:07 install_nginx.yml
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 20:00 staging/
+sergey@uchuwi:~/otus/ansible/lesson16$ mkdir templates
+sergey@uchuwi:~/otus/ansible/lesson16$ nano install_nginx.yml
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 32
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 20:13 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 .vagrant/
+-rw-rw-r-- 1 sergey sergey 1819 Aug 29 19:05 Vagrantfile
+-rw-rw-r-- 1 sergey sergey  113 Aug 29 19:59 ansible.cfg
+-rw-rw-r-- 1 sergey sergey  587 Aug 29 20:13 install_nginx.yml
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 20:00 staging/
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 20:09 templates/
+sergey@uchuwi:~/otus/ansible/lesson16$ nano templates/nginx.conf.j2
+sergey@uchuwi:~/otus/ansible/lesson16$ nano install_nginx.yml
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible-playbook install_nginx.yml 
+ansible.cfg                 --connection                install_nginx.yml           --private-key               --timeout
+--ask-become-pass           --connection-password-file  --inventory                 --scp-extra-args            -u
+--ask-pass                  --conn-pass-file            --inventory-file            --sftp-extra-args           --user
+--ask-vault-pass            -D                          -J                          --skip-tags                 -v
+--ask-vault-password        --diff                      -k                          --ssh-common-args           .vagrant/
+-b                          -e                          -K                          --ssh-extra-args            Vagrantfile
+--become                    --extra-vars                --key-file                  staging/                    --vault-id
+--become-method             -f                          -l                          --start-at-task             --vault-pass-file
+--become-pass-file          --flush-cache               --limit                     --step                      --vault-password-file
+--become-password-file      --force-handlers            --list-hosts                --syntax-check              --verbose
+--become-user               --forks                     --list-tags                 -t                          --version
+-c                          -h                          --list-tasks                -T                          
+-C                          --help                      -M                          --tags                      
+--check                     -i                          --module-path               templates/                  
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible-playbook install_nginx.yml 
+[ERROR]: YAML parsing failed: Mapping values are not allowed in this context.
+Origin: /home/sergey/otus/ansible/lesson16/install_nginx.yml:30:22
+
+28
+29   vars: Добавлена только секция vars
+30     nginx_listen_port: 8080
+                        ^ column 22
+
+sergey@uchuwi:~/otus/ansible/lesson16$ cat install_nginx.yml 
+---
+- name: NGINX | Install and configure NGINX
+  hosts: nginx
+  become: yes
+
+  tasks:
+    - name: update
+      apt:
+        update_cache=yes
+    - name: NGINX | Install NGINX
+      apt:
+        name: nginx
+        state: latest
+      notify:
+        - restart nginx
+
+    - name: NGINX | Create NGINX config file from template
+      template:
+        src: templates/nginx.conf.j2
+        dest: /tmp/nginx.conf
+      notify:
+        - reload nginx
+      tags:
+        - nginx-configuration
+    - name: NGINX | Install and configure NGINX
+      hosts: nginx
+      become: true
+
+  vars: Добавлена только секция vars
+    nginx_listen_port: 8080
+
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reload
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible-playbook install_nginx.yml 
+
+PLAY [NGINX | Install and configure NGINX] ********************************************************************************************************************
+
+TASK [Gathering Facts] ****************************************************************************************************************************************
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+ok: [nginx]
+
+TASK [update] *************************************************************************************************************************************************
+changed: [nginx]
+
+TASK [NGINX | Install NGINX] **********************************************************************************************************************************
+changed: [nginx]
+
+TASK [NGINX | Create NGINX config file from template] *********************************************************************************************************
+changed: [nginx]
+
+RUNNING HANDLER [restart nginx] *******************************************************************************************************************************
+changed: [nginx]
+
+RUNNING HANDLER [reload nginx] ********************************************************************************************************************************
+[ERROR]: Task failed: Module failed: value of state must be one of: reloaded, restarted, started, stopped, got: reload
+Origin: /home/sergey/otus/ansible/lesson16/install_nginx.yml:31:7
+
+29         state: restarted
+30         enabled: yes
+31     - name: reload nginx
+         ^ column 7
+
+fatal: [nginx]: FAILED! => {"changed": false, "msg": "value of state must be one of: reloaded, restarted, started, stopped, got: reload"}
+
+PLAY RECAP ****************************************************************************************************************************************************
+nginx                      : ok=5    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+sergey@uchuwi:~/otus/ansible/lesson16$ cat install_nginx.yml 
+---
+- name: NGINX | Install and configure NGINX
+  hosts: nginx
+  become: yes
+
+  tasks:
+    - name: update
+      apt: update_cache=yes
+    - name: NGINX | Install NGINX
+      apt:
+        name: nginx
+        state: latest
+      notify:
+        - restart nginx
+    - name: NGINX | Create NGINX config file from template
+      template:
+        src: templates/nginx.conf.j2
+        dest: /tmp/nginx.conf
+      notify:
+        - reload nginx
+      tags:
+        - nginx-configuration
+  vars:
+    nginx_listen_port: 8080
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reload
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible-playbook install_nginx.yml 
+
+PLAY [NGINX | Install and configure NGINX] ********************************************************************************************************************
+
+TASK [Gathering Facts] ****************************************************************************************************************************************
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+ok: [nginx]
+
+TASK [update] *************************************************************************************************************************************************
+changed: [nginx]
+
+TASK [NGINX | Install NGINX] **********************************************************************************************************************************
+ok: [nginx]
+
+TASK [NGINX | Create NGINX config file from template] *********************************************************************************************************
+ok: [nginx]
+
+PLAY RECAP ****************************************************************************************************************************************************
+nginx                      : ok=4    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+sergey@uchuwi:~/otus/ansible/lesson16$ nano install_nginx.yml
+sergey@uchuwi:~/otus/ansible/lesson16$ ansible-playbook install_nginx.yml 
+
+PLAY [NGINX | Install and configure NGINX] ********************************************************************************************************************
+
+TASK [Gathering Facts] ****************************************************************************************************************************************
+[WARNING]: Host 'nginx' is using the discovered Python interpreter at '/usr/bin/python3.10', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+ok: [nginx]
+
+TASK [update] *************************************************************************************************************************************************
+changed: [nginx]
+
+TASK [NGINX | Install NGINX] **********************************************************************************************************************************
+ok: [nginx]
+
+TASK [NGINX | Create NGINX config file from template] *********************************************************************************************************
+changed: [nginx]
+
+RUNNING HANDLER [reload nginx] ********************************************************************************************************************************
+changed: [nginx]
+
+PLAY RECAP ****************************************************************************************************************************************************
+nginx                      : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+sergey@uchuwi:~/otus/ansible/lesson16$ cat install_nginx.yml 
+---
+- name: NGINX | Install and configure NGINX
+  hosts: nginx
+  become: yes
+
+  tasks:
+    - name: update
+      apt: update_cache=yes
+    - name: NGINX | Install NGINX
+      apt:
+        name: nginx
+        state: latest
+      notify:
+        - restart nginx
+    - name: NGINX | Create NGINX config file from template
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - reload nginx
+      tags:
+        - nginx-configuration
+  vars:
+    nginx_listen_port: 8080
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded
+sergey@uchuwi:~/otus/ansible/lesson16$ ll
+total 32
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 20:50 ./
+drwxrwxr-x 4 sergey sergey 4096 Aug 29 18:35 ../
+drwxrwxr-x 5 sergey sergey 4096 Aug 29 18:38 .vagrant/
+-rw-rw-r-- 1 sergey sergey 1819 Aug 29 19:05 Vagrantfile
+-rw-rw-r-- 1 sergey sergey  113 Aug 29 19:59 ansible.cfg
+-rw-rw-r-- 1 sergey sergey  725 Aug 29 20:50 install_nginx.yml
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 20:00 staging/
+drwxrwxr-x 2 sergey sergey 4096 Aug 29 20:14 templates/
+sergey@uchuwi:~/otus/ansible/lesson16$ cat ansible.cfg 
+[defaults]
+inventory = staging/hosts
+remote_user = vagrant
+host_key_checking = False
+retry_files_enabled = False
+sergey@uchuwi:~/otus/ansible/lesson16$ cat staging/hosts 
+[web]
+nginx ansible_host=192.168.121.151 ansible_port=22 ansible_private_key_file=/home/sergey/otus/ansible/lesson16/.vagrant/machines/nginx/libvirt/private_key
+
+sergey@uchuwi:~/otus/ansible/lesson16$ cat templates/nginx.conf.j2 
+# {{ ansible_managed }}
+events {
+    worker_connections 1024;
+}
+
+http {
+    server {
+        listen       {{ nginx_listen_port }} default_server;
+        server_name  default_server;
+        root         /usr/share/nginx/html;
+
+        location / {
+        }
+    }
+}
+sergey@uchuwi:~/otus/ansible/lesson16$ 
+
