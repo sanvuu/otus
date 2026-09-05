@@ -1,0 +1,291 @@
+
+Ноутбук заряжен на 83%
+осталось зарядить 00:24:58
+sergey@uchuwi:~/otus/vagrant_demo$ cd
+sergey@uchuwi:~$ curl -fsSL https://get.docker.com -o get-docker.sh
+sergey@uchuwi:~$ docker --version
+Команда «docker» не найдена, но может быть установлена с помощью:
+sudo snap install docker         # version 29.6.1, or
+sudo apt  install podman-docker  # version 5.7.0+ds2-3build1
+sudo apt  install docker.io      # version 29.1.3-0ubuntu4.1
+См. 'snap info docker', чтобы посмотреть дополнительные версии.
+sergey@uchuwi:~$  sudo sh ./get-docker.sh --dry-run
+[sudo: authenticate] Пароль:         
+# Executing docker install script, commit: 4e16be805b3af595aa448d1a4def857841f1c62c
+apt-get -qq update >/dev/null
+DEBIAN_FRONTEND=noninteractive apt-get -y -qq install ca-certificates curl >/dev/null
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu resolute stable" > /etc/apt/sources.list.d/docker.list
+apt-get -qq update >/dev/null
+DEBIAN_FRONTEND=noninteractive apt-get -y -qq install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-ce-rootless-extras docker-buildx-plugin docker-model-plugin >/dev/null
+systemctl enable --now docker.service 2>/dev/null
+
+sergey@uchuwi:~$ sudo systemctl status docker
+Unit docker.service could not be found.
+sergey@uchuwi:~$ sudo sh ./get-docker.sh
+# Executing docker install script, commit: 4e16be805b3af595aa448d1a4def857841f1c62c
++ sh -c apt-get -qq update >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get -y -qq install ca-certificates curl >/dev/null
++ sh -c install -m 0755 -d /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" -o /etc/apt/keyrings/docker.asc
++ sh -c chmod a+r /etc/apt/keyrings/docker.asc
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu resolute stable" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get -qq update >/dev/null
++ apt_flags=-y -qq
++ [ -n  ]
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get -y -qq install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-ce-rootless-extras docker-buildx-plugin docker-model-plugin >/dev/null
+Using systemd to manage Docker service
++ sh -c systemctl enable --now docker.service 2>/dev/null
+INFO: Docker daemon enabled and started
+
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           29.8.0
+ API version:       1.56
+ Go version:        go1.26.8
+ Git commit:        88096ef
+ Built:             Thu Sep  3 21:50:20 2026
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          29.8.0
+  API version:      1.56 (minimum version 1.40)
+  Go version:       go1.26.8
+  Git commit:       3ce5872
+  Built:            Thu Sep  3 21:50:20 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.3.4
+  GitCommit:        db8809540e1a7a9da5d518876894933ff55692ab
+ runc:
+  Version:          1.5.1
+  GitCommit:        v1.5.1-0-g8f2685a4
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+sergey@uchuwi:~$ sudo systemctl status docker
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-09-05 13:26:00 MSK; 11s ago
+ Invocation: 12954f820765448a94be0f881a9d0b8e
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 204454 (dockerd)
+      Tasks: 15
+     Memory: 27.1M (peak: 30.9M)
+        CPU: 546ms
+     CGroup: /system.slice/docker.service
+             └─204454 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+сен 05 13:25:59 uchuwi dockerd[204454]: time="2026-09-05T13:25:59.800816586+03:00" level=info msg="Restoring containers: start."
+сен 05 13:25:59 uchuwi dockerd[204454]: time="2026-09-05T13:25:59.824960148+03:00" level=info msg="Deleting nftables IPv4 rules" error="running nft: /dev/stdi>
+сен 05 13:25:59 uchuwi dockerd[204454]: time="2026-09-05T13:25:59.844486005+03:00" level=info msg="Deleting nftables IPv6 rules" error="running nft: /dev/stdi>
+сен 05 13:26:00 uchuwi dockerd[204454]: time="2026-09-05T13:26:00.288575881+03:00" level=info msg="Loading containers: done."
+сен 05 13:26:00 uchuwi dockerd[204454]: time="2026-09-05T13:26:00.297200195+03:00" level=info msg="Docker daemon" commit=3ce5872 containerd-snapshotter=true s>
+сен 05 13:26:00 uchuwi dockerd[204454]: time="2026-09-05T13:26:00.297388335+03:00" level=info msg="Initializing buildkit"
+сен 05 13:26:00 uchuwi dockerd[204454]: time="2026-09-05T13:26:00.358275886+03:00" level=info msg="Completed buildkit initialization"
+сен 05 13:26:00 uchuwi dockerd[204454]: time="2026-09-05T13:26:00.363725412+03:00" level=info msg="Daemon has completed initialization"
+сен 05 13:26:00 uchuwi dockerd[204454]: time="2026-09-05T13:26:00.363824248+03:00" level=info msg="API listen on /run/docker.sock"
+сен 05 13:26:00 uchuwi systemd[1]: Started docker.service - Docker Application Container Engine.
+sergey@uchuwi:~$ docker run hello-world
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+sergey@uchuwi:~$ sudo usermod -aG docker $USER
+sergey@uchuwi:~$ groups
+sergey adm cdrom sudo dip plugdev users lpadmin lxd davfs2 libvirt kvm input
+sergey@uchuwi:~$ newgrp docker
+
+Ноутбук заряжен на 86%
+осталось зарядить 00:25:27
+sergey@uchuwi:~$ groups
+docker adm cdrom sudo dip plugdev users lpadmin lxd davfs2 libvirt kvm input sergey
+sergey@uchuwi:~$ docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pull complete 
+d5e71e642bf5: Download complete 
+Digest: sha256:5dd0d3e6e255913fc30f90b9f2b1d359cc2cbdb48090cc4b65f1676e203243cc
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+sergey@uchuwi:~$ docker compose version
+Docker Compose version v5.5.1
+sergey@uchuwi:~$ cd otus
+sergey@uchuwi:~/otus$ mkdir leeson18
+sergey@uchuwi:~/otus$ cd lesson18
+bash: cd: lesson18: Нет такого файла или каталога
+sergey@uchuwi:~/otus$ mkdir lesson18
+sergey@uchuwi:~/otus$ rmdiw leeson18
+Команда «rmdiw» не найдена. Возможно, вы имели в виду:
+  команда 'rmdir' из deb-пакета coreutils-from-gnu (0.0.0~ubuntu25)
+  команда 'rmdir' из deb-пакета coreutils-from-uutils (0.0.0~ubuntu25)
+  команда 'rmdir' из deb-пакета coreutils-from-busybox (0.0.0~ubuntu25)
+  команда 'rmdir' из deb-пакета coreutils-from-toybox (0.0.0~ubuntu25)
+  команда 'rmdic' из deb-пакета canna-utils (3.7p3-26build1)
+Попробуйте: sudo apt install <имя_deb-пакета>
+sergey@uchuwi:~/otus$ rmdir leeson18
+sergey@uchuwi:~/otus$ cd lesson18
+sergey@uchuwi:~/otus/lesson18$ ll
+total 8
+drwxrwxr-x  2 sergey docker 4096 Sep  5 13:31 ./
+drwxrwxr-x 20 sergey sergey 4096 Sep  5 13:31 ../
+sergey@uchuwi:~/otus/lesson18$ nano index.html
+sergey@uchuwi:~/otus/lesson18$ cat index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Мой кастомный Nginx</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 10%; background-color: #f0f2f5; }
+        h1 { color: #1877f2; }
+    </style>
+</head>
+<body>
+    <h1>Привет! Это кастомная страница в Docker-контейнере!</h1>
+    <p>Образ собран на базе Alpine Linux.</p>
+</body>
+</html>
+sergey@uchuwi:~/otus/lesson18$ nano Dockerfile
+sergey@uchuwi:~/otus/lesson18$ cat Dockerfile
+# Используем легковесный образ nginx на базе alpine
+FROM nginx:alpine
+
+# Копируем наш index.html внутрь контейнера, заменяя дефолтный файл nginx
+COPY index.html /usr/share/nginx/html/index.html
+
+# Экспонируем 80 порт
+EXPOSE 80
+sergey@uchuwi:~/otus/lesson18$ docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED         STATUS                     PORTS     NAMES
+8130f2c833a3   hello-world   "/hello"   4 minutes ago   Exited (0) 4 minutes ago             suspicious_shtern
+sergey@uchuwi:~/otus/lesson18$ docker build -t my-custom-nginx .
+[+] Building 7.0s (7/7) FINISHED                                                                                                                docker:default
+ => [internal] load build definition from Dockerfile                                                                                                      0.0s
+ => => transferring dockerfile: 360B                                                                                                                      0.0s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                                                           3.0s
+ => [internal] load .dockerignore                                                                                                                         0.0s
+ => => transferring context: 2B                                                                                                                           0.0s
+ => [internal] load build context                                                                                                                         0.0s
+ => => transferring context: 505B                                                                                                                         0.0s
+ => [1/2] FROM docker.io/library/nginx:alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3                                     3.7s
+ => => resolve docker.io/library/nginx:alpine@sha256:72ba65eb42c10344912a84ff42408db7d34f2feb642204570ab8fc5ffd29f1d3                                     0.0s
+ => => sha256:6636b9fc203ce74d0b07a1d3f48cfa0151b23fa5e787232908e560673a66b553 20.52MB / 20.52MB                                                          3.1s
+ => => sha256:8f924cf5086c7b8a67e8b3e03b22851c1de8e11b0433c21904ef340d89e5014e 1.40kB / 1.40kB                                                            0.3s
+ => => sha256:51900e10fb9cfad93aa74360e5f938efcbe6d3396a380867b7561c84e5cd2daf 1.21kB / 1.21kB                                                            0.8s
+ => => sha256:bc98d76756163f687c200ed6114df3904623bbb5e7698b420efaf8ef3c81dfcf 404B / 404B                                                                0.8s
+ => => sha256:58c524ea09ced2269cb14533d95b80de9fea9532abbf171585d8acee413893f2 956B / 956B                                                                0.5s
+ => => sha256:af7dd138f4591521064c208da6af07f487ebc3e5b350989c0ec2017b3e5208e3 628B / 628B                                                                0.3s
+ => => sha256:850bf2dcecff7924b238f0b7cbae7b456e5206453b784fe6b4adfc949add274a 4.40MB / 4.40MB                                                            2.0s
+ => => sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4 3.85MB / 3.85MB                                                            2.2s
+ => => extracting sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4                                                                 0.1s
+ => => extracting sha256:850bf2dcecff7924b238f0b7cbae7b456e5206453b784fe6b4adfc949add274a                                                                 0.1s
+ => => extracting sha256:af7dd138f4591521064c208da6af07f487ebc3e5b350989c0ec2017b3e5208e3                                                                 0.0s
+ => => extracting sha256:58c524ea09ced2269cb14533d95b80de9fea9532abbf171585d8acee413893f2                                                                 0.0s
+ => => extracting sha256:bc98d76756163f687c200ed6114df3904623bbb5e7698b420efaf8ef3c81dfcf                                                                 0.0s
+ => => extracting sha256:51900e10fb9cfad93aa74360e5f938efcbe6d3396a380867b7561c84e5cd2daf                                                                 0.0s
+ => => extracting sha256:8f924cf5086c7b8a67e8b3e03b22851c1de8e11b0433c21904ef340d89e5014e                                                                 0.0s
+ => => extracting sha256:6636b9fc203ce74d0b07a1d3f48cfa0151b23fa5e787232908e560673a66b553                                                                 0.3s
+ => [2/2] COPY index.html /usr/share/nginx/html/index.html                                                                                                0.0s
+ => exporting to image                                                                                                                                    0.2s
+ => => exporting layers                                                                                                                                   0.0s
+ => => exporting manifest sha256:5cb2e06432927065fe2367b12983d585833a2ee7f3f440a8295497beec1a71a1                                                         0.0s
+ => => exporting config sha256:5e2e44ca0eb47b1d1334c4be652f7e29333b308708b1b6996ca0be59220743ed                                                           0.0s
+ => => exporting attestation manifest sha256:a24b4fb3be1c40858b9741b876656895c30a5431fd4e63480df3367af58b6927                                             0.0s
+ => => exporting manifest list sha256:f4e68bb94b822b3f9fd8a32d0ea79cab15d5a470904ace0130798823638bc546                                                    0.0s
+ => => naming to docker.io/library/my-custom-nginx:latest                                                                                                 0.0s
+ => => unpacking to docker.io/library/my-custom-nginx:latest                                                                                              0.0s
+sergey@uchuwi:~/otus/lesson18$ ll
+total 16
+drwxrwxr-x  2 sergey docker 4096 Sep  5 13:32 ./
+drwxrwxr-x 20 sergey sergey 4096 Sep  5 13:31 ../
+-rw-rw-r--  1 sergey docker  321 Sep  5 13:32 Dockerfile
+-rw-rw-r--  1 sergey docker  466 Sep  5 13:31 index.html
+sergey@uchuwi:~/otus/lesson18$ docker images
+                                                                                                                                           i Info →   U  In Use
+IMAGE                    ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest       5dd0d3e6e255       25.9kB         9.49kB    U   
+my-custom-nginx:latest   f4e68bb94b82        102MB         28.8MB        
+sergey@uchuwi:~/otus/lesson18$ docker ps -a
+CONTAINER ID   IMAGE         COMMAND    CREATED         STATUS                     PORTS     NAMES
+8130f2c833a3   hello-world   "/hello"   5 minutes ago   Exited (0) 5 minutes ago             suspicious_shtern
+sergey@uchuwi:~/otus/lesson18$ docker run -d -p 8080:80 --name nginx-test my-custom-nginx
+1e0c012874c5c14adf52ab91fe6676fb09516f0c14974b7567818954487bbc8f
+sergey@uchuwi:~/otus/lesson18$ docker ps -a
+CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS                     PORTS                                     NAMES
+1e0c012874c5   my-custom-nginx   "/docker-entrypoint.…"   3 seconds ago   Up 3 seconds               0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   nginx-test
+8130f2c833a3   hello-world       "/hello"                 5 minutes ago   Exited (0) 5 minutes ago                                             suspicious_shtern
+sergey@uchuwi:~/otus/lesson18$ docker ps -a
+CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS                     PORTS                                     NAMES
+1e0c012874c5   my-custom-nginx   "/docker-entrypoint.…"   7 seconds ago   Up 6 seconds               0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   nginx-test
+8130f2c833a3   hello-world       "/hello"                 5 minutes ago   Exited (0) 5 minutes ago                                             suspicious_shtern
+sergey@uchuwi:~/otus/lesson18$ ss -tlnp
+State             Recv-Q            Send-Q                         Local Address:Port                          Peer Address:Port            Process            
+LISTEN            0                 4096                           127.0.0.53%lo:53                                 0.0.0.0:*                                  
+LISTEN            0                 50                                   0.0.0.0:445                                0.0.0.0:*                                  
+LISTEN            0                 4096                                 0.0.0.0:22                                 0.0.0.0:*                                  
+LISTEN            0                 50                                   0.0.0.0:139                                0.0.0.0:*                                  
+LISTEN            0                 4096                                 0.0.0.0:8080                               0.0.0.0:*                                  
+LISTEN            0                 128                                127.0.0.1:8203                               0.0.0.0:*                                  
+LISTEN            0                 128                                127.0.0.1:8205                               0.0.0.0:*                                  
+LISTEN            0                 4096                               127.0.0.1:8384                               0.0.0.0:*                                  
+LISTEN            0                 128                                127.0.0.1:9210                               0.0.0.0:*                                  
+LISTEN            0                 128                                127.0.0.1:9212                               0.0.0.0:*                                  
+LISTEN            0                 128                                127.0.0.1:9100                               0.0.0.0:*                                  
+LISTEN            0                 128                                127.0.0.1:7175                               0.0.0.0:*                                  
+LISTEN            0                 4096                               127.0.0.1:631                                0.0.0.0:*                                  
+LISTEN            0                 4096                              127.0.0.54:53                                 0.0.0.0:*                                  
+LISTEN            0                 5                                          *:3389                                     *:*                                  
+LISTEN            0                 50                                      [::]:445                                   [::]:*                                  
+LISTEN            0                 4096                                    [::]:22                                    [::]:*                                  
+LISTEN            0                 50                                      [::]:139                                   [::]:*                                  
+LISTEN            0                 10                                         *:1716                                     *:*                                  
+LISTEN            0                 4096                                    [::]:8080                                  [::]:*                                  
+LISTEN            0                 4096                                   [::1]:631                                   [::]:*                                  
+LISTEN            0                 4096                                       *:22000                                    *:*                                  
+sergey@uchuwi:~/otus/lesson18$ 
+
