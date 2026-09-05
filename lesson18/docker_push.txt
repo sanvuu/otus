@@ -1,0 +1,46 @@
+https://hub.docker.com/repository/docker/sanvu/my-custom-nginx/general
+
+sergey@uchuwi:~/otus/lesson18$ docker login
+
+USING WEB-BASED LOGIN
+
+i Info → To sign in with credentials on the command line, use 'docker login -u <username>'
+         
+
+Your one-time device confirmation code is: SFNN-LQCP
+Press ENTER to open your browser or submit your device code here: https://login.docker.com/activate
+
+Waiting for authentication in the browser…
+
+WARNING! Your credentials are stored unencrypted in '/home/sergey/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+sergey@uchuwi:~/otus/lesson18$ docker tag my-custom-nginx sanvu/my-custom-nginx:v1.0
+sergey@uchuwi:~/otus/lesson18$ docker ps -a
+CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS                      PORTS                                     NAMES
+1e0c012874c5   my-custom-nginx   "/docker-entrypoint.…"   14 minutes ago   Up 14 minutes               0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   nginx-test
+8130f2c833a3   hello-world       "/hello"                 20 minutes ago   Exited (0) 20 minutes ago                                             suspicious_shtern
+sergey@uchuwi:~/otus/lesson18$ docker images
+                                                                                                                                           i Info →   U  In Use
+IMAGE                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest           5dd0d3e6e255       25.9kB         9.49kB    U   
+my-custom-nginx:latest       f4e68bb94b82        102MB         28.8MB    U   
+sanvu/my-custom-nginx:v1.0   f4e68bb94b82        102MB         28.8MB    U   
+sergey@uchuwi:~/otus/lesson18$ docker push sanvu/my-custom-nginx:v1.0
+The push refers to repository [docker.io/sanvu/my-custom-nginx]
+850bf2dcecff: Pushed 
+55afa1ecc21d: Pushed 
+88f58ed3e9f3: Pushed 
+44136fa355b3: Pushed 
+af7dd138f459: Pushed 
+58c524ea09ce: Pushed 
+bc98d7675616: Pushed 
+8f924cf5086c: Pushed 
+51900e10fb9c: Pushed 
+6636b9fc203c: Pushed 
+6b793eb1ad92: Pushed 
+v1.0: digest: sha256:f4e68bb94b822b3f9fd8a32d0ea79cab15d5a470904ace0130798823638bc546 size: 856
+sergey@uchuwi:~/otus/lesson18$ 
+
