@@ -1,0 +1,405 @@
+PS C:\otus\lesson26> vagrant up
+Bringing machine 'backup_server' up with 'virtualbox' provider...
+Bringing machine 'client' up with 'virtualbox' provider...
+==> backup_server: Importing base box 'ubuntu/jammy64'...
+==> backup_server: Matching MAC address for NAT networking...
+==> backup_server: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> backup_server: Setting the name of the VM: lesson26_backup_server_1791642930619_4761
+==> backup_server: Clearing any previously set network interfaces...
+==> backup_server: Preparing network interfaces based on configuration...
+    backup_server: Adapter 1: nat
+    backup_server: Adapter 2: hostonly
+==> backup_server: Forwarding ports...
+    backup_server: 22 (guest) => 2222 (host) (adapter 1)
+==> backup_server: Running 'pre-boot' VM customizations...
+==> backup_server: Booting VM...
+==> backup_server: Waiting for machine to boot. This may take a few minutes...
+    backup_server: SSH address: 127.0.0.1:2222
+    backup_server: SSH username: vagrant
+    backup_server: SSH auth method: private key
+    backup_server: Warning: Connection reset. Retrying...
+    backup_server: Warning: Connection aborted. Retrying...
+    backup_server: Warning: Connection reset. Retrying...
+    backup_server: Warning: Connection aborted. Retrying...
+    backup_server:
+    backup_server: Vagrant insecure key detected. Vagrant will automatically replace
+    backup_server: this with a newly generated keypair for better security.
+    backup_server:
+    backup_server: Inserting generated public key within guest...
+    backup_server: Removing insecure key from the guest if it's present...
+    backup_server: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> backup_server: Machine booted and ready!
+==> backup_server: Checking for guest additions in VM...
+    backup_server: The guest additions on this VM do not match the installed version of
+    backup_server: VirtualBox! In most cases this is fine, but in rare cases it can
+    backup_server: prevent things such as shared folders from working properly. If you see
+    backup_server: shared folder errors, please make sure the guest additions within the
+    backup_server: virtual machine match the version of VirtualBox you have installed on
+    backup_server: your host and reload your VM.
+    backup_server:
+    backup_server: Guest Additions Version: 6.0.0 r127566
+    backup_server: VirtualBox Version: 7.2
+==> backup_server: Setting hostname...
+==> backup_server: Configuring and enabling network interfaces...
+==> backup_server: Mounting shared folders...
+    backup_server: C:/otus/lesson26 => /vagrant
+==> client: Importing base box 'ubuntu/jammy64'...
+==> client: Matching MAC address for NAT networking...
+==> client: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> client: Setting the name of the VM: lesson26_client_1791643107094_86049
+==> client: Fixed port collision for 22 => 2222. Now on port 2200.
+==> client: Clearing any previously set network interfaces...
+==> client: Preparing network interfaces based on configuration...
+    client: Adapter 1: nat
+    client: Adapter 2: hostonly
+==> client: Forwarding ports...
+    client: 22 (guest) => 2200 (host) (adapter 1)
+==> client: Running 'pre-boot' VM customizations...
+==> client: Booting VM...
+==> client: Waiting for machine to boot. This may take a few minutes...
+    client: SSH address: 127.0.0.1:2200
+    client: SSH username: vagrant
+    client: SSH auth method: private key
+    client: Warning: Connection reset. Retrying...
+    client: Warning: Connection aborted. Retrying...
+    client: Warning: Connection reset. Retrying...
+    client: Warning: Connection aborted. Retrying...
+    client:
+    client: Vagrant insecure key detected. Vagrant will automatically replace
+    client: this with a newly generated keypair for better security.
+    client:
+    client: Inserting generated public key within guest...
+    client: Removing insecure key from the guest if it's present...
+    client: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> client: Machine booted and ready!
+==> client: Checking for guest additions in VM...
+    client: The guest additions on this VM do not match the installed version of
+    client: VirtualBox! In most cases this is fine, but in rare cases it can
+    client: prevent things such as shared folders from working properly. If you see
+    client: shared folder errors, please make sure the guest additions within the
+    client: virtual machine match the version of VirtualBox you have installed on
+    client: your host and reload your VM.
+    client:
+    client: Guest Additions Version: 6.0.0 r127566
+    client: VirtualBox Version: 7.2
+==> client: Setting hostname...
+==> client: Configuring and enabling network interfaces...
+==> client: Mounting shared folders...
+    client: C:/otus/lesson26 => /vagrant
+==> client: Running provisioner: shell...
+    client: Running: inline script
+    client: === [1/2] Installing Ansible inside Client Machine ===
+    client: Get:1 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+    client: Hit:2 http://archive.ubuntu.com/ubuntu jammy InRelease
+    client: Get:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+    client: Get:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+    client: Get:5 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
+    client: Get:6 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [3642 kB]
+    client: Get:7 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [509 kB]
+    client: Get:8 http://archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
+    client: Get:9 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [6505 kB]
+    client: Get:10 http://archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
+    client: Get:11 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
+    client: Get:12 http://archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
+    client: Get:13 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
+    client: Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3908 kB]
+    client: Get:15 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [1250 kB]
+    client: Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [576 kB]
+    client: Get:17 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [6740 kB]
+    client: Get:18 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1053 kB]
+    client: Get:19 http://archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [1294 kB]
+    client: Get:20 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [237 kB]
+    client: Get:21 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1286 kB]
+    client: Get:22 http://archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [325 kB]
+    client: Get:23 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [30.8 kB]
+    client: Get:24 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [86.1 kB]
+    client: Get:25 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [23.2 kB]
+    client: Get:26 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [16.6 kB]
+    client: Get:27 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [756 B]
+    client: Get:28 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [70.2 kB]
+    client: Get:29 http://archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.4 kB]
+    client: Get:30 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [412 B]
+    client: Get:31 http://archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
+    client: Get:32 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [79.6 kB]
+    client: Get:33 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [30.8 kB]
+    client: Get:34 http://archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.9 kB]
+    client: Get:35 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [13.7 kB]
+    client: Get:36 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [676 B]
+    client: Get:37 http://archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
+    client: Get:38 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [544 B]
+    client: Fetched 48.5 MB in 33s (1477 kB/s)
+    client: Reading package lists...
+    client: Reading package lists...
+    client: Building dependency tree...
+    client: Reading state information...
+    client: The following additional packages will be installed:
+    client:   ieee-data python3-argcomplete python3-dnspython python3-jmespath
+    client:   python3-kerberos python3-libcloud python3-lockfile python3-netaddr
+    client:   python3-ntlm-auth python3-pycryptodome python3-requests-kerberos
+    client:   python3-requests-ntlm python3-requests-toolbelt python3-selinux
+    client:   python3-simplejson python3-winrm python3-xmltodict
+    client: Suggested packages:
+    client:   cowsay sshpass python3-sniffio python3-trio python-lockfile-doc ipython3
+    client:   python-netaddr-docs
+    client: The following NEW packages will be installed:
+    client:   ansible ieee-data python3-argcomplete python3-dnspython python3-jmespath
+    client:   python3-kerberos python3-libcloud python3-lockfile python3-netaddr
+    client:   python3-ntlm-auth python3-pycryptodome python3-requests-kerberos
+    client:   python3-requests-ntlm python3-requests-toolbelt python3-selinux
+    client:   python3-simplejson python3-winrm python3-xmltodict
+    client: 0 upgraded, 18 newly installed, 0 to remove and 19 not upgraded.
+    client: Need to get 22.8 MB of archives.
+    client: After this operation, 243 MB of additional disk space will be used.
+    client: Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 python3-pycryptodome amd64 3.11.0+dfsg1-3ubuntu0.1 [1029 kB]
+    client: Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-dnspython all 2.1.0-1ubuntu1 [123 kB]
+    client: Get:3 http://archive.ubuntu.com/ubuntu jammy/main amd64 ieee-data all 20210605.1 [1887 kB]
+    client: Get:4 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-netaddr all 0.8.0-2 [309 kB]
+    client: Get:5 http://archive.ubuntu.com/ubuntu jammy/universe amd64 ansible all 2.10.7+merged+base+2.10.8+dfsg-1 [17.5 MB]
+    client: Get:6 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-argcomplete all 1.8.1-1.5 [27.2 kB]
+    client: Get:7 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-jmespath all 0.10.0-1 [21.7 kB]
+    client: Get:8 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-kerberos amd64 1.1.14-3.1build5 [23.0 kB]
+    client: Get:9 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-lockfile all 1:0.12.2-2.2 [14.6 kB]
+    client: Get:10 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-simplejson amd64 3.17.6-1build1 [54.7 kB]
+    client: Get:11 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-libcloud all 3.2.0-2 [1554 kB]
+    client: Get:12 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-ntlm-auth all 1.4.0-1 [20.4 kB]
+    client: Get:13 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-requests-kerberos all 0.12.0-2 [11.9 kB]
+    client: Get:14 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-requests-ntlm all 1.1.0-1.1 [6160 B]
+    client: Get:15 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-requests-toolbelt all 0.9.1-1 [38.0 kB]
+    client: Get:16 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-selinux amd64 3.3-1build2 [159 kB]
+    client: Get:17 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-xmltodict all 0.12.0-2 [12.6 kB]
+    client: Get:18 http://archive.ubuntu.com/ubuntu jammy/universe amd64 python3-winrm all 0.3.0-2 [21.7 kB]
+    client: dpkg-preconfigure: unable to re-open stdin: No such file or directory
+    client: Fetched 22.8 MB in 4s (6107 kB/s)
+    client: Selecting previously unselected package python3-pycryptodome.
+(Reading database ... 64288 files and directories currently installed.)
+    client: Preparing to unpack .../00-python3-pycryptodome_3.11.0+dfsg1-3ubuntu0.1_amd64.deb ...
+    client: Unpacking python3-pycryptodome (3.11.0+dfsg1-3ubuntu0.1) ...
+    client: Selecting previously unselected package python3-dnspython.
+    client: Preparing to unpack .../01-python3-dnspython_2.1.0-1ubuntu1_all.deb ...
+    client: Unpacking python3-dnspython (2.1.0-1ubuntu1) ...
+    client: Selecting previously unselected package ieee-data.
+    client: Preparing to unpack .../02-ieee-data_20210605.1_all.deb ...
+    client: Unpacking ieee-data (20210605.1) ...
+    client: Selecting previously unselected package python3-netaddr.
+    client: Preparing to unpack .../03-python3-netaddr_0.8.0-2_all.deb ...
+    client: Unpacking python3-netaddr (0.8.0-2) ...
+    client: Selecting previously unselected package ansible.
+    client: Preparing to unpack .../04-ansible_2.10.7+merged+base+2.10.8+dfsg-1_all.deb ...
+    client: Unpacking ansible (2.10.7+merged+base+2.10.8+dfsg-1) ...
+    client: Selecting previously unselected package python3-argcomplete.
+    client: Preparing to unpack .../05-python3-argcomplete_1.8.1-1.5_all.deb ...
+    client: Unpacking python3-argcomplete (1.8.1-1.5) ...
+    client: Selecting previously unselected package python3-jmespath.
+    client: Preparing to unpack .../06-python3-jmespath_0.10.0-1_all.deb ...
+    client: Unpacking python3-jmespath (0.10.0-1) ...
+    client: Selecting previously unselected package python3-kerberos.
+    client: Preparing to unpack .../07-python3-kerberos_1.1.14-3.1build5_amd64.deb ...
+    client: Unpacking python3-kerberos (1.1.14-3.1build5) ...
+    client: Selecting previously unselected package python3-lockfile.
+    client: Preparing to unpack .../08-python3-lockfile_1%3a0.12.2-2.2_all.deb ...
+    client: Unpacking python3-lockfile (1:0.12.2-2.2) ...
+    client: Selecting previously unselected package python3-simplejson.
+    client: Preparing to unpack .../09-python3-simplejson_3.17.6-1build1_amd64.deb ...
+    client: Unpacking python3-simplejson (3.17.6-1build1) ...
+    client: Selecting previously unselected package python3-libcloud.
+    client: Preparing to unpack .../10-python3-libcloud_3.2.0-2_all.deb ...
+    client: Unpacking python3-libcloud (3.2.0-2) ...
+    client: Selecting previously unselected package python3-ntlm-auth.
+    client: Preparing to unpack .../11-python3-ntlm-auth_1.4.0-1_all.deb ...
+    client: Unpacking python3-ntlm-auth (1.4.0-1) ...
+    client: Selecting previously unselected package python3-requests-kerberos.
+    client: Preparing to unpack .../12-python3-requests-kerberos_0.12.0-2_all.deb ...
+    client: Unpacking python3-requests-kerberos (0.12.0-2) ...
+    client: Selecting previously unselected package python3-requests-ntlm.
+    client: Preparing to unpack .../13-python3-requests-ntlm_1.1.0-1.1_all.deb ...
+    client: Unpacking python3-requests-ntlm (1.1.0-1.1) ...
+    client: Selecting previously unselected package python3-requests-toolbelt.
+    client: Preparing to unpack .../14-python3-requests-toolbelt_0.9.1-1_all.deb ...
+    client: Unpacking python3-requests-toolbelt (0.9.1-1) ...
+    client: Selecting previously unselected package python3-selinux.
+    client: Preparing to unpack .../15-python3-selinux_3.3-1build2_amd64.deb ...
+    client: Unpacking python3-selinux (3.3-1build2) ...
+    client: Selecting previously unselected package python3-xmltodict.
+    client: Preparing to unpack .../16-python3-xmltodict_0.12.0-2_all.deb ...
+    client: Unpacking python3-xmltodict (0.12.0-2) ...
+    client: Selecting previously unselected package python3-winrm.
+    client: Preparing to unpack .../17-python3-winrm_0.3.0-2_all.deb ...
+    client: Unpacking python3-winrm (0.3.0-2) ...
+    client: Setting up python3-lockfile (1:0.12.2-2.2) ...
+    client: Setting up python3-requests-toolbelt (0.9.1-1) ...
+    client: Setting up python3-ntlm-auth (1.4.0-1) ...
+    client: Setting up python3-pycryptodome (3.11.0+dfsg1-3ubuntu0.1) ...
+    client: Setting up python3-kerberos (1.1.14-3.1build5) ...
+    client: Setting up python3-simplejson (3.17.6-1build1) ...
+    client: Setting up python3-xmltodict (0.12.0-2) ...
+    client: Setting up python3-jmespath (0.10.0-1) ...
+    client: Setting up python3-requests-kerberos (0.12.0-2) ...
+    client: Setting up ieee-data (20210605.1) ...
+    client: Setting up python3-dnspython (2.1.0-1ubuntu1) ...
+    client: Setting up python3-selinux (3.3-1build2) ...
+    client: Setting up python3-argcomplete (1.8.1-1.5) ...
+    client: Setting up python3-requests-ntlm (1.1.0-1.1) ...
+    client: Setting up python3-libcloud (3.2.0-2) ...
+    client: Setting up python3-netaddr (0.8.0-2) ...
+    client: Setting up python3-winrm (0.3.0-2) ...
+    client: Setting up ansible (2.10.7+merged+base+2.10.8+dfsg-1) ...
+    client: Processing triggers for man-db (2.10.2-1) ...
+    client:
+    client: Running kernel seems to be up-to-date.
+    client:
+    client: No services need to be restarted.
+    client:
+    client: No containers need to be restarted.
+    client:
+    client: No user sessions are running outdated binaries.
+    client:
+    client: No VM guests are running outdated hypervisor (qemu) binaries on this host.
+    client: === [2/2] Running Multi-Node Playbook ===
+    client:
+    client: PLAY [Prepare SSH Keys on Client] **********************************************
+    client:
+    client: TASK [Gathering Facts] *********************************************************
+    client: ok: [client]
+    client:
+    client: TASK [Copy backup_server private key to a secure local path] *******************
+    client: changed: [client]
+    client:
+    client: PLAY [Configure Backup Server] *************************************************
+    client:
+    client: TASK [Gathering Facts] *********************************************************
+    client: ok: [backup_server]
+    client:
+    client: TASK [Update apt cache] ********************************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Install BorgBackup on server] ********************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Create borg user] ********************************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Create partition on extra disk] ******************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Create ext4 filesystem] **************************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Ensure mount point exists] ***********************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Mount backup directory] **************************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Create repo directory inside mount point] ********************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Set permissions for borg user on backup root] ****************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Create .ssh directory for borg user] *************************************
+    client: changed: [backup_server]
+    client:
+    client: TASK [Create authorized_keys file for borg user] *******************************
+    client: changed: [backup_server]
+    client:
+    client: PLAY [Configure Client] ********************************************************
+    client:
+    client: TASK [Gathering Facts] *********************************************************
+    client: ok: [client]
+    client:
+    client: TASK [Update apt cache] ********************************************************
+    client: ok: [client]
+    client:
+    client: TASK [Install BorgBackup on client] ********************************************
+    client: changed: [client]
+    client:
+    client: TASK [Generate SSH key for root on client] *************************************
+    client: changed: [client]
+    client:
+    client: TASK [Fetch client public key] *************************************************
+    client: ok: [client]
+    client:
+    client: TASK [Add client root key to backup_server borg user] **************************
+    client: changed: [client -> 192.168.11.160]
+    client:
+    client: TASK [Ensure .ssh directory exists for root] ***********************************
+    client: ok: [client]
+    client:
+    client: TASK [Add backup_server to known_hosts] ****************************************
+    client: ok: [client]
+    client:
+    client: TASK [Initialize Borg Repository] **********************************************
+    client: changed: [client]
+    client:
+    client: TASK [Deploy Systemd Service] **************************************************
+    client: changed: [client]
+    client:
+    client: TASK [Deploy Systemd Timer] ****************************************************
+    client: changed: [client]
+    client:
+    client: TASK [Enable and start Systemd Timer] ******************************************
+    client: changed: [client]
+    client:
+    client: PLAY RECAP *********************************************************************
+    client: backup_server              : ok=12   changed=11   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    client: client                     : ok=14   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    client:
+PS C:\otus\lesson26> vagrant ssh client
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sat Oct 10 17:49:51 UTC 2026
+
+  System load:             0.39
+  Usage of /:              5.9% of 38.70GB
+  Memory usage:            17%
+  Swap usage:              0%
+  Processes:               105
+  Users logged in:         0
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+23 updates can be applied immediately.
+22 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+2 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@client:~$ sudo -i
+root@client:~# systemctl start borg-backup.service
+root@client:~# journalctl -u borg-backup.service -n 50
+Oct 10 17:50:06 client systemd[1]: Starting Borg Backup...
+Oct 10 17:50:11 client borg[4135]: ------------------------------------------------------------------------------
+Oct 10 17:50:11 client borg[4135]: Repository: ssh://borg@192.168.11.160/var/backup/repo
+Oct 10 17:50:11 client borg[4135]: Archive name: etc-2026-10-10_17:50:06
+Oct 10 17:50:11 client borg[4135]: Archive fingerprint: 2d4e166229e6358d5c0adc010b6f797796a90250553472cc416a1afac7d74c19
+Oct 10 17:50:11 client borg[4135]: Time (start): Sat, 2026-10-10 17:50:08
+Oct 10 17:50:11 client borg[4135]: Time (end):   Sat, 2026-10-10 17:50:11
+Oct 10 17:50:11 client borg[4135]: Duration: 2.73 seconds
+Oct 10 17:50:11 client borg[4135]: Number of files: 704
+Oct 10 17:50:11 client borg[4135]: Utilization of max. archive size: 0%
+Oct 10 17:50:11 client borg[4135]: ------------------------------------------------------------------------------
+Oct 10 17:50:11 client borg[4135]:                        Original size      Compressed size    Deduplicated size
+Oct 10 17:50:11 client borg[4135]: This archive:                2.11 MB            929.57 kB            899.04 kB
+Oct 10 17:50:11 client borg[4135]: All archives:                2.11 MB            929.00 kB            967.70 kB
+Oct 10 17:50:11 client borg[4135]:                        Unique chunks         Total chunks
+Oct 10 17:50:11 client borg[4135]: Chunk index:                     666                  694
+Oct 10 17:50:11 client borg[4135]: ------------------------------------------------------------------------------
+Oct 10 17:50:16 client systemd[1]: borg-backup.service: Deactivated successfully.
+Oct 10 17:50:16 client systemd[1]: Finished Borg Backup.
+Oct 10 17:50:16 client systemd[1]: borg-backup.service: Consumed 4.547s CPU time.
+root@client:~# export BORG_PASSPHRASE="Otus1234"
+root@client:~# borg list borg@192.168.11.160:/var/backup/repo
+etc-2026-10-10_17:50:06              Sat, 2026-10-10 17:50:08 [2d4e166229e6358d5c0adc010b6f797796a90250553472cc416a1afac7d74c19]
+root@client:~#

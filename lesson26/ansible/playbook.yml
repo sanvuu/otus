@@ -1,0 +1,178 @@
+---
+- name: Prepare SSH Keys on Client
+  hosts: clients
+  become: true
+  tasks:
+    - name: Copy backup_server private key to a secure local path
+      copy:
+        src: /vagrant/.vagrant/machines/backup_server/virtualbox/private_key
+        dest: /tmp/backup_server_private_key
+        owner: vagrant
+        group: vagrant
+        mode: '0600'
+
+- name: Configure Backup Server
+  hosts: backup_servers
+  become: true
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install BorgBackup on server
+      apt:
+        name: borgbackup
+        state: present
+
+    - name: Create borg user
+      user:
+        name: borg
+        shell: /bin/bash
+        create_home: true
+
+    - name: Create partition on extra disk
+      parted:
+        device: /dev/sdb
+        number: 1
+        state: present
+        fs_type: ext4
+
+    - name: Create ext4 filesystem
+      filesystem:
+        fstype: ext4
+        dev: /dev/sdb1
+
+    - name: Ensure mount point exists
+      file:
+        path: /var/backup
+        state: directory
+        mode: '0755'
+
+    - name: Mount backup directory
+      mount:
+        path: /var/backup
+        src: /dev/sdb1
+        fstype: ext4
+        state: mounted
+
+    # ИСПРАВЛЕНИЕ №2: Явно создаем подкаталог для репозитория Borg
+    - name: Create repo directory inside mount point
+      file:
+        path: /var/backup/repo
+        state: directory
+        owner: borg
+        group: borg
+        mode: '0755'
+
+    - name: Set permissions for borg user on backup root
+      file:
+        path: /var/backup
+        owner: borg
+        group: borg
+        mode: '0755'
+
+    - name: Create .ssh directory for borg user
+      file:
+        path: /home/borg/.ssh
+        state: directory
+        owner: borg
+        group: borg
+        mode: '0700'
+
+    - name: Create authorized_keys file for borg user
+      file:
+        path: /home/borg/.ssh/authorized_keys
+        state: touch
+        owner: borg
+        group: borg
+        mode: '0600'
+        modification_time: preserve
+        access_time: preserve
+
+- name: Configure Client
+  hosts: clients
+  become: true
+  vars:
+    borg_passphrase: "Otus1234"
+    backup_server_ip: "192.168.11.160"
+    # ИСПРАВЛЕНИЕ №1: Указываем точный подкаталог репозитория
+    repo_path: "/var/backup/repo"
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install BorgBackup on client
+      apt:
+        name: borgbackup
+        state: present
+
+    - name: Generate SSH key for root on client
+      user:
+        name: root
+        generate_ssh_key: true
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+
+    - name: Fetch client public key
+      command: cat /root/.ssh/id_rsa.pub
+      register: client_ssh_key
+      changed_when: false
+
+    # ИСПРАВЛЕНИЕ №3: Исправлено имя хоста делегирования на backup_server
+    - name: Add client root key to backup_server borg user
+      delegate_to: backup_server
+      vars:
+        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+      authorized_key:
+        user: borg
+        key: "{{ client_ssh_key.stdout }}"
+
+    - name: Ensure .ssh directory exists for root
+      file:
+        path: /root/.ssh
+        state: directory
+        mode: '0700'
+
+    - name: Add backup_server to known_hosts
+      shell: |
+        ssh-keyscan -H {{ backup_server_ip }} >> /root/.ssh/known_hosts
+      args:
+        creates: /root/.ssh/known_hosts
+
+    - name: Initialize Borg Repository
+      environment:
+        BORG_PASSPHRASE: "{{ borg_passphrase }}"
+      command: >
+        borg init --encryption=repokey borg@{{ backup_server_ip }}:{{ repo_path }}
+      register: borg_init_result
+      failed_when: 
+        - borg_init_result.rc != 0 
+        - "'already exists' not in borg_init_result.stderr"
+        - "'already something at' not in borg_init_result.stderr"
+      changed_when: 
+        - "'already exists' not in borg_init_result.stderr"
+        - "'already something at' not in borg_init_result.stderr"
+
+    - name: Deploy Systemd Service
+      template:
+        src: templates/borg-backup.service.j2
+        dest: /etc/systemd/system/borg-backup.service
+        mode: '0644'
+
+    - name: Deploy Systemd Timer
+      template:
+        src: templates/borg-backup.timer.j2
+        dest: /etc/systemd/system/borg-backup.timer
+        mode: '0644'
+
+    - name: Enable and start Systemd Timer
+      systemd:
+        name: borg-backup.timer
+        enabled: true
+        state: started
+        daemon_reload: true
