@@ -1,0 +1,125 @@
+---
+# Сценарий 1: Синхронизация времени на всех серверах
+- name: Common Time Synchronization Config
+  hosts: all
+  become: true
+  vars:
+    ansible_host: "{{ '192.168.56.10' if inventory_hostname == 'web' else '127.0.0.1' if inventory_hostname == 'log' else inventory_hostname }}"
+    ansible_ssh_private_key_file: "/home/vagrant/.ssh/web_private_key"
+  tasks:
+    - name: Ensure systemd-timesyncd is installed
+      apt:
+        name: systemd-timesyncd
+        state: present
+        update_cache: yes
+
+    - name: Enable and start NTP synchronization
+      command: timedatectl set-ntp true
+      changed_when: false
+
+# Сценарий 2: Настройка центрального сервера логов (log)
+- name: Configure Centralized Rsyslog Server
+  hosts: log
+  become: true
+  vars:
+    ansible_host: "127.0.0.1"
+  tasks:
+    - name: Configure Rsyslog to listen on UDP and TCP port 514
+      blockinfile:
+        path: /etc/rsyslog.conf
+        insertafter: "# Provides UDP syslog reception" # ИСПРАВЛЕНО: Точное совпадение с дефолтным файлом Ubuntu
+        block: |
+          module(load="imudp")
+          input(type="imudp" port="514")
+          module(load="imtcp")
+          input(type="imtcp" port="514")
+
+    - name: Add remote logging templates for clients
+      blockinfile:
+        path: /etc/rsyslog.conf
+        insertafter: EOF
+        block: |
+          $template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
+          *.* ?RemoteLogs
+          & stop
+
+    - name: Restart and enable Rsyslog service
+      systemd:
+        name: rsyslog
+        state: restarted
+        enabled: yes
+
+# Сценарий 3: Настройка Nginx, конфигурация логов и подсистемы Аудита (web)
+- name: Configure Web Server with Remote Logging & Audit
+  hosts: web
+  become: true
+  vars:
+    ansible_host: "192.168.56.10"
+    ansible_ssh_private_key_file: "/home/vagrant/.ssh/web_private_key"
+  tasks:
+    - name: Install Nginx, Auditd and Audisp plugins
+      apt:
+        name:
+          - nginx
+          - auditd
+          - audispd-plugins
+        state: present
+
+    - name: Configure Nginx logging settings (Remote syslog + local crit)
+      blockinfile:
+        path: /etc/nginx/nginx.conf
+        insertafter: "# Logging Settings"
+        block: |
+          access_log syslog:server=192.168.56.15:514,tag=nginx_access combined;
+          error_log syslog:server=192.168.56.15:514,tag=nginx_error info;
+          error_log /var/log/nginx/error.log crit;
+
+    - name: Remove default Nginx local access log directive to satisfy task requirements
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        state: absent
+        regexp: 'access_log /var/log/nginx/access.log;'
+
+    # ДОБАВЛЕНО: Настройка глобального rsyslog на машине web для отправки системных логов ОС
+    - name: Configure Rsyslog client to send global logs to central server
+      lineinfile:
+        path: /etc/rsyslog.conf
+        line: "*.* @192.168.56.15:514"
+        insertafter: EOF
+
+    # ДОБАВЛЕНО: Рестарт rsyslog на машине web для применения настроек отправки
+    - name: Restart Rsyslog on web client
+      systemd:
+        name: rsyslog
+        state: restarted
+
+    - name: Restart Nginx to apply changes
+      systemd:
+        name: nginx
+        state: restarted
+
+    - name: Configure Auditd to send logs via audisp-syslog
+      lineinfile:
+        path: /etc/audisp/plugins.d/syslog.conf
+        regexp: '^active ='
+        line: 'active = yes'
+      failed_when: false
+
+    - name: Alternative path audit syslog activation for newer systemd systems
+      lineinfile:
+        path: /etc/audit/plugins.d/syslog.conf
+        regexp: '^active ='
+        line: 'active = yes'
+      failed_when: false
+
+    - name: Configure Audit rules to track Nginx configurations changes
+      blockinfile:
+        path: /etc/audit/rules.d/audit.rules
+        insertafter: EOF
+        block: |
+          -w /etc/nginx/nginx.conf -p wa -k nginx_conf_changes
+          -w /etc/nginx/conf.d/ -p wa -k nginx_conf_changes
+
+    - name: Restart Auditd service to load new rules
+      shell: service auditd restart
+      changed_when: true

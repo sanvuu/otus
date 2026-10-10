@@ -1,0 +1,69 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/jammy64"
+    
+    # Увеличиваем таймауты загрузки глобально для стабильности на Windows
+    config.vm.boot_timeout = 600 
+    config.ssh.connect_timeout = 60 
+
+    config.vm.provider :virtualbox do |v|
+        v.cpus = 2
+        v.memory = 1512
+        v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+
+    boxes = [
+        { :name => "web", :ip => "192.168.56.10" },
+        { :name => "log", :ip => "192.168.56.15" }
+    ]
+    
+    boxes.each do |opts|
+        config.vm.define opts[:name] do |box|
+            box.vm.hostname = opts[:name]
+            
+            # Переключение коммуникатора на системный SSH (решает проблему зависания)
+            box.vm.communicator = "ssh" 
+
+            # Глобально отключаем синхронизацию папок (переопределим для log ниже)
+            box.vm.synced_folder ".", "/vagrant", disabled: true 
+
+            # Настройки сети
+            box.vm.network "private_network", ip: opts[:ip]
+            
+            # Принудительно пробрасываем порт SSH наружу
+            box.vm.network "forwarded_port", guest: 22, host: (opts[:name] == "web" ? 2222 : 2223), id: "ssh", auto_correct: true
+
+            # Проброс веб-порта только для машины web
+            if opts[:name] == "web"
+                box.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+            end
+
+            # Скрипт автоматической настройки SSH внутри ОС (включаем вход по паролю)
+            box.vm.provision "shell", inline: <<-SHELL
+                sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
+                systemctl restart sshd.service
+            SHELL
+
+            # Специфичные настройки для машины log (синхронизация плейбука, копирование ключей и Ansible)
+            if opts[:name] == "log"
+                # РАЗРЕШАЕМ общую папку ТОЛЬКО для log, чтобы она видела playbook.yml
+                box.vm.synced_folder ".", "/vagrant", disabled: false
+
+                # АВТО-КОПИРОВАНИЕ КЛЮЧА: Переносим ключ от 'web' внутрь машины 'log'
+                box.vm.provision "file", 
+                    source: ".vagrant/machines/web/virtualbox/private_key", 
+                    destination: "/home/vagrant/.ssh/web_private_key"
+
+                # Настройка правильных прав на ключ внутри Linux
+                box.vm.provision "shell", inline: "chmod 600 /home/vagrant/.ssh/web_private_key"
+
+                # Интеграция с Ansible внутри виртуалки log
+                box.vm.provision "ansible_local" do |ansible|
+                    ansible.playbook = "playbook.yml"
+                    ansible.limit = "all"
+                    ansible.install = true
+                    ansible.raw_arguments = ["--ssh-common-args='-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'"]
+                end
+            end
+        end
+    end
+end

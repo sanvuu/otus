@@ -1,0 +1,326 @@
+PowerShell 7.6.6
+PS C:\otus\lesson22> vagrant up
+Bringing machine 'pam' up with 'virtualbox' provider...
+==> pam: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> pam: Waiting for cleanup before exiting...
+==> pam: There was a problem while downloading the metadata for your box
+==> pam: to check for updates. This is not an error, since it is usually due
+==> pam: to temporary network problems. This is just a warning. The problem
+==> pam: encountered was:
+==> pam:
+==> pam:
+==> pam:
+==> pam: If you want to check for box updates, verify your network connection
+==> pam: is valid and try again.
+PS C:\otus\lesson22> vagrant upited after cleanup due to external interrupt.
+PS C:\otus\lesson22>
+PS C:\otus\lesson22>
+PS C:\otus\lesson22>
+PS C:\otus\lesson22> vagrant up
+Bringing machine 'pam' up with 'virtualbox' provider...
+==> pam: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> pam: Clearing any previously set forwarded ports...
+==> pam: Clearing any previously set network interfaces...
+==> pam: Preparing network interfaces based on configuration...
+    pam: Adapter 1: nat
+    pam: Adapter 2: hostonly
+==> pam: Forwarding ports...
+    pam: 22 (guest) => 2222 (host) (adapter 1)
+==> pam: Running 'pre-boot' VM customizations...
+==> pam: Booting VM...
+==> pam: Waiting for machine to boot. This may take a few minutes...
+    pam: SSH address: 127.0.0.1:2222
+    pam: SSH username: vagrant
+    pam: SSH auth method: private key
+    pam: Warning: Connection timeout. Retrying...
+    pam: Warning: Connection timeout. Retrying...
+    pam: Warning: Connection reset. Retrying...
+    pam: Warning: Connection aborted. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+    pam: Warning: Remote connection disconnect. Retrying...
+==> pam: Waiting for cleanup before exiting...
+PS C:\otus\lesson22> Vagrant exited after cleanup due to external interrupt.
+                     ссс
+ссс: Термин "ссс" не распознается как имя, которое является именем для выполнения, функции, файла сценария или исполняемой программы.
+Проверьте правильность написания имени, а если включен путь, то проверьте правильность пути и повторите попытку.
+PS C:\otus\lesson22> vagrant up
+Bringing machine 'pam' up with 'virtualbox' provider...
+==> pam: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> pam: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> pam: flag to force provisioning. Provisioners marked to run always will still run.
+PS C:\otus\lesson22> vagrant up
+Bringing machine 'pam' up with 'virtualbox' provider...
+==> pam: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> pam: Clearing any previously set forwarded ports...
+==> pam: Clearing any previously set network interfaces...
+==> pam: Preparing network interfaces based on configuration...
+    pam: Adapter 1: nat
+    pam: Adapter 2: hostonly
+==> pam: Forwarding ports...
+    pam: 22 (guest) => 2222 (host) (adapter 1)
+==> pam: Running 'pre-boot' VM customizations...
+==> pam: Booting VM...
+==> pam: Waiting for machine to boot. This may take a few minutes...
+    pam: SSH address: 127.0.0.1:2222
+    pam: SSH username: vagrant
+    pam: SSH auth method: private key
+    pam: Warning: Connection timeout. Retrying...
+==> pam: Waiting for cleanup before exiting...
+PS C:\otus\lesson22> Vagrant exited after cleanup due to external interrupt.
+                     с
+с: Термин "с" не распознается как имя, которое является именем для выполнения, функции, файла сценария или исполняемой программы.
+Проверьте правильность написания имени, а если включен путь, то проверьте правильность пути и повторите попытку.
+
+[General Feedback]
+  Наиболее похожие команды:
+    ➤ %, ?, h, r
+
+PS C:\otus\lesson22> vagrant destroy -f
+==> pam: Forcing shutdown of VM...
+==> pam: Destroying VM and associated drives...
+PS C:\otus\lesson22> vagrant up
+Bringing machine 'pam' up with 'virtualbox' provider...
+==> pam: Importing base box 'ubuntu/jammy64'...
+==> pam: Matching MAC address for NAT networking...
+==> pam: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+==> pam: Setting the name of the VM: lesson22_pam_1791561138652_36662
+==> pam: Clearing any previously set network interfaces...
+==> pam: Preparing network interfaces based on configuration...
+    pam: Adapter 1: nat
+    pam: Adapter 2: hostonly
+==> pam: Forwarding ports...
+    pam: 22 (guest) => 2222 (host) (adapter 1)
+==> pam: Running 'pre-boot' VM customizations...
+==> pam: Booting VM...
+==> pam: Waiting for machine to boot. This may take a few minutes...
+    pam: SSH address: 127.0.0.1:2222
+    pam: SSH username: vagrant
+    pam: SSH auth method: private key
+    pam: Warning: Connection timeout. Retrying...
+    pam: Warning: Connection reset. Retrying...
+    pam: Warning: Connection aborted. Retrying...
+    pam: Warning: Connection reset. Retrying...
+    pam: Warning: Connection aborted. Retrying...
+    pam:
+    pam: Vagrant insecure key detected. Vagrant will automatically replace
+    pam: this with a newly generated keypair for better security.
+    pam:
+    pam: Inserting generated public key within guest...
+    pam: Removing insecure key from the guest if it's present...
+    pam: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> pam: Machine booted and ready!
+==> pam: Checking for guest additions in VM...
+    pam: The guest additions on this VM do not match the installed version of
+    pam: VirtualBox! In most cases this is fine, but in rare cases it can
+    pam: prevent things such as shared folders from working properly. If you see
+    pam: shared folder errors, please make sure the guest additions within the
+    pam: virtual machine match the version of VirtualBox you have installed on
+    pam: your host and reload your VM.
+    pam:
+    pam: Guest Additions Version: 6.0.0 r127566
+    pam: VirtualBox Version: 7.2
+==> pam: Setting hostname...
+==> pam: Configuring and enabling network interfaces...
+==> pam: Running provisioner: shell...
+    pam: Running: inline script
+PS C:\otus\lesson22> vagrant ssh
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 18:55:39 UTC 2026
+
+  System load:             0.88
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            22%
+  Swap usage:              0%
+  Processes:               107
+  Users logged in:         0
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@pam:~$ sudo -i
+root@pam:~# useradd otusadm
+root@pam:~# useradd otus
+root@pam:~# passwd otusadm
+New password:
+Retype new password:
+passwd: password updated successfully
+root@pam:~# passwd otus
+New password:
+Retype new password:
+passwd: password updated successfully
+root@pam:~# groupadd -f admin
+
+
+root@pam:~# systemctl restart ssh
+root@pam:~# sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config.d/*.conf 2>/dev/null || true
+root@pam:~# echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+root@pam:~# systemctl restart sshd
+root@pam:~# cat /etc/group | grep admin
+admin:x:117:otusadm,root,vagrant
+root@pam:~# nano /usr/local/bin/login.sh
+root@pam:~# chmod +x /usr/local/bin/login.sh
+root@pam:~# nano /etc/pam.
+pam.conf  pam.d/
+root@pam:~# nano /etc/pam.d/sshd
+root@pam:~# $(date +%a)
+Command 'Fri' not found, did you mean:
+  command 'iri' from snap iri (1.1.0)
+  command 'ri' from snap ruby (4.0.7)
+  command 'yri' from deb yard (0.9.26-1ubuntu0.1)
+  command 'ri' from deb ruby (1:3.0~exp1)
+See 'snap info <snapname>' for additional versions.
+root@pam:~# date +%a
+Fri
+root@pam:~# cat /etc/group | grep admin
+admin:x:117:otusadm,root,vagrant
+root@pam:~# nano /etc/pam.d/sshd
+root@pam:~# chmod 755 /usr/local/bin/login.sh
+root@pam:~# date
+Fri Oct  9 19:22:29 UTC 2026
+root@pam:~# date 101022222026.00
+Sat Oct 10 22:22:00 UTC 2026
+root@pam:~# date
+Fri Oct  9 19:23:15 UTC 2026
+root@pam:~# date
+Fri Oct  9 19:24:10 UTC 2026
+root@pam:~# timedatectl set-ntp false
+root@pam:~# timedatectl set-time "2026-10-10 12:00:00"
+root@pam:~# date
+Sat Oct 10 12:00:03 UTC 2026
+root@pam:~# cat /etc/pam.d/sshd
+# PAM configuration for the Secure Shell service
+
+# Standard Un*x authentication.
+@include common-auth
+
+# Disallow non-root logins when /etc/nologin exists.
+account    required     pam_nologin.so
+
+# Uncomment and edit /etc/security/access.conf if you need to set complex
+# access limits that are hard to express in sshd_config.
+# account  required     pam_access.so
+
+# Standard Un*x authorization.
+@include common-account
+
+# SELinux needs to be the first session rule.  This ensures that any
+# lingering context has been cleared.  Without this it is possible that a
+# module could execute code in the wrong domain.
+session [success=ok ignore=ignore module_unknown=ignore default=bad]        pam_selinux.so close
+
+# Set the loginuid process attribute.
+session    required     pam_loginuid.so
+
+# Create a new session keyring.
+session    optional     pam_keyinit.so force revoke
+
+# Standard Un*x session setup and teardown.
+@include common-session
+
+# Print the message of the day upon successful login.
+# This includes a dynamically generated part from /run/motd.dynamic
+# and a static (admin-editable) part from /etc/motd.
+session    optional     pam_motd.so  motd=/run/motd.dynamic
+session    optional     pam_motd.so noupdate
+
+# Print the status of the user's mailbox upon successful login.
+session    optional     pam_mail.so standard noenv # [1]
+
+# Set up user limits from /etc/security/limits.conf.
+session    required     pam_limits.so
+
+# Read environment variables from /etc/environment and
+# /etc/security/pam_env.conf.
+session    required     pam_env.so # [1]
+# In Debian 4.0 (etch), locale-related environment variables were moved to
+# /etc/default/locale, so read that as well.
+session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale
+
+# SELinux needs to intervene at login time to ensure that the process starts
+# in the proper default security context.  Only sessions which are intended
+# to run in the user's context should be run after this.
+session [success=ok ignore=ignore module_unknown=ignore default=bad]        pam_selinux.so open
+
+# Standard Un*x password updating.
+@include common-password
+
+#%PAM-1.0
+# PAM configuration for the Secure Shell service
+
+# Наш скрипт проверки выходных (блок auth)
+auth       required     pam_exec.so debug /usr/local/bin/login.sh
+
+# Стандартный блок аутентификации Ubuntu
+@include common-auth
+
+# Блокировка входа root, если создан файл /etc/nologin
+account    required     pam_nologin.so
+
+# Стандартный блок управления аккаунтами Ubuntu
+@include common-account
+
+# Стандартный блок сессий и паролей Ubuntu
+session    required     pam_loginuid.so
+@include common-session
+@include common-password
+
+# Настройка переменных окружения
+session    optional     pam_motd.so  motd=/run/motd.dynamic
+session    optional     pam_motd.so noupdate
+session    optional     pam_mail.so standard noenv
+session    required     pam_limits.so
+session    required     pam_env.so
+session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale
+
+root@pam:~# cat /usr/local/bin/login.sh
+#!/bin/bash
+#Первое условие: если день недели суббота или воскресенье
+if [ $(date +%a) = "Sat" ] || [ $(date +%a) = "Sun" ]; then
+ #Второе условие: входит ли пользователь в группу admin
+ if getent group admin | grep -qw "$PAM_USER"; then
+        #Если пользователь входит в группу admin, то он может подключиться
+        exit 0
+      else
+        #Иначе ошибка (не сможет подключиться)
+        exit 1
+    fi
+  #Если день не выходной, то подключиться может любой пользователь
+  else
+    exit 0
+fi
+root@pam:~#

@@ -1,0 +1,37 @@
+MACHINES = {
+  :"pam" => {
+    :box_name => "ubuntu/jammy64",
+    :cpus     => 2,
+    :memory   => 1024,
+    :ip       => "192.168.57.10",
+  }
+}
+
+Vagrant.configure("2") do |config|
+  # Увеличиваем таймауты загрузки для медленных систем
+  config.vm.boot_timeout = 600
+  config.ssh.connect_timeout = 60
+
+  MACHINES.each do |boxname, boxconfig|
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.network "private_network", ip: boxconfig[:ip]
+
+    config.vm.define boxname do |box|
+      box.vm.box = boxconfig[:box_name]
+      box.vm.host_name = boxname.to_s
+
+      box.vm.provider "virtualbox" do |v|
+        v.memory = boxconfig[:memory]
+        v.cpus = boxconfig[:cpus]
+        # Решает проблемы с DNS внутри виртуалки на Windows-хостах
+        v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      end
+
+      # Настройка SSH-сервера внутри гостевой ОС
+      box.vm.provision "shell", inline: <<-SHELL
+        sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
+        systemctl restart sshd.service
+      SHELL
+    end
+  end
+end

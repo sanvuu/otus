@@ -1,0 +1,611 @@
+PowerShell 7.6.6
+PS C:\Users\vserg> vagrant ssh
+A Vagrant environment or target machine is required to run this
+command. Run `vagrant init` to create a new Vagrant environment. Or,
+get an ID of a target machine from `vagrant global-status` to run
+this command on. A final option is to change to a directory with a
+Vagrantfile and to try again.
+PS C:\Users\vserg> ssh otus@192.168.57.10
+The authenticity of host '192.168.57.10 (192.168.57.10)' can't be established.
+ED25519 key fingerprint is SHA256:SLrZe2CO9nUMlpf0/ydA+PI+XQobnBevhC1DVhgovZs.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.57.10' (ED25519) to the list of known hosts.
+otus@192.168.57.10: Permission denied (publickey).
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10: Permission denied (publickey).
+PS C:\Users\vserg> ssh otusadm@192.168.57.10
+otusadm@192.168.57.10: Permission denied (publickey).
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10's password:
+Permission denied, please try again.
+otus@192.168.57.10's password:
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:04:55 UTC 2026
+
+  System load:             0.01
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            21%
+  Swap usage:              0%
+  Processes:               109
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/otus: No such file or directory
+$ whoami
+otus
+$ exit
+Connection to 192.168.57.10 closed.
+PS C:\Users\vserg> ssh otusadm@192.168.57.10
+otusadm@192.168.57.10's password:
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:04:55 UTC 2026
+
+  System load:             0.01
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            21%
+  Swap usage:              0%
+  Processes:               109
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Could not chdir to home directory /home/otusadm: No such file or directory
+$ whoami
+otusadm
+$ exit
+Connection to 192.168.57.10 closed.
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10's password:
+Permission denied, please try again.
+otus@192.168.57.10's password:
+Permission denied, please try again.
+otus@192.168.57.10's password:
+otus@192.168.57.10: Permission denied (publickey,password).
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10's password:
+Permission denied, please try again.
+otus@192.168.57.10's password:
+PS C:\Users\vserg> ssh otusadm@192.168.57.10
+otusadm@192.168.57.10's password:
+Permission denied, please try again.
+otusadm@192.168.57.10's password:
+Permission denied, please try again.
+otusadm@192.168.57.10's password:
+otusadm@192.168.57.10: Permission denied (publickey,password).
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10's password:
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:21:33 UTC 2026
+
+  System load:             0.09
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            21%
+  Swap usage:              0%
+  Processes:               109
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:21:33 UTC 2026
+
+  System load:             0.09
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            21%
+  Swap usage:              0%
+  Processes:               109
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Fri Oct  9 19:04:57 2026 from 192.168.57.1
+Could not chdir to home directory /home/otus: No such file or directory
+$ exit
+Connection to 192.168.57.10 closed.
+PS C:\Users\vserg> ssh otusadm@192.168.57.10
+otusadm@192.168.57.10's password:
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:21:33 UTC 2026
+
+  System load:             0.09
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            21%
+  Swap usage:              0%
+  Processes:               109
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:21:33 UTC 2026
+
+  System load:             0.09
+  Usage of /:              4.3% of 38.70GB
+  Memory usage:            21%
+  Swap usage:              0%
+  Processes:               109
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Fri Oct  9 19:05:44 2026 from 192.168.57.1
+Could not chdir to home directory /home/otusadm: No such file or directory
+$ exit
+Connection to 192.168.57.10 closed.
+PS C:\Users\vserg> date
+
+10 октября 2026 г. 22:23:56
+
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10's password:
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:24:25 UTC 2026
+
+  System load:             0.08
+  Usage of /:              4.4% of 38.70GB
+  Memory usage:            23%
+  Swap usage:              0%
+  Processes:               113
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct  9 19:24:25 UTC 2026
+
+  System load:             0.08
+  Usage of /:              4.4% of 38.70GB
+  Memory usage:            23%
+  Swap usage:              0%
+  Processes:               113
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Fri Oct  9 19:21:35 2026 from 192.168.57.1
+Could not chdir to home directory /home/otus: No such file or directory
+$ exit
+-sh: 1: уexit: not found
+$ exit
+Connection to 192.168.57.10 closed.
+PS C:\Users\vserg> ssh otus@192.168.57.10
+otus@192.168.57.10's password:
+Permission denied, please try again.
+otus@192.168.57.10's password:
+Permission denied, please try again.
+otus@192.168.57.10's password:
+otus@192.168.57.10: Permission denied (publickey,password).
+PS C:\Users\vserg> ssh otusadm@192.168.57.10
+otusadm@192.168.57.10's password:
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sat Oct 10 12:00:54 UTC 2026
+
+  System load:             0.02
+  Usage of /:              4.4% of 38.70GB
+  Memory usage:            23%
+  Swap usage:              0%
+  Processes:               112
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-194-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sat Oct 10 12:00:54 UTC 2026
+
+  System load:             0.02
+  Usage of /:              4.4% of 38.70GB
+  Memory usage:            23%
+  Swap usage:              0%
+  Processes:               112
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:7a:c9ff:fe24:4659
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Fri Oct  9 19:21:52 2026 from 192.168.57.1
+Could not chdir to home directory /home/otusadm: No such file or directory
+$ date
+Sat Oct 10 12:01:03 UTC 2026
+$
+
