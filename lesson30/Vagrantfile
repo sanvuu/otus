@@ -1,0 +1,82 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.boot_timeout = 600
+
+  config.vm.provider :libvirt do |lv|
+    lv.driver = "kvm"
+    lv.memory = 1536
+    lv.cpus = 1
+  end
+
+  # =========================================================================
+  # 1. inetRouter (Основной шлюз)
+  # =========================================================================
+  config.vm.define "inetRouter" do |node|
+    node.vm.hostname = "inetRouter"
+    node.vm.network "private_network", 
+      ip: "192.168.255.10", 
+      netmask: "255.255.255.0",
+      libvirt__network_name: "inter-router-net",
+      libvirt__forward_mode: "none"
+    
+    node.vm.network "forwarded_port", guest: 22, host: 2201, id: "ssh"
+  end
+
+  # =========================================================================
+  # 2. inetRouter2 (Альтернативный роутер)
+  # =========================================================================
+  config.vm.define "inetRouter2" do |node|
+    node.vm.hostname = "inetRouter2"
+    node.vm.network "private_network", 
+      ip: "192.168.255.2", 
+      netmask: "255.255.255.0",
+      libvirt__network_name: "inter-router-net",
+      libvirt__forward_mode: "none"
+
+    node.vm.network "private_network",
+      ip: "192.168.56.10",
+      netmask: "255.255.255.0",
+      libvirt__network_name: "host-only-net",
+      libvirt__forward_mode: "route"
+
+    node.vm.network "forwarded_port", guest: 22, host: 2202, id: "ssh"
+  end
+
+  # =========================================================================
+  # 3. centralRouter (Локальный маршрутизатор)
+  # =========================================================================
+  config.vm.define "centralRouter" do |node|
+    node.vm.hostname = "centralRouter"
+    node.vm.network "private_network", 
+      ip: "192.168.255.6", 
+      netmask: "255.255.255.0",
+      libvirt__network_name: "inter-router-net",
+      libvirt__forward_mode: "none"
+      
+    node.vm.network "private_network", 
+      ip: "192.168.0.254", 
+      netmask: "255.255.255.0",
+      libvirt__network_name: "internal-lan",
+      libvirt__forward_mode: "none"
+
+    node.vm.network "forwarded_port", guest: 22, host: 2203, id: "ssh"
+  end
+
+  # =========================================================================
+  # 4. centralServer (Веб-сервер Nginx)
+  # =========================================================================
+  config.vm.define "centralServer" do |node|
+    node.vm.hostname = "centralServer"
+    node.vm.network "private_network", 
+      ip: "192.168.0.2", 
+      netmask: "255.255.255.0",
+      libvirt__network_name: "internal-lan",
+      libvirt__forward_mode: "none"
+
+    node.vm.network "forwarded_port", guest: 22, host: 2204, id: "ssh"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provision.yml"
+  end
+end

@@ -1,0 +1,294 @@
+sergey@uchuwi:~/otus/lesson30$ vagrant provision
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> inetRouter: Running provisioner: ansible...
+    inetRouter: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Этап 0. Аварийное восстановление интернета для "залипших" сессий] ********
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'inetRouter' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [inetRouter]
+
+TASK [Принудительное восстановление шлюза Vagrant для выполнения apt] **********
+changed: [inetRouter]
+
+PLAY [Этап 1. Базовая настройка и установка пакетов на всех хостах] ************
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter]
+
+TASK [Установка базовых сетевых утилит] ****************************************
+ok: [inetRouter]
+
+PLAY [Этап 1.1. Специфичная установка Nginx на веб-сервер] *********************
+skipping: no hosts matched
+
+PLAY [Этап 2. Глубокая системная настройка маршрутизаторов (Динамическое подавление rp_filter)] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter]
+
+TASK [Включение IP Forwarding] *************************************************
+ok: [inetRouter]
+
+TASK [Глобальное отключение Reverse Path Filtering] ****************************
+ok: [inetRouter]
+
+TASK [Глобальное отключение Reverse Path Filtering (Default)] ******************
+ok: [inetRouter]
+
+TASK [Динамическое отключение rp_filter на всех active интерфейсах KVM] ********
+changed: [inetRouter]
+
+PLAY [Этап 3. Drop SSH снаружи и Port Knocking] ********************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter]
+
+TASK [Маршрут во внутреннюю сеть 192.168.0.0/24 через centralRouter] ***********
+changed: [inetRouter]
+
+TASK [Настройка правил Port Knocking через утилиту iptables] *******************
+changed: [inetRouter]
+
+PLAY [Этап 4. Конфигурация альтернативного шлюза inetRouter2 (Решение асимметрии)] ***
+skipping: no hosts matched
+
+PLAY [Этап 5. Финальное переключение маршрутизации на centralRouter] ***********
+skipping: no hosts matched
+
+PLAY [Этап 6.Rx Конфигурация веб-сервера centralServer и решение асимметрии] ***
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+inetRouter                 : ok=12   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+==> inetRouter2: Running provisioner: ansible...
+    inetRouter2: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Этап 0. Аварийное восстановление интернета для "залипших" сессий] ********
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter2]
+[WARNING]: Host 'inetRouter2' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+
+TASK [Принудительное восстановление шлюза Vagrant для выполнения apt] **********
+changed: [inetRouter2]
+
+PLAY [Этап 1. Базовая настройка и установка пакетов на всех хостах] ************
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter2]
+
+TASK [Установка базовых сетевых утилит] ****************************************
+ok: [inetRouter2]
+
+PLAY [Этап 1.1. Специфичная установка Nginx на веб-сервер] *********************
+skipping: no hosts matched
+
+PLAY [Этап 2. Глубокая системная настройка маршрутизаторов (Динамическое подавление rp_filter)] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter2]
+
+TASK [Включение IP Forwarding] *************************************************
+ok: [inetRouter2]
+
+TASK [Глобальное отключение Reverse Path Filtering] ****************************
+ok: [inetRouter2]
+
+TASK [Глобальное отключение Reverse Path Filtering (Default)] ******************
+ok: [inetRouter2]
+
+TASK [Динамическое отключение rp_filter на всех active интерфейсах KVM] ********
+changed: [inetRouter2]
+
+PLAY [Этап 3. Drop SSH снаружи и Port Knocking] ********************************
+skipping: no hosts matched
+
+PLAY [Этап 4. Конфигурация альтернативного шлюза inetRouter2 (Решение асимметрии)] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [inetRouter2]
+
+TASK [Маршрут во внутреннюю сеть 192.168.0.0/24 через centralRouter] ***********
+changed: [inetRouter2]
+
+TASK [Проброс входящего порта 80 на centralServer:8080 (Чистый DNAT без маскарадинга)] ***
+changed: [inetRouter2]
+
+TASK [Разрешить Маскарадинг для внешних запросов с хост-системы] ***************
+changed: [inetRouter2]
+
+TASK [Разрешение форвардинга пакетов до веб-сервера] ***************************
+changed: [inetRouter2]
+
+TASK [Настройка Policy Based Routing для возврата трафика на хост через eth2] ***
+changed: [inetRouter2]
+
+PLAY [Этап 5. Финальное переключение маршрутизации на centralRouter] ***********
+skipping: no hosts matched
+
+PLAY [Этап 6.Rx Конфигурация веб-сервера centralServer и решение асимметрии] ***
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+inetRouter2                : ok=15   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+==> centralRouter: Running provisioner: ansible...
+    centralRouter: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Этап 0. Аварийное восстановление интернета для "залипших" сессий] ********
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'centralRouter' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [centralRouter]
+
+TASK [Принудительное восстановление шлюза Vagrant для выполнения apt] **********
+changed: [centralRouter]
+
+PLAY [Этап 1. Базовая настройка и установка пакетов на всех хостах] ************
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralRouter]
+
+TASK [Установка базовых сетевых утилит] ****************************************
+ok: [centralRouter]
+
+PLAY [Этап 1.1. Специфичная установка Nginx на веб-сервер] *********************
+skipping: no hosts matched
+
+PLAY [Этап 2. Глубокая системная настройка маршрутизаторов (Динамическое подавление rp_filter)] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralRouter]
+
+TASK [Включение IP Forwarding] *************************************************
+ok: [centralRouter]
+
+TASK [Глобальное отключение Reverse Path Filtering] ****************************
+ok: [centralRouter]
+
+TASK [Глобальное отключение Reverse Path Filtering (Default)] ******************
+ok: [centralRouter]
+
+TASK [Динамическое отключение rp_filter на всех active интерфейсах KVM] ********
+changed: [centralRouter]
+
+PLAY [Этап 3. Drop SSH снаружи и Port Knocking] ********************************
+skipping: no hosts matched
+
+PLAY [Этап 4. Конфигурация альтернативного шлюза inetRouter2 (Решение асимметрии)] ***
+skipping: no hosts matched
+
+PLAY [Этап 5. Финальное переключение маршрутизации на centralRouter] ***********
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralRouter]
+
+TASK [Разрешение транзитного трафика (FORWARD) на внутреннем роутере] **********
+changed: [centralRouter]
+
+TASK [Удаление дефолтного шлюза Vagrant] ***************************************
+changed: [centralRouter]
+
+TASK [Установка основного шлюза через inetRouter] ******************************
+changed: [centralRouter]
+
+TASK [Policy Based Routing на centralRouter (Возврат пакетов от inetRouter2 назад на inetRouter2)] ***
+changed: [centralRouter]
+
+PLAY [Этап 6.Rx Конфигурация веб-сервера centralServer и решение асимметрии] ***
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+centralRouter              : ok=14   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+==> centralServer: Running provisioner: ansible...
+    centralServer: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Этап 0. Аварийное восстановление интернета для "залипших" сессий] ********
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'centralServer' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [centralServer]
+
+TASK [Принудительное восстановление шлюза Vagrant для выполнения apt] **********
+changed: [centralServer]
+
+PLAY [Этап 1. Базовая настройка и установка пакетов на всех хостах] ************
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralServer]
+
+TASK [Установка базовых сетевых утилит] ****************************************
+ok: [centralServer]
+
+PLAY [Этап 1.1. Специфичная установка Nginx на веб-сервер] *********************
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralServer]
+
+TASK [Установка веб-сервера Nginx] *********************************************
+ok: [centralServer]
+
+TASK [Принудительное создание чистого конфига Nginx на порту 8080 (IPv4 + IPv6)] ***
+ok: [centralServer]
+
+TASK [Создание индексной страницы для проверки доступности] ********************
+ok: [centralServer]
+
+PLAY [Этап 2. Глубокая системная настройка маршрутизаторов (Динамическое подавление rp_filter)] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralServer]
+
+TASK [Включение IP Forwarding] *************************************************
+ok: [centralServer]
+
+TASK [Глобальное отключение Reverse Path Filtering] ****************************
+ok: [centralServer]
+
+TASK [Глобальное отключение Reverse Path Filtering (Default)] ******************
+ok: [centralServer]
+
+TASK [Динамическое отключение rp_filter на всех active интерфейсах KVM] ********
+changed: [centralServer]
+
+PLAY [Этап 3. Drop SSH снаружи и Port Knocking] ********************************
+skipping: no hosts matched
+
+PLAY [Этап 4. Конфигурация альтернативного шлюза inetRouter2 (Решение асимметрии)] ***
+skipping: no hosts matched
+
+PLAY [Этап 5. Финальное переключение маршрутизации на centralRouter] ***********
+skipping: no hosts matched
+
+PLAY [Этап 6.Rx Конфигурация веб-сервера centralServer и решение асимметрии] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralServer]
+
+TASK [Направление всего исходящего трафика на centralRouter] *******************
+changed: [centralServer]
+
+TASK [Настройка Policy Based Routing (Точный парсинг интерфейса подсети 192.168.0.0)] ***
+changed: [centralServer]
+
+PLAY RECAP *********************************************************************
+centralServer              : ok=16   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+sergey@uchuwi:~/otus/lesson30$ 
+
+

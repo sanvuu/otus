@@ -1,0 +1,220 @@
+sergey@uchuwi:~/otus$ cd lesson30
+sergey@uchuwi:~/otus/lesson30$ ll
+total 48
+drwxr-xr-x  3 sergey sergey  4096 Oct 24 11:55 ./
+drwxrwxr-x 24 sergey sergey  4096 Oct 22 18:30 ../
+-rwxr-xr-x  1 sergey sergey    25 Oct 10 17:58 .gitignore*
+drwxrwxr-x  6 sergey sergey  4096 Oct 22 19:07 .vagrant/
+-rwxr-xr-x  1 sergey sergey  2988 Oct 24 11:56 Vagrantfile*
+-rwxr-xr-x  1 sergey sergey   158 Oct 20 22:49 knock.sh*
+-rw-rw-r--  1 sergey sergey 15842 Oct 24 11:55 new.txt
+-rwxr-xr-x  1 sergey sergey  7621 Oct 24 13:15 provision.yml*
+sergey@uchuwi:~/otus/lesson30$ vagrant up
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+Bringing machine 'inetRouter' up with 'libvirt' provider...
+Bringing machine 'inetRouter2' up with 'libvirt' provider...
+Bringing machine 'centralRouter' up with 'libvirt' provider...
+Bringing machine 'centralServer' up with 'libvirt' provider...
+==> centralRouter: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+==> inetRouter: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+==> inetRouter2: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+==> centralServer: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+==> inetRouter2: Creating shared folders metadata...
+==> centralServer: Creating shared folders metadata...
+==> inetRouter2: Starting domain.
+==> centralServer: Starting domain.
+==> inetRouter2: Domain launching with graphics connection settings...
+==> centralServer: Domain launching with graphics connection settings...
+==> inetRouter2:  -- Graphics Port:      5900
+==> centralServer:  -- Graphics Port:      5901
+==> inetRouter2:  -- Graphics IP:        127.0.0.1
+==> centralServer:  -- Graphics IP:        127.0.0.1
+==> inetRouter2:  -- Graphics Password:  Not defined
+==> centralServer:  -- Graphics Password:  Not defined
+==> inetRouter2:  -- Graphics Websocket: 5700
+==> centralServer:  -- Graphics Websocket: 5701
+==> inetRouter2: Waiting for domain to get an IP address...
+==> centralServer: Waiting for domain to get an IP address...
+==> centralRouter: Creating shared folders metadata...
+==> centralRouter: Starting domain.
+==> centralRouter: Domain launching with graphics connection settings...
+==> centralRouter:  -- Graphics Port:      5902
+==> centralRouter:  -- Graphics IP:        127.0.0.1
+==> centralRouter:  -- Graphics Password:  Not defined
+==> centralRouter:  -- Graphics Websocket: 5702
+==> centralRouter: Waiting for domain to get an IP address...
+==> inetRouter: Creating shared folders metadata...
+==> inetRouter: Starting domain.
+==> inetRouter: Domain launching with graphics connection settings...
+==> inetRouter:  -- Graphics Port:      5903
+==> inetRouter:  -- Graphics IP:        127.0.0.1
+==> inetRouter:  -- Graphics Password:  Not defined
+==> inetRouter:  -- Graphics Websocket: 5703
+==> inetRouter: Waiting for domain to get an IP address...
+==> inetRouter: Waiting for machine to boot. This may take a few minutes...
+    inetRouter: SSH address: 192.168.121.10:22
+    inetRouter: SSH username: vagrant
+    inetRouter: SSH auth method: private key
+==> inetRouter2: Waiting for machine to boot. This may take a few minutes...
+==> centralServer: Waiting for machine to boot. This may take a few minutes...
+    inetRouter2: SSH address: 192.168.121.42:22
+    centralServer: SSH address: 192.168.121.160:22
+    inetRouter2: SSH username: vagrant
+    centralServer: SSH username: vagrant
+    inetRouter2: SSH auth method: private key
+    centralServer: SSH auth method: private key
+==> inetRouter: Machine booted and ready!
+==> centralRouter: Waiting for machine to boot. This may take a few minutes...
+    centralRouter: SSH address: 192.168.121.97:22
+    centralRouter: SSH username: vagrant
+    centralRouter: SSH auth method: private key
+==> centralRouter: Machine booted and ready!
+==> centralServer: Machine booted and ready!
+==> inetRouter2: Machine booted and ready!
+==> inetRouter: Rsyncing folder: /home/sergey/otus/lesson30/ => /vagrant
+==> centralRouter: Rsyncing folder: /home/sergey/otus/lesson30/ => /vagrant
+==> centralServer: Rsyncing folder: /home/sergey/otus/lesson30/ => /vagrant
+==> inetRouter2: Rsyncing folder: /home/sergey/otus/lesson30/ => /vagrant
+==> inetRouter: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> inetRouter: flag to force provisioning. Provisioners marked to run always will still run.
+==> centralRouter: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> centralRouter: flag to force provisioning. Provisioners marked to run always will still run.
+==> centralServer: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> centralServer: flag to force provisioning. Provisioners marked to run always will still run.
+==> inetRouter2: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> inetRouter2: flag to force provisioning. Provisioners marked to run always will still run.
+sergey@uchuwi:~/otus/lesson30$ vagrant ssh centralRouter
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-64-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Oct 27 08:31:19 AM UTC 2026
+
+  System load:  0.0                Processes:             97
+  Usage of /:   15.8% of 30.34GB   Users logged in:       0
+  Memory usage: 10%                IPv4 address for eth0: 192.168.121.97
+  Swap usage:   0%
+
+Last login: Sat Oct 24 08:54:06 2026 from 192.168.121.1
+vagrant@centralRouter:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:45:e4:bb brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname ens5
+    inet 192.168.121.97/24 metric 100 brd 192.168.121.255 scope global dynamic eth0
+       valid_lft 3498sec preferred_lft 3498sec
+    inet6 fe80::5054:ff:fe45:e4bb/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:b6:d5:49 brd ff:ff:ff:ff:ff:ff
+    altname enp0s6
+    altname ens6
+    inet 192.168.255.6/24 brd 192.168.255.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:feb6:d549/64 scope link 
+       valid_lft forever preferred_lft forever
+4: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:21:05:0f brd ff:ff:ff:ff:ff:ff
+    altname enp0s7
+    altname ens7
+    inet 192.168.0.254/24 brd 192.168.0.255 scope global eth2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fe21:50f/64 scope link 
+       valid_lft forever preferred_lft forever
+vagrant@centralRouter:~$ ping 192.168.255.1
+PING 192.168.255.1 (192.168.255.1) 56(84) bytes of data.
+64 bytes from 192.168.255.1: icmp_seq=1 ttl=64 time=0.158 ms
+64 bytes from 192.168.255.1: icmp_seq=2 ttl=64 time=0.210 ms
+^C
+--- 192.168.255.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1020ms
+rtt min/avg/max/mdev = 0.158/0.184/0.210/0.026 ms
+vagrant@centralRouter:~$ ping 192.168.0.2
+PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.
+64 bytes from 192.168.0.2: icmp_seq=1 ttl=64 time=0.839 ms
+64 bytes from 192.168.0.2: icmp_seq=2 ttl=64 time=0.890 ms
+^C
+--- 192.168.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.839/0.864/0.890/0.025 ms
+vagrant@centralRouter:~$ ping 192.168.255.10
+PING 192.168.255.10 (192.168.255.10) 56(84) bytes of data.
+64 bytes from 192.168.255.10: icmp_seq=1 ttl=64 time=0.610 ms
+64 bytes from 192.168.255.10: icmp_seq=2 ttl=64 time=0.978 ms
+^C
+--- 192.168.255.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1062ms
+rtt min/avg/max/mdev = 0.610/0.794/0.978/0.184 ms
+vagrant@centralRouter:~$ ping 192.168.255.2
+PING 192.168.255.2 (192.168.255.2) 56(84) bytes of data.
+64 bytes from 192.168.255.2: icmp_seq=1 ttl=64 time=0.890 ms
+64 bytes from 192.168.255.2: icmp_seq=2 ttl=64 time=0.833 ms
+^C
+--- 192.168.255.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.833/0.861/0.890/0.028 ms
+vagrant@centralRouter:~$ ping 192.168.56.10
+PING 192.168.56.10 (192.168.56.10) 56(84) bytes of data.
+64 bytes from 192.168.56.10: icmp_seq=1 ttl=63 time=3.96 ms
+64 bytes from 192.168.56.10: icmp_seq=2 ttl=63 time=0.912 ms
+^C
+--- 192.168.56.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.912/2.434/3.957/1.522 ms
+vagrant@centralRouter:~$ ping ya.ru
+PING ya.ru (5.255.255.242) 56(84) bytes of data.
+64 bytes from ya.ru (5.255.255.242): icmp_seq=1 ttl=51 time=171 ms
+64 bytes from ya.ru (5.255.255.242): icmp_seq=2 ttl=51 time=26.4 ms
+64 bytes from ya.ru (5.255.255.242): icmp_seq=3 ttl=51 time=120 ms
+^C
+--- ya.ru ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2001ms
+rtt min/avg/max/mdev = 26.384/105.803/171.052/59.904 ms
+vagrant@centralRouter:~$ sudo nft list ruleset
+vagrant@centralRouter:~$ sudo iptables -V
+iptables v1.8.10 (nf_tables)
+vagrant@centralRouter:~$ sudo iptables-save
+vagrant@centralRouter:~$ sudo iptables-save
+# Generated by iptables-save v1.8.10 (nf_tables) on Tue Oct 27 08:46:08 2026
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A FORWARD -j ACCEPT
+COMMIT
+# Completed on Tue Oct 27 08:46:08 2026
+vagrant@centralRouter:~$ sudo nft list ruleset
+table ip filter {
+	chain FORWARD {
+		type filter hook forward priority filter; policy accept;
+		counter packets 0 bytes 0 accept
+	}
+}
+vagrant@centralRouter:~$ sudo ip route show
+default via 192.168.255.10 dev eth1 
+default via 192.168.121.1 dev eth0 proto dhcp src 192.168.121.97 metric 100 
+192.168.0.0/24 dev eth2 proto kernel scope link src 192.168.0.254 
+192.168.121.0/24 dev eth0 proto kernel scope link src 192.168.121.97 metric 100 
+192.168.121.1 dev eth0 proto dhcp scope link src 192.168.121.97 metric 100 
+192.168.255.0/24 dev eth1 proto kernel scope link src 192.168.255.6 
+vagrant@centralRouter:~$ sudo ip route show table 150
+Error: ipv4: FIB table does not exist.
+Dump terminated
+vagrant@centralRouter:~$ sudo ip route show table 200
+default via 192.168.255.2 dev eth1 
+vagrant@centralRouter:~$ ^C
+vagrant@centralRouter:~$ 
+
+

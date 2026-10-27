@@ -1,0 +1,185 @@
+---
+- name: Этап 0. Аварийное восстановление интернета для "залипших" сессий
+  hosts: all
+  become: true
+  tasks:
+    - name: Принудительное восстановление шлюза Vagrant для выполнения apt
+      shell: ip route replace default via 192.168.121.1 dev eth0
+      ignore_errors: yes
+
+- name: Этап 1. Базовая настройка и установка пакетов на всех хостах
+  hosts: all
+  become: true
+  tasks:
+    - name: Установка базовых сетевых утилит
+      apt:
+        name:
+          - iptables
+          - iptables-persistent
+          - net-tools
+          - tcpdump
+          - curl
+        state: present
+        update_cache: yes
+
+- name: Этап 1.1. Специфичная установка Nginx на веб-сервер
+  hosts: centralServer
+  become: true
+  tasks:
+    - name: Установка веб-сервера Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Принудительное создание чистого конфига Nginx на порту 8080 (IPv4 + IPv6)
+      copy:
+        dest: /etc/nginx/sites-available/default
+        content: |
+          server {
+              listen 8080 default_server;
+              listen [::]:8080 default_server;
+
+              root /var/www/html;
+              index index.html index.htm;
+              server_name _;
+
+              location / {
+                  try_files $uri $uri/ =404;
+              }
+          }
+      notify: Перезапуск Nginx
+
+    - name: Создание индексной страницы для проверки доступности
+      copy:
+        dest: /var/www/html/index.html
+        content: "Welcome to OTUS Network Lab Custom Port 8080!\n"
+        mode: '0644'
+
+  handlers:
+    - name: Перезапуск Nginx
+      service:
+        name: nginx
+        state: restarted
+
+- name: Этап 2. Глубокая системная настройка маршрутизаторов (Динамическое подавление rp_filter)
+  hosts: inetRouter, inetRouter2, centralRouter, centralServer
+  become: true
+  tasks:
+    - name: Включение IP Forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: '1'
+        state: present
+        reload: yes
+
+    - name: Глобальное отключение Reverse Path Filtering
+      sysctl: { name: net.ipv4.conf.all.rp_filter, value: '0', state: present, reload: yes }
+
+    - name: Глобальное отключение Reverse Path Filtering (Default)
+      sysctl: { name: net.ipv4.conf.default.rp_filter, value: '0', state: present, reload: yes }
+
+    - name: Динамическое отключение rp_filter на всех active интерфейсах KVM
+      shell: |
+        for interface in /proc/sys/net/ipv4/conf/*; do
+          echo 0 > "${interface}/rp_filter"
+        done
+      ignore_errors: yes
+
+- name: "Этап 3. Drop SSH снаружи и Port Knocking"
+  hosts: inetRouter
+  become: true
+  tasks:
+    - name: Маршрут во внутреннюю сеть 192.168.0.0/24 через centralRouter
+      command: ip route replace 192.168.0.0/24 via 192.168.255.6
+      ignore_errors: yes
+
+    - name: Настройка правил Port Knocking через утилиту iptables
+      shell: |
+        iptables -F INPUT
+        iptables -F FORWARD
+        iptables -A FORWARD -j ACCEPT
+        iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+        iptables -A INPUT -p tcp --dport 22 -s 192.168.121.0/24 -j ACCEPT
+        iptables -A INPUT -p tcp --dport 7000 -m recent --set --name KNOCK1 -j DROP
+        iptables -A INPUT -p tcp --dport 8000 -m recent --rcheck --seconds 10 --name KNOCK1 -m recent --set --name KNOCK2 -j DROP
+        iptables -A INPUT -p tcp --dport 9000 -m recent --rcheck --seconds 10 --name KNOCK2 -m recent --set --name KNOCK3 -j DROP
+        iptables -A INPUT -p tcp --dport 22 -m recent --rcheck --seconds 30 --name KNOCK3 -j ACCEPT
+        iptables -A INPUT -p tcp --dport 22 -j DROP
+      ignore_errors: yes
+
+- name: Этап 4. Конфигурация альтернативного шлюза inetRouter2 (Решение асимметрии)
+  hosts: inetRouter2
+  become: true
+  tasks:
+    - name: Маршрут во внутреннюю сеть 192.168.0.0/24 через centralRouter
+      command: ip route replace 192.168.0.0/24 via 192.168.255.6
+      ignore_errors: yes
+
+    - name: Проброс входящего порта 80 на centralServer:8080 (Чистый DNAT без маскарадинга)
+      iptables:
+        table: nat
+        chain: PREROUTING
+        protocol: tcp
+        destination_port: 80
+        jump: DNAT
+        to_destination: 192.168.0.2:8080
+
+    - name: Разрешить Маскарадинг для внешних запросов с хост-системы
+      iptables:
+        table: nat
+        chain: POSTROUTING
+        out_interface: eth1
+        jump: MASQUERADE
+
+    - name: Разрешение форвардинга пакетов до веб-сервера
+      iptables:
+        chain: FORWARD
+        jump: ACCEPT
+
+    - name: Настройка Policy Based Routing для возврата трафика на хост через eth2
+      shell: |
+        ip rule del from 192.168.255.2 table 150 || true
+        ip rule add from 192.168.255.2 table 150
+        ip route replace default via 192.168.56.1 dev eth2 table 150
+      ignore_errors: yes
+
+- name: Этап 5. Финальное переключение маршрутизации на centralRouter
+  hosts: centralRouter
+  become: true
+  tasks:
+    - name: Разрешение транзитного трафика (FORWARD) на внутреннем роутере
+      iptables:
+        chain: FORWARD
+        jump: ACCEPT
+
+    - name: Удаление дефолтного шлюза Vagrant
+      command: ip route del default
+      ignore_errors: yes
+
+    - name: Установка основного шлюза через inetRouter
+      command: ip route add default via 192.168.255.10
+      ignore_errors: yes
+
+    - name: Policy Based Routing на centralRouter (Возврат пакетов от inetRouter2 назад на inetRouter2)
+      shell: |
+        ip rule del from 192.168.255.6 table 200 || true
+        ip rule add from 192.168.255.6 table 200
+        ip route replace default via 192.168.255.2 table 200
+      ignore_errors: yes
+
+- name: Этап 6.Rx Конфигурация веб-сервера centralServer и решение асимметрии
+  hosts: centralServer
+  become: true
+  tasks:
+    - name: Направление всего исходящего трафика на centralRouter
+      command: ip route replace default via 192.168.0.254
+      ignore_errors: yes
+
+    - name: Настройка Policy Based Routing (Точный парсинг интерфейса подсети 192.168.0.0)
+      shell: |
+        IFACE=$(ip -4 route show 192.168.0.0/24 | grep -o 'dev [^ ]*' | cut -d' ' -f2)
+        ip rule del from 192.168.0.2 table 100 || true
+        ip rule add from 192.168.0.2 table 100
+        ip route replace default via 192.168.0.254 dev $IFACE table 100
+        ip route replace 192.168.255.0/24 via 192.168.0.254 dev $IFACE table 100
+      ignore_errors: yes
