@@ -1,0 +1,13 @@
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+table ip nat {
+    chain prerouting {
+        type nat hook prerouting priority filter; policy accept;
+    }
+    chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+        oifname "eth0" masquerade
+    }
+}

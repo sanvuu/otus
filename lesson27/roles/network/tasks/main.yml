@@ -1,0 +1,49 @@
+---
+- name: Enable IP Forwarding on Routers
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+    state: present
+    reload: true
+  when: inventory_hostname in groups['routers']
+
+- name: Remove default Vagrant and Cloud-Init netplan configs to prevent overrides
+  file:
+    path: "/etc/netplan/{{ item }}"
+    state: absent
+  loop:
+    - 01-netcfg.yaml
+    - 50-vagrant.yaml
+    - 70-vagrant.yaml
+    - 90-hotplug.yaml
+  ignore_errors: true
+
+- name: Clean up systemd-networkd runtime cache
+  shell: rm -rf /run/systemd/network/*
+  changed_when: true
+
+- name: Deploy High Priority Netplan Configuration
+  template:
+    src: netplan.yaml.j2
+    dest: /etc/netplan/99-custom-network.yaml
+    mode: '0600'
+  register: netplan_config
+
+- name: Configure NAT rules on inetRouter
+  template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+    mode: '0755'
+  when: inventory_hostname == 'inetRouter'
+
+- name: Enable nftables service
+  service:
+    name: nftables
+    enabled: true
+  when: inventory_hostname == 'inetRouter'
+
+- name: Reboot the machine gently to apply network changes without SSH hanging
+  reboot:
+    reboot_timeout: 120
+  when: netplan_config.changed

@@ -1,0 +1,89 @@
+---
+# Глобальные переменные сетей для каждого хоста стенда
+
+# inetRouter
+inetRouter_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.0.14/28
+inetRouter_static_routes:
+  - to: 192.168.0.0/16
+    via: 192.168.0.1
+  # Явно возвращаем дефолтный шлюз в интернет через интерфейс eth0 (виртуальный роутер KVM)
+  - to: 0.0.0.0/0
+    via: 192.168.121.1
+
+# centralRouter
+centralRouter_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.0.1/28
+  eth2:
+    addresses:
+      - 192.168.0.17/30
+  eth3:
+    addresses:
+      - 192.168.0.21/30
+centralRouter_static_routes:
+  - to: 0.0.0.0/0
+    via: 192.168.0.14
+  - to: 192.168.2.0/24
+    via: 192.168.0.18
+  - to: 192.168.1.0/24
+    via: 192.168.0.22
+
+# office1Router
+office1Router_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.0.18/30
+  eth2:
+    addresses:
+      - 192.168.2.1/26
+      - 192.168.2.65/26
+      - 192.168.2.129/26
+      - 192.168.2.193/26
+office1Router_static_routes:
+  - to: 0.0.0.0/0
+    via: 192.168.0.17
+
+# office2Router
+office2Router_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.0.22/30
+  eth2:
+    addresses:
+      - 192.168.1.1/25
+      - 192.168.1.129/26
+      - 192.168.1.193/26
+office2Router_static_routes:
+  - to: 0.0.0.0/0
+    via: 192.168.0.21
+
+# centralServer
+centralServer_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.0.2/28
+centralServer_static_routes:
+  - to: 0.0.0.0/0
+    via: 192.168.0.1
+
+# office1Server
+office1Server_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.2.2/26
+office1Server_static_routes:
+  - to: 0.0.0.0/0
+    via: 192.168.2.1
+
+# office2Server
+office2Server_netplan_interfaces:
+  eth1:
+    addresses:
+      - 192.168.1.2/25
+office2Server_static_routes:
+  - to: 0.0.0.0/0
+    via: 192.168.1.1

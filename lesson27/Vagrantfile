@@ -1,0 +1,93 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+BOX_IMAGE = "bento/ubuntu-24.04"
+
+MACHINES = {
+  "inetRouter" => {
+    :cpus => 2, :memory => 2048,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.0.14", :netmask => "255.255.255.240", :libvirt__network_name => "central-net" }
+    ]
+  },
+  "centralRouter" => {
+    :cpus => 2, :memory => 2048,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.0.1", :netmask => "255.255.255.240", :libvirt__network_name => "central-net" },
+      { :type => "private_network", :ip => "192.168.0.17", :netmask => "255.255.255.252", :libvirt__network_name => "to-office1" },
+      { :type => "private_network", :ip => "192.168.0.21", :netmask => "255.255.255.252", :libvirt__network_name => "to-office2" }
+    ]
+  },
+  "office1Router" => {
+    :cpus => 2, :memory => 2048,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.0.18", :netmask => "255.255.255.252", :libvirt__network_name => "to-office1" },
+      { :type => "private_network", :ip => "192.168.2.1", :netmask => "255.255.255.192", :libvirt__network_name => "office1-inner" }
+    ]
+  },
+  "office2Router" => {
+    :cpus => 2, :memory => 2048,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.0.22", :netmask => "255.255.255.252", :libvirt__network_name => "to-office2" },
+      { :type => "private_network", :ip => "192.168.1.1", :netmask => "255.255.255.128", :libvirt__network_name => "office2-inner" }
+    ]
+  },
+  "centralServer" => {
+    :cpus => 2, :memory => 1024,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.0.2", :netmask => "255.255.255.240", :libvirt__network_name => "central-net" }
+    ]
+  },
+  "office1Server" => {
+    :cpus => 2, :memory => 1024,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.2.2", :netmask => "255.255.255.192", :libvirt__network_name => "office1-inner" }
+    ]
+  },
+  "office2Server" => {
+    :cpus => 2, :memory => 1024,
+    :networks => [
+      { :type => "private_network", :ip => "192.168.1.2", :netmask => "255.255.255.128", :libvirt__network_name => "office2-inner" }
+    ]
+  }
+}
+
+Vagrant.configure("2") do |config|
+  MACHINES.each do |boxname, boxconfig|
+    config.vm.define boxname do |node|
+      node.vm.box = BOX_IMAGE
+      node.vm.hostname = boxname
+      node.vm.synced_folder ".", "/vagrant", disabled: true
+
+      node.vm.provider :libvirt do |lv|
+        lv.driver = "kvm"
+        lv.cpus = boxconfig[:cpus]
+        lv.memory = boxconfig[:memory]
+        lv.default_prefix = "lesson27_"
+      end
+
+      boxconfig[:networks].each do |net|
+        node.vm.network net[:type], 
+                        ip: net[:ip], 
+                        netmask: net[:netmask], 
+                        libvirt__network_name: net[:libvirt__network_name],
+                        always_destroy: true
+      end
+
+      # Скрипт инициализации: настраивает SSH и подготавливает Netplan к работе без перезапуска сети
+      node.vm.provision "shell", inline: <<-SHELL
+        sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
+        systemctl restart ssh.service
+      SHELL
+    end
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.groups = {
+      "routers" => ["inetRouter", "centralRouter", "office1Router", "office2Router"],
+      "servers" => ["centralServer", "office1Server", "office2Server"]
+    }
+    ansible.compatibility_mode = "2.0"
+  end
+end

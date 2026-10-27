@@ -1,0 +1,29 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: true
+      dhcp4-overrides:
+        use-routes: false
+{% set ifaces = lookup('vars', inventory_hostname ~ '_netplan_interfaces', default={}) %}
+{% set routes = lookup('vars', inventory_hostname ~ '_static_routes', default=[]) %}
+{% if ifaces %}
+{% for iface, iface_config in ifaces.items() %}
+    {{ iface }}:
+      addresses:
+{% for addr in iface_config.addresses %}
+        - {{ addr }}
+{% endfor %}
+      dhcp4: false
+      # Говорим системе не ждать линка на этом интерфейсе при загрузке
+      optional: true
+{% if loop.first and routes | length > 0 %}
+      routes:
+{% for route in routes %}
+        - to: {{ route.to }}
+          via: {{ route.via }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}

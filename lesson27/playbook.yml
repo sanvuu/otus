@@ -1,0 +1,6 @@
+---
+- name: Configure Network Topology
+  hosts: all
+  become: true
+  roles:
+    - network

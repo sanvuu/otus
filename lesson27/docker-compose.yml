@@ -1,0 +1,9 @@
+services:
+  ansible:
+    image: cytopia/ansible:2.14-awshelm3.17
+    volumes:
+      - ./:/data
+      - ./.vagrant:/data/.vagrant
+    working_dir: /data
+    network_mode: host
+    command: ansible-playbook -i /data/inventory/hosts.ini /data/playbook.yml

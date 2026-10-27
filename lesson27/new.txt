@@ -1,0 +1,625 @@
+sergey@uchuwi:~/otus/lesson27$ vagrant up --no-parallel
+Bringing machine 'inetRouter' up with 'libvirt' provider...
+Bringing machine 'centralRouter' up with 'libvirt' provider...
+Bringing machine 'office1Router' up with 'libvirt' provider...
+Bringing machine 'office2Router' up with 'libvirt' provider...
+Bringing machine 'centralServer' up with 'libvirt' provider...
+Bringing machine 'office1Server' up with 'libvirt' provider...
+Bringing machine 'office2Server' up with 'libvirt' provider...
+==> inetRouter: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> inetRouter: Creating image (snapshot of base box volume).
+==> inetRouter: Creating domain with the following settings...
+==> inetRouter:  -- Name:              lesson27_inetRouter
+==> inetRouter:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> inetRouter:  -- Domain type:       kvm
+==> inetRouter:  -- Cpus:              2
+==> inetRouter:  -- Feature:           acpi
+==> inetRouter:  -- Feature:           apic
+==> inetRouter:  -- Feature:           pae
+==> inetRouter:  -- Clock offset:      utc
+==> inetRouter:  -- Memory:            2048M
+==> inetRouter:  -- Base box:          bento/ubuntu-24.04
+==> inetRouter:  -- Storage pool:      default
+==> inetRouter:  -- Image(vda):        /var/lib/libvirt/images/lesson27_inetRouter.img, virtio, 64G
+==> inetRouter:  -- Disk driver opts:  cache='default'
+==> inetRouter:  -- Graphics Type:     vnc
+==> inetRouter:  -- Video Type:        cirrus
+==> inetRouter:  -- Video VRAM:        16384
+==> inetRouter:  -- Video 3D accel:    false
+==> inetRouter:  -- Keymap:            en-us
+==> inetRouter:  -- TPM Backend:       passthrough
+==> inetRouter:  -- INPUT:             type=mouse, bus=ps2
+==> inetRouter: Creating shared folders metadata...
+==> inetRouter: Starting domain.
+==> inetRouter: Domain launching with graphics connection settings...
+==> inetRouter:  -- Graphics Port:      5900
+==> inetRouter:  -- Graphics IP:        127.0.0.1
+==> inetRouter:  -- Graphics Password:  Not defined
+==> inetRouter:  -- Graphics Websocket: 5700
+==> inetRouter: Waiting for domain to get an IP address...
+==> inetRouter: Waiting for machine to boot. This may take a few minutes...
+    inetRouter: SSH address: 192.168.121.3:22
+    inetRouter: SSH username: vagrant
+    inetRouter: SSH auth method: private key
+    inetRouter: 
+    inetRouter: Vagrant insecure key detected. Vagrant will automatically replace
+    inetRouter: this with a newly generated keypair for better security.
+    inetRouter: 
+    inetRouter: Inserting generated public key within guest...
+    inetRouter: Removing insecure key from the guest if it's present...
+    inetRouter: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> inetRouter: Machine booted and ready!
+==> inetRouter: Setting hostname...
+==> inetRouter: Configuring and enabling network interfaces...
+==> inetRouter: Running provisioner: ansible...
+    inetRouter: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'inetRouter' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [inetRouter]
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+changed: [inetRouter]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [inetRouter] => (item=01-netcfg.yaml)
+changed: [inetRouter] => (item=50-vagrant.yaml)
+ok: [inetRouter] => (item=70-vagrant.yaml)
+ok: [inetRouter] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [inetRouter]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [inetRouter]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+changed: [inetRouter]
+
+TASK [network : Enable nftables service] ***************************************
+changed: [inetRouter]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [inetRouter]
+
+PLAY RECAP *********************************************************************
+inetRouter                 : ok=8    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+==> inetRouter: Running provisioner: shell...
+    inetRouter: Running: inline script
+==> centralRouter: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> centralRouter: This is very often used by the router and can cause the
+==> centralRouter: network to not work properly. If the network doesn't work
+==> centralRouter: properly, try changing this IP.
+==> centralRouter: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> centralRouter: Creating image (snapshot of base box volume).
+==> centralRouter: Creating domain with the following settings...
+==> centralRouter:  -- Name:              lesson27_centralRouter
+==> centralRouter:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> centralRouter:  -- Domain type:       kvm
+==> centralRouter:  -- Cpus:              2
+==> centralRouter:  -- Feature:           acpi
+==> centralRouter:  -- Feature:           apic
+==> centralRouter:  -- Feature:           pae
+==> centralRouter:  -- Clock offset:      utc
+==> centralRouter:  -- Memory:            2048M
+==> centralRouter:  -- Base box:          bento/ubuntu-24.04
+==> centralRouter:  -- Storage pool:      default
+==> centralRouter:  -- Image(vda):        /var/lib/libvirt/images/lesson27_centralRouter.img, virtio, 64G
+==> centralRouter:  -- Disk driver opts:  cache='default'
+==> centralRouter:  -- Graphics Type:     vnc
+==> centralRouter:  -- Video Type:        cirrus
+==> centralRouter:  -- Video VRAM:        16384
+==> centralRouter:  -- Video 3D accel:    false
+==> centralRouter:  -- Keymap:            en-us
+==> centralRouter:  -- TPM Backend:       passthrough
+==> centralRouter:  -- INPUT:             type=mouse, bus=ps2
+==> centralRouter: Creating shared folders metadata...
+==> centralRouter: Starting domain.
+==> centralRouter: Domain launching with graphics connection settings...
+==> centralRouter:  -- Graphics Port:      5901
+==> centralRouter:  -- Graphics IP:        127.0.0.1
+==> centralRouter:  -- Graphics Password:  Not defined
+==> centralRouter:  -- Graphics Websocket: 5701
+==> centralRouter: Waiting for domain to get an IP address...
+==> centralRouter: Waiting for machine to boot. This may take a few minutes...
+    centralRouter: SSH address: 192.168.121.238:22
+    centralRouter: SSH username: vagrant
+    centralRouter: SSH auth method: private key
+    centralRouter: 
+    centralRouter: Vagrant insecure key detected. Vagrant will automatically replace
+    centralRouter: this with a newly generated keypair for better security.
+    centralRouter: 
+    centralRouter: Inserting generated public key within guest...
+    centralRouter: Removing insecure key from the guest if it's present...
+    centralRouter: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> centralRouter: Machine booted and ready!
+==> centralRouter: Setting hostname...
+==> centralRouter: Configuring and enabling network interfaces...
+==> centralRouter: Running provisioner: ansible...
+    centralRouter: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralRouter]
+[WARNING]: Host 'centralRouter' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+changed: [centralRouter]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [centralRouter] => (item=01-netcfg.yaml)
+changed: [centralRouter] => (item=50-vagrant.yaml)
+ok: [centralRouter] => (item=70-vagrant.yaml)
+ok: [centralRouter] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [centralRouter]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [centralRouter]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+skipping: [centralRouter]
+
+TASK [network : Enable nftables service] ***************************************
+skipping: [centralRouter]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [centralRouter]
+
+PLAY RECAP *********************************************************************
+centralRouter              : ok=6    changed=5    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
+==> centralRouter: Running provisioner: shell...
+    centralRouter: Running: inline script
+==> office1Router: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> office1Router: This is very often used by the router and can cause the
+==> office1Router: network to not work properly. If the network doesn't work
+==> office1Router: properly, try changing this IP.
+==> office1Router: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> office1Router: Creating image (snapshot of base box volume).
+==> office1Router: Creating domain with the following settings...
+==> office1Router:  -- Name:              lesson27_office1Router
+==> office1Router:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> office1Router:  -- Domain type:       kvm
+==> office1Router:  -- Cpus:              2
+==> office1Router:  -- Feature:           acpi
+==> office1Router:  -- Feature:           apic
+==> office1Router:  -- Feature:           pae
+==> office1Router:  -- Clock offset:      utc
+==> office1Router:  -- Memory:            2048M
+==> office1Router:  -- Base box:          bento/ubuntu-24.04
+==> office1Router:  -- Storage pool:      default
+==> office1Router:  -- Image(vda):        /var/lib/libvirt/images/lesson27_office1Router.img, virtio, 64G
+==> office1Router:  -- Disk driver opts:  cache='default'
+==> office1Router:  -- Graphics Type:     vnc
+==> office1Router:  -- Video Type:        cirrus
+==> office1Router:  -- Video VRAM:        16384
+==> office1Router:  -- Video 3D accel:    false
+==> office1Router:  -- Keymap:            en-us
+==> office1Router:  -- TPM Backend:       passthrough
+==> office1Router:  -- INPUT:             type=mouse, bus=ps2
+==> office1Router: Creating shared folders metadata...
+==> office1Router: Starting domain.
+==> office1Router: Domain launching with graphics connection settings...
+==> office1Router:  -- Graphics Port:      5902
+==> office1Router:  -- Graphics IP:        127.0.0.1
+==> office1Router:  -- Graphics Password:  Not defined
+==> office1Router:  -- Graphics Websocket: 5702
+==> office1Router: Waiting for domain to get an IP address...
+==> office1Router: Waiting for machine to boot. This may take a few minutes...
+    office1Router: SSH address: 192.168.121.104:22
+    office1Router: SSH username: vagrant
+    office1Router: SSH auth method: private key
+    office1Router: 
+    office1Router: Vagrant insecure key detected. Vagrant will automatically replace
+    office1Router: this with a newly generated keypair for better security.
+    office1Router: 
+    office1Router: Inserting generated public key within guest...
+    office1Router: Removing insecure key from the guest if it's present...
+    office1Router: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> office1Router: Machine booted and ready!
+==> office1Router: Setting hostname...
+==> office1Router: Configuring and enabling network interfaces...
+==> office1Router: Running provisioner: ansible...
+    office1Router: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [office1Router]
+[WARNING]: Host 'office1Router' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+changed: [office1Router]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [office1Router] => (item=01-netcfg.yaml)
+changed: [office1Router] => (item=50-vagrant.yaml)
+ok: [office1Router] => (item=70-vagrant.yaml)
+ok: [office1Router] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [office1Router]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [office1Router]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+skipping: [office1Router]
+
+TASK [network : Enable nftables service] ***************************************
+skipping: [office1Router]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [office1Router]
+
+PLAY RECAP *********************************************************************
+office1Router              : ok=6    changed=5    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
+==> office1Router: Running provisioner: shell...
+    office1Router: Running: inline script
+==> office2Router: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> office2Router: This is very often used by the router and can cause the
+==> office2Router: network to not work properly. If the network doesn't work
+==> office2Router: properly, try changing this IP.
+==> office2Router: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> office2Router: Creating image (snapshot of base box volume).
+==> office2Router: Creating domain with the following settings...
+==> office2Router:  -- Name:              lesson27_office2Router
+==> office2Router:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> office2Router:  -- Domain type:       kvm
+==> office2Router:  -- Cpus:              2
+==> office2Router:  -- Feature:           acpi
+==> office2Router:  -- Feature:           apic
+==> office2Router:  -- Feature:           pae
+==> office2Router:  -- Clock offset:      utc
+==> office2Router:  -- Memory:            2048M
+==> office2Router:  -- Base box:          bento/ubuntu-24.04
+==> office2Router:  -- Storage pool:      default
+==> office2Router:  -- Image(vda):        /var/lib/libvirt/images/lesson27_office2Router.img, virtio, 64G
+==> office2Router:  -- Disk driver opts:  cache='default'
+==> office2Router:  -- Graphics Type:     vnc
+==> office2Router:  -- Video Type:        cirrus
+==> office2Router:  -- Video VRAM:        16384
+==> office2Router:  -- Video 3D accel:    false
+==> office2Router:  -- Keymap:            en-us
+==> office2Router:  -- TPM Backend:       passthrough
+==> office2Router:  -- INPUT:             type=mouse, bus=ps2
+==> office2Router: Creating shared folders metadata...
+==> office2Router: Starting domain.
+==> office2Router: Domain launching with graphics connection settings...
+==> office2Router:  -- Graphics Port:      5903
+==> office2Router:  -- Graphics IP:        127.0.0.1
+==> office2Router:  -- Graphics Password:  Not defined
+==> office2Router:  -- Graphics Websocket: 5703
+==> office2Router: Waiting for domain to get an IP address...
+==> office2Router: Waiting for machine to boot. This may take a few minutes...
+    office2Router: SSH address: 192.168.121.84:22
+    office2Router: SSH username: vagrant
+    office2Router: SSH auth method: private key
+    office2Router: 
+    office2Router: Vagrant insecure key detected. Vagrant will automatically replace
+    office2Router: this with a newly generated keypair for better security.
+    office2Router: 
+    office2Router: Inserting generated public key within guest...
+    office2Router: Removing insecure key from the guest if it's present...
+    office2Router: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> office2Router: Machine booted and ready!
+==> office2Router: Setting hostname...
+==> office2Router: Configuring and enabling network interfaces...
+==> office2Router: Running provisioner: ansible...
+    office2Router: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'office2Router' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [office2Router]
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+changed: [office2Router]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [office2Router] => (item=01-netcfg.yaml)
+changed: [office2Router] => (item=50-vagrant.yaml)
+ok: [office2Router] => (item=70-vagrant.yaml)
+ok: [office2Router] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [office2Router]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [office2Router]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+skipping: [office2Router]
+
+TASK [network : Enable nftables service] ***************************************
+skipping: [office2Router]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [office2Router]
+
+PLAY RECAP *********************************************************************
+office2Router              : ok=6    changed=5    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
+==> office2Router: Running provisioner: shell...
+    office2Router: Running: inline script
+==> centralServer: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> centralServer: Creating image (snapshot of base box volume).
+==> centralServer: Creating domain with the following settings...
+==> centralServer:  -- Name:              lesson27_centralServer
+==> centralServer:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> centralServer:  -- Domain type:       kvm
+==> centralServer:  -- Cpus:              2
+==> centralServer:  -- Feature:           acpi
+==> centralServer:  -- Feature:           apic
+==> centralServer:  -- Feature:           pae
+==> centralServer:  -- Clock offset:      utc
+==> centralServer:  -- Memory:            1024M
+==> centralServer:  -- Base box:          bento/ubuntu-24.04
+==> centralServer:  -- Storage pool:      default
+==> centralServer:  -- Image(vda):        /var/lib/libvirt/images/lesson27_centralServer.img, virtio, 64G
+==> centralServer:  -- Disk driver opts:  cache='default'
+==> centralServer:  -- Graphics Type:     vnc
+==> centralServer:  -- Video Type:        cirrus
+==> centralServer:  -- Video VRAM:        16384
+==> centralServer:  -- Video 3D accel:    false
+==> centralServer:  -- Keymap:            en-us
+==> centralServer:  -- TPM Backend:       passthrough
+==> centralServer:  -- INPUT:             type=mouse, bus=ps2
+==> centralServer: Creating shared folders metadata...
+==> centralServer: Starting domain.
+==> centralServer: Domain launching with graphics connection settings...
+==> centralServer:  -- Graphics Port:      5904
+==> centralServer:  -- Graphics IP:        127.0.0.1
+==> centralServer:  -- Graphics Password:  Not defined
+==> centralServer:  -- Graphics Websocket: 5704
+==> centralServer: Waiting for domain to get an IP address...
+==> centralServer: Waiting for machine to boot. This may take a few minutes...
+    centralServer: SSH address: 192.168.121.221:22
+    centralServer: SSH username: vagrant
+    centralServer: SSH auth method: private key
+    centralServer: 
+    centralServer: Vagrant insecure key detected. Vagrant will automatically replace
+    centralServer: this with a newly generated keypair for better security.
+    centralServer: 
+    centralServer: Inserting generated public key within guest...
+    centralServer: Removing insecure key from the guest if it's present...
+    centralServer: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> centralServer: Machine booted and ready!
+==> centralServer: Setting hostname...
+==> centralServer: Configuring and enabling network interfaces...
+==> centralServer: Running provisioner: ansible...
+    centralServer: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [centralServer]
+[WARNING]: Host 'centralServer' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+skipping: [centralServer]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [centralServer] => (item=01-netcfg.yaml)
+changed: [centralServer] => (item=50-vagrant.yaml)
+ok: [centralServer] => (item=70-vagrant.yaml)
+ok: [centralServer] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [centralServer]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [centralServer]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+skipping: [centralServer]
+
+TASK [network : Enable nftables service] ***************************************
+skipping: [centralServer]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [centralServer]
+
+PLAY RECAP *********************************************************************
+centralServer              : ok=5    changed=4    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+==> centralServer: Running provisioner: shell...
+    centralServer: Running: inline script
+==> office1Server: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> office1Server: Creating image (snapshot of base box volume).
+==> office1Server: Creating domain with the following settings...
+==> office1Server:  -- Name:              lesson27_office1Server
+==> office1Server:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> office1Server:  -- Domain type:       kvm
+==> office1Server:  -- Cpus:              2
+==> office1Server:  -- Feature:           acpi
+==> office1Server:  -- Feature:           apic
+==> office1Server:  -- Feature:           pae
+==> office1Server:  -- Clock offset:      utc
+==> office1Server:  -- Memory:            1024M
+==> office1Server:  -- Base box:          bento/ubuntu-24.04
+==> office1Server:  -- Storage pool:      default
+==> office1Server:  -- Image(vda):        /var/lib/libvirt/images/lesson27_office1Server.img, virtio, 64G
+==> office1Server:  -- Disk driver opts:  cache='default'
+==> office1Server:  -- Graphics Type:     vnc
+==> office1Server:  -- Video Type:        cirrus
+==> office1Server:  -- Video VRAM:        16384
+==> office1Server:  -- Video 3D accel:    false
+==> office1Server:  -- Keymap:            en-us
+==> office1Server:  -- TPM Backend:       passthrough
+==> office1Server:  -- INPUT:             type=mouse, bus=ps2
+==> office1Server: Creating shared folders metadata...
+==> office1Server: Starting domain.
+==> office1Server: Domain launching with graphics connection settings...
+==> office1Server:  -- Graphics Port:      5905
+==> office1Server:  -- Graphics IP:        127.0.0.1
+==> office1Server:  -- Graphics Password:  Not defined
+==> office1Server:  -- Graphics Websocket: 5705
+==> office1Server: Waiting for domain to get an IP address...
+==> office1Server: Waiting for machine to boot. This may take a few minutes...
+    office1Server: SSH address: 192.168.121.116:22
+    office1Server: SSH username: vagrant
+    office1Server: SSH auth method: private key
+    office1Server: 
+    office1Server: Vagrant insecure key detected. Vagrant will automatically replace
+    office1Server: this with a newly generated keypair for better security.
+    office1Server: 
+    office1Server: Inserting generated public key within guest...
+    office1Server: Removing insecure key from the guest if it's present...
+    office1Server: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> office1Server: Machine booted and ready!
+==> office1Server: Setting hostname...
+==> office1Server: Configuring and enabling network interfaces...
+==> office1Server: Running provisioner: ansible...
+    office1Server: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'office1Server' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [office1Server]
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+skipping: [office1Server]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [office1Server] => (item=01-netcfg.yaml)
+changed: [office1Server] => (item=50-vagrant.yaml)
+ok: [office1Server] => (item=70-vagrant.yaml)
+ok: [office1Server] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [office1Server]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [office1Server]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+skipping: [office1Server]
+
+TASK [network : Enable nftables service] ***************************************
+skipping: [office1Server]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [office1Server]
+
+PLAY RECAP *********************************************************************
+office1Server              : ok=5    changed=4    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+==> office1Server: Running provisioner: shell...
+    office1Server: Running: inline script
+==> office2Server: Checking if box 'bento/ubuntu-24.04' version '202508.03.0' is up to date...
+[fog][WARNING] Unrecognized arguments: libvirt_ip_command
+==> office2Server: Creating image (snapshot of base box volume).
+==> office2Server: Creating domain with the following settings...
+==> office2Server:  -- Name:              lesson27_office2Server
+==> office2Server:  -- Description:       Source: /home/sergey/otus/lesson27/Vagrantfile
+==> office2Server:  -- Domain type:       kvm
+==> office2Server:  -- Cpus:              2
+==> office2Server:  -- Feature:           acpi
+==> office2Server:  -- Feature:           apic
+==> office2Server:  -- Feature:           pae
+==> office2Server:  -- Clock offset:      utc
+==> office2Server:  -- Memory:            1024M
+==> office2Server:  -- Base box:          bento/ubuntu-24.04
+==> office2Server:  -- Storage pool:      default
+==> office2Server:  -- Image(vda):        /var/lib/libvirt/images/lesson27_office2Server.img, virtio, 64G
+==> office2Server:  -- Disk driver opts:  cache='default'
+==> office2Server:  -- Graphics Type:     vnc
+==> office2Server:  -- Video Type:        cirrus
+==> office2Server:  -- Video VRAM:        16384
+==> office2Server:  -- Video 3D accel:    false
+==> office2Server:  -- Keymap:            en-us
+==> office2Server:  -- TPM Backend:       passthrough
+==> office2Server:  -- INPUT:             type=mouse, bus=ps2
+==> office2Server: Creating shared folders metadata...
+==> office2Server: Starting domain.
+==> office2Server: Domain launching with graphics connection settings...
+==> office2Server:  -- Graphics Port:      5906
+==> office2Server:  -- Graphics IP:        127.0.0.1
+==> office2Server:  -- Graphics Password:  Not defined
+==> office2Server:  -- Graphics Websocket: 5706
+==> office2Server: Waiting for domain to get an IP address...
+==> office2Server: Waiting for machine to boot. This may take a few minutes...
+    office2Server: SSH address: 192.168.121.169:22
+    office2Server: SSH username: vagrant
+    office2Server: SSH auth method: private key
+    office2Server: 
+    office2Server: Vagrant insecure key detected. Vagrant will automatically replace
+    office2Server: this with a newly generated keypair for better security.
+    office2Server: 
+    office2Server: Inserting generated public key within guest...
+    office2Server: Removing insecure key from the guest if it's present...
+    office2Server: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> office2Server: Machine booted and ready!
+==> office2Server: Setting hostname...
+==> office2Server: Configuring and enabling network interfaces...
+==> office2Server: Running provisioner: ansible...
+    office2Server: Running ansible-playbook...
+[WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+[DEPRECATION WARNING]: The '--inventory-file' argument is deprecated. This feature will be removed from ansible-core version 2.23. Use -i or --inventory instead.
+
+PLAY [Configure Network Topology] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'office2Server' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+ok: [office2Server]
+
+TASK [network : Enable IP Forwarding on Routers] *******************************
+skipping: [office2Server]
+
+TASK [network : Remove default Vagrant and Cloud-Init netplan configs to prevent overrides] ***
+changed: [office2Server] => (item=01-netcfg.yaml)
+changed: [office2Server] => (item=50-vagrant.yaml)
+ok: [office2Server] => (item=70-vagrant.yaml)
+ok: [office2Server] => (item=90-hotplug.yaml)
+
+TASK [network : Clean up systemd-networkd runtime cache] ***********************
+changed: [office2Server]
+
+TASK [network : Deploy High Priority Netplan Configuration] ********************
+changed: [office2Server]
+
+TASK [network : Configure NAT rules on inetRouter] *****************************
+skipping: [office2Server]
+
+TASK [network : Enable nftables service] ***************************************
+skipping: [office2Server]
+
+TASK [network : Reboot the machine gently to apply network changes without SSH hanging] ***
+changed: [office2Server]
+
+PLAY RECAP *********************************************************************
+office2Server              : ok=5    changed=4    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+==> office2Server: Running provisioner: shell...
+    office2Server: Running: inline script
+sergey@uchuwi:~/otus/lesson27$ 
+
+
