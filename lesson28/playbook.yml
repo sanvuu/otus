@@ -1,0 +1,172 @@
+---
+- name: Настройка PXE-сервера для автоустановки Ubuntu 24.04 LTS (UEFI, NFS)
+  hosts: all
+  become: true
+  vars:
+    iso_name: "ubuntu-24.04.5-live-server-amd64.iso"
+    iso_url: "https://releases.ubuntu.com/24.04.5.1/ubuntu-24.04.5-live-server-amd64.iso"
+    server_ip: "192.168.56.10"
+    tftp_root: "/srv/tftp"
+    http_root: "/var/www/html"
+    nfs_export_dir: "/srv/nfs_iso"
+
+  tasks:
+    - name: Принудительное поднятие интерфейса eth1 с IP
+      shell: |
+        ip addr add {{ server_ip }}/24 dev eth1 2>/dev/null || true
+        ip link set eth1 up
+      failed_when: false
+
+    - name: Проверка наличия ISO-образа на хосте
+      stat:
+        path: "/vagrant/{{ iso_name }}"
+      register: iso_file
+
+    - name: Скачивание ISO-образа (если его нет)
+      get_url:
+        url: "{{ iso_url }}"
+        dest: "/vagrant/{{ iso_name }}"
+        mode: '0644'
+      when: not iso_file.stat.exists
+
+    - name: Установка необходимых пакетов (включая NFS)
+      apt:
+        name:
+          - dnsmasq
+          - nginx
+          - grub-efi-amd64-signed
+          - shim-signed
+          - nfs-kernel-server
+        state: present
+        update_cache: yes
+
+    - name: Создание рабочих директорий
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ tftp_root }}"
+        - "{{ tftp_root }}/grub"
+        - "{{ tftp_root }}/boot/grub"
+        - "{{ tftp_root }}/EFI/boot"
+        - "{{ http_root }}/autoinstall"
+        - "{{ nfs_export_dir }}"
+
+    - name: Создание точки монтирования ISO
+      shell: "mkdir -p /tmp/iso_mount"
+      args:
+        creates: /tmp/iso_mount
+
+    - name: Монтирование ISO-образа
+      mount:
+        path: /tmp/iso_mount
+        src: "/vagrant/{{ iso_name }}"
+        fstype: iso9660
+        opts: loop,ro
+        state: mounted
+
+    - name: Копирование распакованного содержимого ISO в NFS-экспорт
+      shell: "cp -a /tmp/iso_mount/. {{ nfs_export_dir }}/"
+      args:
+        creates: "{{ nfs_export_dir }}/.disk"
+
+    - name: Извлечение ядра vmlinuz и initrd в корень TFTP
+      copy:
+        src: "/tmp/iso_mount/casper/{{ item }}"
+        dest: "{{ tftp_root }}/{{ item }}"
+        remote_src: yes
+        mode: '0644'
+      loop:
+        - vmlinuz
+        - initrd
+
+    - name: Размещение подписанных сетевых UEFI-загрузчиков в TFTP
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ tftp_root }}/{{ item.dest }}"
+        remote_src: yes
+        mode: '0644'
+      loop:
+        - { src: '/usr/lib/shim/shimx64.efi.signed', dest: 'bootx64.efi' }
+        - { src: '/usr/lib/grub/x86_64-efi-signed/grubnetx64.efi.signed', dest: 'grubx64.efi' }
+
+    - name: Настройка NFS-экспорта для распакованного ISO
+      copy:
+        dest: /etc/exports
+        content: |
+          {{ nfs_export_dir }} 192.168.56.0/24(ro,sync,no_subtree_check,no_root_squash)
+
+    - name: Применение NFS-экспорта
+      shell: "exportfs -ra"
+      changed_when: true
+
+    - name: Создание сетевой конфигурации GRUB (используем NFS)
+      copy:
+        dest: "{{ item }}"
+        content: |
+          set default="0"
+          set timeout=5
+          menuentry "Autoinstall Ubuntu 24.04.5 LTS (NFS)" {
+              set gfxpayload=keep
+              linux /vmlinuz root=/dev/ram0 ip=dhcp autoinstall "ds=nocloud-net;s=http://{{ server_ip }}/autoinstall/" cloud-config-url=/dev/null netboot=nfs nfsroot={{ server_ip }}:{{ nfs_export_dir }} ---
+              initrd /initrd
+          }
+      loop:
+        - "{{ tftp_root }}/grub.cfg"
+        - "{{ tftp_root }}/grub/grub.cfg"
+        - "{{ tftp_root }}/boot/grub/grub.cfg"
+
+    - name: Настройка службы dnsmasq
+      copy:
+        dest: /etc/dnsmasq.conf
+        content: |
+          interface=eth1
+          bind-interfaces
+          dhcp-range=192.168.56.50,192.168.56.100,255.255.255.0,1h
+          dhcp-option=option:router,{{ server_ip }}
+          dhcp-option=option:dns-server,{{ server_ip }}
+          enable-tftp
+          tftp-root={{ tftp_root }}
+          dhcp-match=set:efi-x86_64,option:client-arch,7
+          dhcp-match=set:efi-x86_64,option:client-arch,9
+          dhcp-boot=tag:efi-x86_64,bootx64.efi
+
+    - name: Создание файла метаданных autoinstall (meta-data)
+      copy:
+        dest: "{{ http_root }}/autoinstall/meta-data"
+        content: |
+          instance-id: uefi-pxe-node
+          local-hostname: ubuntu24-client
+
+    - name: Создание файла ответов autoinstall (user-data)
+      copy:
+        dest: "{{ http_root }}/autoinstall/user-data"
+        content: |
+          #cloud-config
+          autoinstall:
+            version: 1
+            identity:
+              hostname: ubuntu-client
+              password: "$6$UPy7iAB4qvAnPddy$fYFPRgQ4OSvTXypdZ0E11mkP4WKicJr1iAPzdehaLKGQIK60LajXyIUdCYZ6q4yXPI6I.jcT6fHaNZkvSSB9k."
+              username: ubuntu
+            locale: en_US.UTF-8
+            keyboard:
+              layout: us
+            storage:
+              layout:
+                name: direct
+            ssh:
+              install-server: true
+              allow-pw: true
+            shutdown: poweroff
+
+    - name: Перезапуск и включение служб
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      loop:
+        - dnsmasq
+        - nginx
+        - nfs-kernel-server
