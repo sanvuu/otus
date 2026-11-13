@@ -1,0 +1,6 @@
+.vagrant/
+*.vdi
+*.log
+*.iso
+ras_client_bundle/
+*.retry

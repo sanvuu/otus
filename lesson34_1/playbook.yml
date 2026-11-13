@@ -1,0 +1,171 @@
+---
+- name: Base setup for all VPN lab nodes
+  hosts: all
+  become: true
+  vars:
+    vpn_mode: "tun" # Можно переопределить через -e "vpn_mode=tap"
+  tasks:
+    - name: Install OpenVPN, iperf3 and Easy-RSA
+      apt:
+        name:
+          - openvpn
+          - iperf3
+          - easy-rsa
+        state: present
+        update_cache: yes
+
+- name: Configure VPN Server (Task 1 P2P & Task 2 RAS)
+  hosts: vpn_server
+  become: true
+  vars:
+    vpn_mode: "tun"
+  tasks:
+    # --- ЗАДАНИЕ 1: P2P Server ---
+    - name: Generate static key for P2P VPN
+      command: openvpn --genkey secret /etc/openvpn/server/static.key
+      args:
+        creates: /etc/openvpn/server/static.key
+
+    - name: Fetch static.key to local host for distribution to client
+      fetch:
+        src: /etc/openvpn/server/static.key
+        dest: /tmp/static.key
+        flat: yes
+
+    - name: Deploy P2P server configuration
+      template:
+        src: templates/p2p-server.conf.j2
+        dest: /etc/openvpn/server/p2p.conf
+        mode: '0640'
+      notify: Restart P2P Server
+
+    - name: Ensure P2P OpenVPN service is enabled and started
+      systemd:
+        name: openvpn-server@p2p
+        enabled: yes
+        state: started
+
+    - name: Ensure iperf3 daemon is running on server
+      systemd:
+        name: iperf3
+        enabled: yes
+        state: started
+
+    # --- ЗАДАНИЕ 2: RAS Server (PKI + Certificates) ---
+    - name: Initialize Easy-RSA PKI
+      command: /usr/share/easy-rsa/easyrsa init-pki
+      args:
+        chdir: /etc/openvpn/server
+        creates: /etc/openvpn/server/pki
+
+    - name: Build CA (non-interactive)
+      command: /usr/share/easy-rsa/easyrsa --batch --req-cn="OTUS-VPN-CA" build-ca nopass
+      args:
+        chdir: /etc/openvpn/server
+        creates: /etc/openvpn/server/pki/ca.crt
+
+    - name: Generate and sign Server certificate
+      command: /usr/share/easy-rsa/easyrsa --batch build-server-full server nopass
+      args:
+        chdir: /etc/openvpn/server
+        creates: /etc/openvpn/server/pki/issued/server.crt
+
+    - name: Generate Diffie-Hellman parameters
+      command: /usr/share/easy-rsa/easyrsa gen-dh
+      args:
+        chdir: /etc/openvpn/server
+        creates: /etc/openvpn/server/pki/dh.pem
+
+    - name: Generate tls-crypt key
+      command: openvpn --genkey secret /etc/openvpn/server/ta.key
+      args:
+        creates: /etc/openvpn/server/ta.key
+
+    - name: Generate and sign Client certificate
+      command: /usr/share/easy-rsa/easyrsa --batch build-client-full client nopass
+      args:
+        chdir: /etc/openvpn/server
+        creates: /etc/openvpn/server/pki/issued/client.crt
+
+    - name: Deploy RAS server configuration
+      template:
+        src: templates/ras-server.conf.j2
+        dest: /etc/openvpn/server/ras.conf
+        mode: '0640'
+      notify: Restart RAS Server
+
+    - name: Ensure RAS OpenVPN service is enabled and started
+      systemd:
+        name: openvpn-server@ras
+        enabled: yes
+        state: started
+
+    # --- Скачиваем клиентские сертификаты на хост для проверки Задания 2 ---
+    - name: Create local bundle directory for host RAS client
+      delegate_to: localhost
+      become: false
+      file:
+        path: "./ras_client_bundle"
+        state: directory
+        mode: '0700'
+
+    - name: Fetch client certificates and keys to host
+      fetch:
+        src: "{{ item }}"
+        dest: "./ras_client_bundle/"
+        flat: yes
+      loop:
+        - /etc/openvpn/server/pki/ca.crt
+        - /etc/openvpn/server/pki/issued/client.crt
+        - /etc/openvpn/server/pki/private/client.key
+        - /etc/openvpn/server/ta.key
+
+    - name: Generate client.conf in local bundle directory
+      delegate_to: localhost
+      become: false
+      template:
+        src: templates/ras-client.conf.j2
+        dest: "./ras_client_bundle/client.conf"
+
+  handlers:
+    - name: Restart P2P Server
+      systemd:
+        name: openvpn-server@p2p
+        state: restarted
+
+    - name: Restart RAS Server
+      systemd:
+        name: openvpn-server@ras
+        state: restarted
+
+- name: Configure VPN Client (Task 1 P2P)
+  hosts: vpn_client
+  become: true
+  vars:
+    vpn_mode: "tun"
+  tasks:
+    - name: Copy static.key to client
+      copy:
+        src: /tmp/static.key
+        dest: /etc/openvpn/server/static.key
+        mode: '0600'
+      notify: Restart P2P Client
+
+    - name: Deploy P2P client configuration
+      template:
+        src: templates/p2p-client.conf.j2
+        dest: /etc/openvpn/server/p2p.conf
+        mode: '0640'
+      notify: Restart P2P Client
+
+    - name: Ensure P2P OpenVPN service is enabled and started on client
+      systemd:
+        name: openvpn-server@p2p
+        enabled: yes
+        state: started
+
+  handlers:
+    - name: Restart P2P Client
+      systemd:
+        name: openvpn-server@p2p
+        state: restarted

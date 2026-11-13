@@ -1,0 +1,16 @@
+port 1207
+proto udp
+dev tun
+ca /etc/openvpn/server/pki/ca.crt
+cert /etc/openvpn/server/pki/issued/server.crt
+key /etc/openvpn/server/pki/private/server.key
+dh /etc/openvpn/server/pki/dh.pem
+tls-crypt /etc/openvpn/server/ta.key
+server 10.20.20.0 255.255.255.0
+ifconfig-pool-persist /run/openvpn-server/ipp.txt
+client-to-client
+keepalive 10 120
+cipher AES-256-GCM
+persist-key
+persist-tun
+verb 3
