@@ -1,0 +1,112 @@
+---
+- name: Base set up
+  hosts: all
+  become: true
+  tasks:
+    - name: Install software on RHEL-based systems
+      ansible.builtin.dnf:
+        name:
+          - vim
+          - traceroute
+          - tcpdump
+          - net-tools
+          - NetworkManager-initscripts-updown
+        state: present
+        update_cache: true
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Install software on Debian-based systems
+      ansible.builtin.apt:
+        name:
+          - vim
+          - traceroute
+          - tcpdump
+          - net-tools
+          - vlan
+        state: present
+        update_cache: true
+      when: ansible_facts['os_family'] == "Debian"
+
+- name: Set up VLAN 1 on testClient1 and testServer1
+  hosts: testClient1,testServer1
+  become: true
+  tasks:
+    - name: Load 8021q kernel module
+      community.general.modprobe:
+        name: 8021q
+        state: present
+
+    - name: Configure VLAN 1 via nmcli
+      community.general.nmcli:
+        conn_name: "vlan{{ vlan_id }}"
+        ifname: "eth2.{{ vlan_id }}"
+        type: vlan
+        vlandev: eth2
+        vlanid: "{{ vlan_id }}"
+        ip4: "{{ vlan_ip }}/24"
+        state: present
+
+    - name: Bring up VLAN 1 connection
+      ansible.builtin.command: "nmcli connection up vlan{{ vlan_id }}"
+      changed_when: false
+
+- name: Set up VLAN 2 on testClient2 and testServer2
+  hosts: testClient2,testServer2
+  become: true
+  tasks:
+    - name: Configure Netplan for VLAN 2
+      ansible.builtin.template:
+        src: templates/50-cloud-init.yaml.j2
+        dest: /etc/netplan/60-vlan.yaml
+        owner: root
+        group: root
+        mode: "0600"
+
+    - name: Apply Netplan configuration
+      ansible.builtin.command: netplan apply
+      changed_when: false
+
+- name: Set up Bond0 between inetRouter and centralRouter
+  hosts: inetRouter,centralRouter
+  become: true
+  tasks:
+    - name: Load bonding kernel module
+      community.general.modprobe:
+        name: bonding
+        state: present
+
+    - name: Create bond0 master connection
+      community.general.nmcli:
+        conn_name: bond0
+        ifname: bond0
+        type: bond
+        mode: active-backup
+        miimon: 100
+        ip4: "{{ bond_ip }}/30"
+        state: present
+
+    - name: Add eth2 as slave to bond0
+      community.general.nmcli:
+        conn_name: bond0-slave-eth2
+        ifname: eth2
+        type: ethernet
+        master: bond0
+        slave_type: bond
+        state: present
+
+    - name: Add eth3 as slave to bond0
+      community.general.nmcli:
+        conn_name: bond0-slave-eth3
+        ifname: eth3
+        type: ethernet
+        master: bond0
+        slave_type: bond
+        state: present
+
+    - name: Activate bond0 and slave interfaces
+      ansible.builtin.command: "{{ item }}"
+      loop:
+        - nmcli connection up bond0
+        - nmcli connection up bond0-slave-eth2
+        - nmcli connection up bond0-slave-eth3
+      changed_when: false

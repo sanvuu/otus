@@ -1,0 +1,101 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :inetRouter => {
+    :box_name => "bento/almalinux-9",
+    :vm_name => "inetRouter",
+    :net => [
+      { :ip => "192.168.56.10", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_router_net", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_router_net", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false }
+    ]
+  },
+  :centralRouter => {
+    :box_name => "bento/almalinux-9",
+    :vm_name => "centralRouter",
+    :net => [
+      { :ip => "192.168.56.11", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_router_net", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_router_net", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false },
+      { :ip => "192.168.255.9", :netmask => "255.255.255.252", :libvirt__network_name => "lesson36_o1c", :libvirt__network_address => "192.168.255.8", :libvirt__netmask => "255.255.255.252", :libvirt__forward_mode => "none", :libvirt__dhcp_enabled => false }
+    ]
+  },
+  :office1Router => {
+    :box_name => "bento/almalinux-9",
+    :vm_name => "office1Router",
+    :net => [
+      { :ip => "192.168.56.20", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :ip => "192.168.255.10", :netmask => "255.255.255.252", :libvirt__network_name => "lesson36_o1c", :libvirt__network_address => "192.168.255.8", :libvirt__netmask => "255.255.255.252", :libvirt__forward_mode => "none", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_testLAN", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false }
+    ]
+  },
+  :testClient1 => {
+    :box_name => "bento/almalinux-9",
+    :vm_name => "testClient1",
+    :net => [
+      { :ip => "192.168.56.21", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_testLAN", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false }
+    ]
+  },
+  :testServer1 => {
+    :box_name => "bento/almalinux-9",
+    :vm_name => "testServer1",
+    :net => [
+      { :ip => "192.168.56.22", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_testLAN", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false }
+    ]
+  },
+  :testClient2 => {
+    :box_name => "bento/ubuntu-24.04",
+    :vm_name => "testClient2",
+    :net => [
+      { :ip => "192.168.56.31", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_testLAN", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false }
+    ]
+  },
+  :testServer2 => {
+    :box_name => "bento/ubuntu-24.04",
+    :vm_name => "testServer2",
+    :net => [
+      { :ip => "192.168.56.32", :libvirt__network_name => "lesson36_mgmt", :libvirt__network_address => "192.168.56.0", :libvirt__netmask => "255.255.255.0", :libvirt__dhcp_enabled => false },
+      { :auto_config => false, :libvirt__network_name => "lesson36_testLAN", :libvirt__forward_mode => "veryisolated", :libvirt__dhcp_enabled => false }
+    ]
+  }
+}
+
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.memory = 1024
+    libvirt.cpus = 2
+  end
+
+  MACHINES.each do |boxname, boxconfig|
+    config.vm.define boxname do |box|
+      box.vm.box = boxconfig[:box_name]
+      box.vm.hostname = boxconfig[:vm_name]
+
+      boxconfig[:net].each do |ipconf|
+        box.vm.network "private_network", **ipconf
+      end
+
+      box.vm.provision "shell", inline: <<-SHELL
+        mkdir -p ~root/.ssh
+        cp ~vagrant/.ssh/authorized_keys ~root/.ssh/
+      SHELL
+
+      if boxconfig[:vm_name] == "testServer2"
+        box.vm.provision "ansible" do |ansible|
+          ansible.playbook = "ansible/provision.yml"
+          ansible.inventory_path = "ansible/hosts"
+          ansible.host_key_checking = false
+          ansible.become = true
+          ansible.limit = "all"
+        end
+      end
+    end
+  end
+end
