@@ -1,0 +1,73 @@
+include "/etc/bind/named.zonetransfer.key";
+
+key "client-key" {
+    algorithm hmac-sha256;
+    secret "IQg171Ht4mdGYcjjYKhI9gSc1fhoxzHZB+h2NMtyZWY=";
+};
+
+key "client2-key" {
+    algorithm hmac-sha256;
+    secret "m7r7SpZ9KBcA4kOl1JHQQnUiIlpQA1IJ9xkBHwdRAHc=";
+};
+
+acl client { !key client2-key; key client-key; 192.168.50.15; };
+acl client2 { !key client-key; key client2-key; 192.168.50.16; };
+
+view "client" {
+    match-clients { client; };
+    server 192.168.50.10 { keys { "client-key"; }; };
+
+    zone "dns.lab" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.dns.lab.client";
+    };
+
+    zone "newdns.lab" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.newdns.lab.client";
+    };
+};
+
+view "client2" {
+    match-clients { client2; };
+    server 192.168.50.10 { keys { "client2-key"; }; };
+
+    zone "dns.lab" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.dns.lab.client2";
+    };
+
+    zone "50.168.192.in-addr.arpa" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.dns.lab.rev.client2";
+    };
+};
+
+view "default" {
+    match-clients { any; };
+    server 192.168.50.10 { keys { "zonetransfer.key"; }; };
+
+    include "/etc/bind/named.conf.default-zones";
+
+    zone "dns.lab" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.dns.lab";
+    };
+
+    zone "50.168.192.in-addr.arpa" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.dns.lab.rev";
+    };
+
+    zone "newdns.lab" {
+        type slave;
+        masters { 192.168.50.10; };
+        file "/var/cache/bind/named.newdns.lab";
+    };
+};

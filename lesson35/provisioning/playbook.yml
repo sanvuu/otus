@@ -1,0 +1,143 @@
+---
+- name: Install DNS packages on all hosts
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache and install bind9 and utils
+      ansible.builtin.apt:
+        name:
+          - bind9
+          - bind9-utils
+          - dnsutils
+        state: present
+        update_cache: true
+
+    - name: Copy zonetransfer key
+      ansible.builtin.copy:
+        src: named.zonetransfer.key
+        dest: /etc/bind/named.zonetransfer.key
+        owner: root
+        group: bind
+        mode: "0640"
+
+- name: Configure Master DNS (ns01)
+  hosts: ns01
+  become: true
+  tasks:
+    - name: Create zones directory
+      ansible.builtin.file:
+        path: /etc/bind/zones
+        state: directory
+        owner: root
+        group: bind
+        mode: "0755"
+
+    - name: Configure named.conf to include only options and local
+      ansible.builtin.copy:
+        dest: /etc/bind/named.conf
+        owner: root
+        group: bind
+        mode: "0644"
+        content: |
+          include "/etc/bind/named.conf.options";
+          include "/etc/bind/named.conf.local";
+
+    - name: Copy master options and local configs
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: bind
+        mode: "0640"
+      loop:
+        - { src: "master-named.conf.options", dest: "/etc/bind/named.conf.options" }
+        - { src: "master-named.conf.local", dest: "/etc/bind/named.conf.local" }
+
+    - name: Copy zone files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/etc/bind/zones/{{ item }}"
+        owner: root
+        group: bind
+        mode: "0640"
+      loop:
+        - named.dns.lab
+        - named.dns.lab.client
+        - named.dns.lab.rev
+        - named.newdns.lab
+
+    - name: Validate named configuration
+      ansible.builtin.command: named-checkconf
+      changed_when: false
+
+    - name: Restart and enable named
+      ansible.builtin.service:
+        name: named
+        state: restarted
+        enabled: true
+
+- name: Configure Slave DNS (ns02)
+  hosts: ns02
+  become: true
+  tasks:
+    - name: Configure named.conf to include only options and local
+      ansible.builtin.copy:
+        dest: /etc/bind/named.conf
+        owner: root
+        group: bind
+        mode: "0644"
+        content: |
+          include "/etc/bind/named.conf.options";
+          include "/etc/bind/named.conf.local";
+
+    - name: Copy slave options and local configs
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: bind
+        mode: "0640"
+      loop:
+        - { src: "slave-named.conf.options", dest: "/etc/bind/named.conf.options" }
+        - { src: "slave-named.conf.local", dest: "/etc/bind/named.conf.local" }
+
+    - name: Ensure /var/cache/bind is writable by bind
+      ansible.builtin.file:
+        path: /var/cache/bind
+        state: directory
+        owner: bind
+        group: bind
+        mode: "0775"
+
+    - name: Validate named configuration
+      ansible.builtin.command: named-checkconf
+      changed_when: false
+
+    - name: Restart and enable named
+      ansible.builtin.service:
+        name: named
+        state: restarted
+        enabled: true
+
+- name: Configure DNS Clients
+  hosts: clients
+  become: true
+  tasks:
+    - name: Stop and disable systemd-resolved
+      ansible.builtin.service:
+        name: systemd-resolved
+        state: stopped
+        enabled: false
+
+    - name: Remove symlink /etc/resolv.conf
+      ansible.builtin.file:
+        path: /etc/resolv.conf
+        state: absent
+
+    - name: Copy static client resolv.conf
+      ansible.builtin.copy:
+        src: client-resolv.conf
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        mode: "0644"
