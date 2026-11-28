@@ -1,0 +1,55 @@
+- name: Конфигурация клиентов FreeIPA (CentOS 9 Stream)
+  hosts: all
+  become: yes
+  gather_facts: yes  # В CentOS 9 родной Python 3.9, сбор фактов работает сразу!
+
+  tasks:
+    - name: Установка Vim, Chrony и FreeIPA клиента
+      dnf:
+        name:
+          - vim
+          - chrony
+          - freeipa-client
+        state: present
+        update_cache: true
+
+    - name: Отключение firewalld
+      service:
+        name: firewalld
+        state: stopped
+        enabled: false
+
+    - name: Отключение SElinux в конфигурационном файле
+      selinux:
+        state: disabled
+
+    - name: Отключение SElinux в текущей сессии
+      shell: setenforce 0
+      failed_when: false
+
+    - name: Установка временной зоны
+      timezone:
+        name: "Europe/Moscow"
+
+    - name: Включение и запуск службы chrony
+      service:
+        name: chronyd
+        state: restarted
+        enabled: true
+
+    - name: Копирование шаблона файла /etc/hosts
+      template:
+        src: hosts.j2
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Проверка, настроен ли уже IPA-клиент
+      stat:
+        path: /etc/ipa/default.conf
+      register: ipa_conf
+
+    - name: Подключение хоста к IPA-серверу
+      shell: echo -e "yes\nyes" | ipa-client-install --mkhomedir --domain=OTUS.LAN --server=ipa.otus.lan --no-ntp -p admin -w otuspassword
+      when: not ipa_conf.stat.exists
